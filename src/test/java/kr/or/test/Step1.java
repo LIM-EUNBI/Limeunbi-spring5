@@ -4,10 +4,17 @@ package kr.or.test;
  * @author 임은비
  *
  */
-public class step1 {
+public class Step1 {
 	// 전역변수는 step1클래스에서 사용할 수 있는 변수
 	// 내부변수는 main메서드 내부에서만 사용할 수 있는 변수
 //	private String name; 전역변수
+	public void Step1() {
+		// 클래스명과 같은 이름의 메서드를 생성자 메서드(자동으로 만들어짐)
+		// 중요한 이유는 다른 클래스에서 step1을 객체로 만들 때 생성자 메서드가 필요.
+		// step1 aaa = new step1();
+		// 자바앱에서는 객체를 만들 때 필수
+		// 단, 스프링에서는 @Inject로 객체를 만들어서 사용
+	}
 	public static void main(String[] args) {
 		// name, age, phoneNum 내부변수 사용.
 		String name;
