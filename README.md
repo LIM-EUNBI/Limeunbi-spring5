@@ -1,4 +1,29 @@
+#### 20210526(수) 작업
+
+
+
 #### 20210525(화) 작업
+- 스프링MVC프로젝트 : ModelViewController (MVC구조 - 웹프로그램구조)
+- src/test/java폴더 : 테스트 작업 폴더
+- src/main/java폴더 : 소스 작업 폴더
+- javac HelloWorld.java -encoding UTF-8 
+- 자바 컴파일러로 실행한 결과 - HelloWorld.class 실행파일이 생성됨
+- 주의점) 클래스 파일은 실행을 패키지 루트에서 해야한다.
+- kr.or.test패키지 root폴더 src/test/java 폴더에서 실행
+- -> java kr.or.test.HelloWorld 클래스를 실행
+- 이클립스 나오기 25년전에는 javac 컴파일에서 직접 class프로그램을 만들었다.
+- 지금은 이클립스에서 바로 실행.
+- javac : 자바앱 컴파일러 -> 클래스 실행파일을 만듬.class (자바환경JVM에서 실행)
+- 메이븐(Maven) : 웹프로그램 실행파일을 만듬.war (톰캣에서 실행)
+- 메이븐이 컴파일할 때, 자바소스만 컴파일하는게 아니라 외부 라이브러리도 가져와서 바인딩해준다.
+- 이것을 패키징 이라고 한다. = .war(와르)파일로 패키징된다.
+- 메이븐이 관리하는 외부 라이브러리파일(lib) 목록을 저장하는 파일 - pom.xml
+- pom.xml에서 자바버전을 1.6 -> 1.8로 변경 후 메이븐을 업데이트 합니다.
+- 업데이트 한 후 maven-update 해줘야 한다. (offline체크해제)
+- 외부 라이브러리 파일을 참조하는 방식을 Dependency
+- jar파일 : JavaARchive = jar 자바클래스를 패키징한 파일
+
+
 - 자바 기초 실습
 - 자바스크립트는 함수기반의 프로그래밍
 - 자바는 객체지향 프로그래밍. (object oriented program)
