@@ -71,9 +71,15 @@ public class Step2 {
 		members[1] = member2;
 		members[2] = member3;
 		
+		// 객체로 만들면 호출 시 메모리에 로딩 -> 실행 끝나면 메모리 반환
 		MemberService memberService = new MemberService();
 		memberService.printMember(members);
+		// 외부클래스는 아래처럼 직접 접근해서 메서드나 변수를 사용할 수 없음.
+		// 외부 클래스로 접근하려면, 객체(실행가능한=메모리로딩)
+		// But, 메서드를 static으로 변경하면 아래로 직접 접근 가능함.
+		// 대신 static은 메모리 할당이 되기 때문에, 많이 쓰면 실행이 느려져서
+		// 현업에서는 많이 쓰이지 않음.
+		// MemberService.printMember(members);
 		
 	}
-
 }
