@@ -1,3 +1,7 @@
+#### 20210531(화) 작업
+- 4장 
+
+
 #### 20210530(월) 작업
 - 오라클 웹용 관리프로그램에서 XE라는 테이블스페이스를 XE사용자로 추가.
 - 비밀번호는 apmsetup으로 통일
@@ -6,6 +10,7 @@
 - MVC 스프링 프로젝트에서 M이 Model 이고, 스프링 프로젝트 구성중에 DB를 가리킴.
 - V는 View이고 jsp를  말한다. C는 Controller이고 클래스를 말한다.
 - RDBMS : RelationDataBaseManagementSystem (관계형 데이터 베이스 관리 시스템)
+
 - 테이블 구성 : 필드(컬럼, 열) = 테이블의 멤버변수(자바클래스의 멤버변수)
 - 필드 구성 : PK(PrimaryKey) = 주키, 기본키, 고유키 = 테이블영역에서 고유한 ID를 말한다(중복되지 않는 값)
 -          ㄴ> 로그인 ID, 이메일주소, 주민번호 등...
@@ -13,6 +18,21 @@
 - ERD에서 Relation 생성 : 게시판 타입 테이블(부)과 게시물 관리 테이블(자식)의 관계를 생성
 - 부자의 관계는 부모의 PK를 기준, 자식에게는 FK(ForeignKey)
 - BOARD 테이블과 REPLY테이블은 1:N 관계 = 게시물 1개에 댓글이 여러개 달릴 수 있음.
+
+- 스프링 시큐리티 : 1. 로그인 인증(ENABLED) : AUTHENTICATION, 2. 권한 체크(LEVELS) : AUTHORITY (관리자-어드민 폴더 접근 가능)
+- ERD를 물리 테이블로 변경 (forward engineering)
+- 물리테이블을 ERD로 만드는 것 (reverse engineering)
+- 데이터 딕셔너리를 모델과 동기화 : 자료사전을(데이터의 정보) DB테이블과 동기화
+- 데이터 딕셔너리는 메타 데이터와 동일 : 컨텐츠는 없고, 구조, 구성 정보만 존재
+- 토드(SQL디벨로퍼와 비슷한 상용)에서는 버튼으로 포워드 엔지니어링 처리 가능
+- 무료인 SQL디벨로퍼에서는 버튼으로 포워드 엔지니어링이 처리가 불가하기 때문에, DDL을 실행해서 포워드 엔지니어링 처리 
+- MYSQL은 무료이지만, 버튼으로 포워드 엔지니어링 처리 가능.
+
+
+- SQL쿼리문 :
+- DDL문(Data Definition Language)- 데이터 정의 언어(create table문 등),
+- DCL문(Data Control Language) - 데이터 제어 언어(commit, rollback), 
+- DML문(Data Manufacture Language)- 데이터 조작 언어(CRUD)
 
 
 #### 20210528(금) 작업

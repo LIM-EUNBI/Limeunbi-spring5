@@ -1,0 +1,66 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableProxyOraclev11g class="oracle.dbtools.crest.model.design.storage.oracle.v11g.TableProxyOraclev11g" name="TBL_ATTACH" directorySegmentName="seg_0" id="B09DE0B9-0B00-C864-832D-72AF14516963">
+<createdBy>PC User</createdBy>
+<createdTime>2021-05-31 07:28:39 UTC</createdTime>
+<ownerDesignName>SPRING5</ownerDesignName>
+<schemaObject>B061147C-2E77-416E-55C6-FC1553051E7D</schemaObject>
+<logging>YES</logging>
+<partitionedRowMovement>DISABLE</partitionedRowMovement>
+<segment>B93AD86C-93AC-5699-CF81-E532EE26EAC9</segment>
+<tableSpace>23FD0804-CD45-23F1-9673-C2D8A47215C2</tableSpace>
+<temporaryChanged>false</temporaryChanged>
+<accessDriverType>oracle_loader</accessDriverType>
+<rejectLimit></rejectLimit>
+<columnProxies itemClass="oracle.dbtools.crest.model.design.storage.oracle.v12c.ColumnProxyOraclev12c">
+<ColumnProxy name="REG_DATE" id="359489F9-099A-1BB1-A843-2D68402D11ED">
+<createdBy>PC User</createdBy>
+<createdTime>2021-05-31 07:28:40 UTC</createdTime>
+<ownerDesignName>SPRING5</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="REAL_FILE_NAME" id="8DB9BC36-AF04-8C92-A1C4-5F1023BDA2D3">
+<createdBy>PC User</createdBy>
+<createdTime>2021-05-31 07:28:40 UTC</createdTime>
+<ownerDesignName>SPRING5</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="SAVE_FILE_NAME" id="BA7E3FD4-0E81-EF5D-E2EE-6C450006E61E">
+<createdBy>PC User</createdBy>
+<createdTime>2021-05-31 07:28:40 UTC</createdTime>
+<ownerDesignName>SPRING5</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="BNO" id="C8DCFC6F-A7ED-2B36-7432-42687D91B099">
+<createdBy>PC User</createdBy>
+<createdTime>2021-05-31 07:28:40 UTC</createdTime>
+<ownerDesignName>SPRING5</ownerDesignName>
+</ColumnProxy>
+</columnProxies>
+<indexProxies>
+<IndexProxy class="oracle.dbtools.crest.model.design.storage.oracle.v10g.IndexProxyOraclev10g" name="TBL_ATTACH_PK" id="F5770308-ECEB-68EF-0D8D-851A5CD0789E">
+<createdBy>PC User</createdBy>
+<createdTime>2021-05-31 07:28:40 UTC</createdTime>
+<ownerDesignName>SPRING5</ownerDesignName>
+<schemaObject>B061147C-2E77-416E-55C6-FC1553051E7D</schemaObject>
+<segment>1C00AA1A-3E6F-27D3-3B77-859E3D7325DA</segment>
+<tableSpace>23FD0804-CD45-23F1-9673-C2D8A47215C2</tableSpace>
+</IndexProxy>
+</indexProxies>
+<foreignKeys>
+<ForeignKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.FKProxyOraclev10g" name="TBL_ATTACH_TBL_BOARD_FK" id="4A7CA903-9B5C-1CAE-C175-085E1EEB4BCB">
+<createdBy>PC User</createdBy>
+<createdTime>2021-05-31 07:28:41 UTC</createdTime>
+<ownerDesignName>SPRING5</ownerDesignName>
+</ForeignKey>
+</foreignKeys>
+<primaryKeys>
+<PrimaryKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.PKProxyOraclev10g" name="TBL_ATTACH_PK" id="79A8F928-1C44-005E-D5D7-EDD77BA653E1">
+<createdBy>PC User</createdBy>
+<createdTime>2021-05-31 07:28:40 UTC</createdTime>
+<ownerDesignName>SPRING5</ownerDesignName>
+<segment>1C00AA1A-3E6F-27D3-3B77-859E3D7325DA</segment>
+<tableSpace>23FD0804-CD45-23F1-9673-C2D8A47215C2</tableSpace>
+<existingIndex>F5770308-ECEB-68EF-0D8D-851A5CD0789E</existingIndex>
+<indexSegment>1C00AA1A-3E6F-27D3-3B77-859E3D7325DA</indexSegment>
+<indexSort>SORTED</indexSort>
+<usingIndex>BY INDEX NAME</usingIndex>
+</PrimaryKey>
+</primaryKeys>
+</TableProxyOraclev11g>
