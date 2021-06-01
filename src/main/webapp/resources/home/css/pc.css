@@ -1,0 +1,60 @@
+@charset "UTF-8";
+@media all and (min-width: 1066px) {
+    /* 로고 */
+	.header_area h1 { padding-left: 0px; }
+
+	/* 소메뉴 */
+	.header_cont {
+		width: 769px;
+		padding-right: 10px;
+	}
+
+	/* 대메뉴 */
+	.gnb li a { padding: 26px 40px;}
+	.gnb_depth { /* 2차메뉴 내용 */
+		position: absolute;
+		left: 0;
+		top: 113px;
+		width: 100%;
+		background: rgba(109, 67, 74, 0.8);
+		z-index: 100;
+	}
+	.gnb_depth2_1 .submenu_list {
+		padding-left: 750px;
+	}
+ 	 .gnb_depth2_2 .submenu_list {
+		padding-left: 800px;
+	}
+	.submenu_list {
+		box-sizing: border-box;
+		width: 1050px;
+		margin: 0 auto;
+		text-align: left;
+	}
+    /* 갤러리*/
+	.place_list {
+		padding: 0px;
+	}
+	/* 카카오톡, 전화상담 신청 영역 */
+	.appbbs_box {
+		padding: 0px;
+	}
+	.app_line a, .app_line a + a {
+		text-align: center;
+		background-position: 20px 50%;
+	}
+	.app_line { width: 66%; }
+	.bbs_line { width: 32%; }
+
+	/* footer 영역 */
+	.foot_area {
+		padding-left: 0px;
+		padding-right: 0px;
+	}
+	.foot_area .snslink {
+		top: 50px;
+	}
+	.foot_area .snslink  li { 
+		margin-left: 60px;
+	}
+}

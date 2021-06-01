@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML5 실습</title>
+    <style>
+        table, tr, th, td {
+            border: 1px solid black;
+            font-size: 16px;
+        }
+        /* css 주석 */
+        /* 테이블 태그의 테두리 이중선을 1개의 선으로 병합 */
+        table {
+            border-collapse: collapse;
+        }
+                /* css : cascade style sheet 계층형 스타일 표 */
+                header, nav, section, aside, footer {
+            border: 1px dotted black;
+        }
+        header > h1, footer { text-align: center; }
+        nav { display: block; height: 60px;}
+        nav > ul > li {
+            float: left;
+            margin-right: 30px;
+            margin-left: 5px;
+        } 
+        div.contents {
+            /* 내부의 컨텐츠 기준되는 외부 요소에 관계형 포지션 */
+             position: relative; 
+             overflow: hidden;
+             }  
+        section {
+            width: 79%;
+            display: inline-block;
+            text-align: center;
+        }
+        aside {
+            width: 20%;
+            display: inline-block;
+            text-align: center;
+            position: absolute;
+            height: 100%;
+            right: 0px;
+        }
+        section > article { 
+            margin: 10px;
+            border: 1px solid skyblue;
+            }
+
+
+    </style>
+</head>
+<body>
+
+    <!-- HTML5 레이아웃 (기본 구조)
+         header, nav, section, article, aside, footer
+    -->
+
+    <header>
+        <h1>Header</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="#">menu1</a></li> 
+            <li><a href="#">menu2</a></li>
+            <li><a href="#">menu3</a></li> 
+        </ul>
+    </nav>
+    <div class="contents">
+        <section>
+            <h1>section</h1>
+            <article>
+                <h2>article1</h2>
+            </article>
+            <article>
+                <h2>article2</h2>
+            </article>
+        </section>
+        <aside>
+            <h2>aside</h2>
+        </aside>
+    </div>
+    <footer>
+        <h2>footer</h2>
+    </footer>
+    <br>
+
+    <!-- table 태그 : 테이블 제어 (셀 병합) -->
+    <!-- table>(tr>td*5)*3 -->
+    <!-- tr : table row,
+         td : table data
+    -->
+    <table>
+        <tr>
+            <th>순번</th>
+            <th>도서명</th>
+            <th>가격</th>
+            <th>판매량</th>
+            <th>판매액</th>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>HTML</td>
+            <td>7,000</td>
+            <td rowspan="2">1,000</td>
+            <td>7,000,000</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>JS</td>
+            <td>7,000</td>
+            <!-- <td>1,000</td> -->
+            <td>7,000,000</td>
+        </tr>
+        <tr>
+            <!-- 셀 병합 :
+                    - 가로칸 병합 : colspan="칸수"  
+                    - 세로칸 병합 : rowspan="칸수"  
+            -->
+            <td colspan="4">총 합계</td>
+            <td>14,000,000</td>
+        </tr>
+    </table>
+
+    <!-- form 태그 사용 : form 태그, input 태그 (엘리먼트) -->
+    <!-- action(데이터 전송), method, radio, submit -->
+    <form action="https://naver.com">
+        <p><input type="text" name="text" id="" required autofocus></p>
+        <p><input type="text" name="text" id=""></p>
+        <p><input type="password" name="password" id=""></p>
+        <p><input type="date" name="date" id=""></p>
+        <p><input type="color" name="color" id=""></p>
+        <!-- 라디오버튼은 2개 이상중에 1개만 선택, name이 같음 -->
+        <p><input type="radio" name="radio" id="">여자
+        <input type="radio" name="radio" id="">남자</p>
+        <!-- 체크박스는 2개 이상중에 2개 이상 선택가능, 그래서 이름이 틀려야함. -->
+        <p><label><input type="checkbox" name="checkbox1" id="">오전</label>
+        <input type="checkbox" name="checkbox2" id="">오후</p>
+        <p><input type="file" name="file" id=""></p>
+        <p><input type="file" name="file" id=""></p>
+        <textarea name="textarea" id="" cols="30" rows="10"></textarea>
+        <p><input type="button" value="버튼">
+        <input type="submit" value="서밋">
+        <input type="reset" value="입력 취소"></p>
+    </form>
+
+    <!-- 유튜브 영상 넣기 -->
+    <iframe width="100%" height="300px" src="https://nate.com" frameborder="0"></iframe>
+    <p><iframe width="100%" height="550px" src="https://www.youtube.com/embed/bG9tqsgHNlo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
+
+    <!-- 
+        컨텐츠 경로 = 상대경로(첫번째).은 현재폴더를 가르킨다.
+                     절대경로(두번째)
+    -->
+    <img style="width: 200px;" src="./img/green.jpg" alt="엑박일 때 표시할 내용 여기에 ">
+    <img style="width: 200px;" src="/test/img/green.jpg" alt="엑박일 때 표시할 내용 여기에 ">
+
+    <!-- 
+        영역지정 div : division 
+        가상링크는 #으로 만든다.
+    -->
+    <div style="background-color: greenyellow;">
+        <a href="#">네이버</a>
+        <a href="#">다음</a>
+        <a href="#">네이트</a>
+    </div>
+
+    <!-- 리스트형 2가지 : ol(Ordered List 정렬된 리스트[숫자 생성]), 
+                         ul(Unordered List 비정렬 리스트[숫자 X]) -->
+    <ol type="A">
+        <li>Hello HTML</li>
+        <li>Hello HTML</li>
+        <li>Hello HTML</li>
+        <li>Hello HTML</li>
+    </ol>
+
+    <ul>
+        <li>Hello HTML</li>
+        <li>Hello HTML</li>
+        <li>Hello HTML</li>
+    </ul>
+
+    <!-- 첨자 sub = 아래첨자, sup = 윗첨자 -->
+    <p>H<sub>2</sub>o</p>
+    <p>X<sup>2</sup>=4</p>
+
+    <!--
+        로렘 입숨(립숨)은 작업공간에 채울 내용을 자동으로 생성해 준다.
+      -->
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt, repellendus!</p>
+    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Maxime quidem consequatur, labore possimus porro obcaecati fuga provident ducimus ipsa repellat.</p>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>번호</th>
+                <th>제목</th>
+                <th>작성자</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>국가의 세입·세출의 결산, 국가 및 법률이...</td>
+                <td>이완용</td>
+            </tr>   
+            <tr>
+                <td>2</td>
+                <td>군인은 현역을 면한 후가 아니면 국무위원...</td>
+                <td>박팽년</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>국가원로자문회의의 조직·직무범위 기타 ...</td>
+                <td>관창</td>
+            </tr>        
+            <tr>
+                <td>4</td>
+                <td>모든 국민은 거주·이전의 자유를 가진다. ...</td>
+                <td>이상</td>
+            </tr>     
+            <tr>
+                <td>5</td>
+                <td>대통령은 국민의 보통·평등·직접·비밀선...</td>
+                <td>신사임당</td>
+            </tr>    
+        </tbody>
+        </table>
+
+    <!-- html:5콜론, ;세미콜론 
+         Emmet 문법 사용
+         h${헬로 html}*6
+    -->
+    <!-- p태그는 문단의 약자 
+         줄바꿈이 이루어지는 영역태그를 블럭영역
+    -->
+    <!-- 줄바꿈이 이루어지지 않는 영역을 인라인블럭영역 -> span -->
+    <!-- 도메인(사람이확인) : IP주소(컴퓨터시스템) -->
+    <!-- 매칭 = 바인딩(묶어준다.) -->
+    <!-- 사람이 보는 색상(color) : red, blue, skyblue, black
+         컴퓨터가 인식하는 색상(color) : #000000(black), #ff0000(red)
+         #ff은 16진수를 나타냄(red), 00(green), 00(blue) 
+         - 빛의 3가지 색상(3원색) 빛은 더하면 흰색으로 변함.(#ffffff(white))
+           참고로, 물감은 더하면 검은색으로 변함.
+        표기방법) 흰색 : #ffffff = #fff = white = 함수 rgb(255, 255, 255)
+    -->
+    <br>
+    <span style="color: rgb(255, 0, 0);">Hello Html5</span>
+    <span style="color: #6004ad;">Hello Html5</span>
+    <hr><br><br><br>
+    <p>Hello HTML5</p>
+    <p>Hello HTML5</p>
+    <h3>헬로 html</h3>
+    <h4>헬로 html</h4>
+    <h5>헬로 html</h5>
+    <h6>헬로 html</h6>
+</body>
+</html>

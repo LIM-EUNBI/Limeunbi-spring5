@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS 실습</title>
+    <!-- 자바스크립트: JS, jQuery, ES5~7(엑마스크립트) -->
+    <style>
+        table, tr, td, th {
+            border: 1px solid black;
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th { width: 25%; padding: 8px;}
+    </style>
+    <!-- jQuery 코어 불러(임포트)오기 -->
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script src="./json.js"></script>
+    <script>
+        $(document).ready(function(){
+            // RestAPI 제공하는 곳 : 공공데이터포털, 네이버(하단에 오픈API), 구글, 인스타그램, 페이스북, 카카오 등등
+            // RestAPI서버에서 받은 빅데이터(코로나 확진자 위치와 발생 일시)를 파싱
+            // $.ajax({}); Asyncronous Javascript and Xml 비동기 자바스크립트와 Xml 통신 
+            // 지금은 Xml 대신에 json 데이터 사용.
+            // http 통신 : 비동기, 동기(기본)
+            // 동기 : 웹프로그램은 기본(옛날에는 동영상 재생시, 100메가 모두 다운로드 후 재생)
+            // 비동기 : 동기는 다중작업이 안됨. 사이트가 먹통처럼 보이는것을 방지. $.ajax 함수로 비동기 데이터(json) 전송을 사용.
+            $.ajax({
+                type:'get', // get(검색), post(보안필요 : 입력, 수정, 삭제)
+                url:'https://coroname.me/getdata', // RestAPI서버의 url 주소
+                dataType:'json', // RestAPI서버로부터 전송받은 데이터 형식
+                success:function(result) {
+                    // var jsonData = JSON.parse(result);
+                    var jsonData = result.data;
+                    console.log(jsonData); // result에는 url에서 dataType 형식으로 받은 자료가 저장
+                    var i = 0;
+                    for(var jsonOne of jsonData) {
+                        $('#board #tbody').append('<tr>');
+                        $('#board #tbody').append('<td style="text-align:center;">' + (i++ + 1) + '</td>');
+                        $('#board #tbody').append('<td style="background-color: lightgreen">' + jsonOne.place + '</td>');
+                        $('#board #tbody').append('<td>' + jsonOne.latlng + '</td>'); 
+                        $('#board #tbody').append('<td>' + jsonOne.createDate + '</td>');
+                        $('#board #tbody').append('<td>' + jsonOne.region + '</td>');
+                        $('#board #tbody').append('</tr>');
+                    }
+                    // 오리지널 for문 (이차원 배열)
+                    for(i = 0; i < jsonData.length; i++) {
+                        if(i == 10) break;
+                        $('#board #tbody').append('<tr>'); // append는 after과 같은 역할
+                        $('#board #tbody').append('<td style="text-align:center;">' + (i + 1) + '</td>');
+                        $('#board #tbody').append('<td style="background-color: #b67f18">' + jsonData[i]['place'] + '</td>');
+                        $('#board #tbody').append('<td>' + jsonData[i]['latlng'] + '</td>'); 
+                        $('#board #tbody').append('<td>' + jsonData[i]['createDate'] + '</td>');
+                        $('#board #tbody').append('<td>' + jsonData[i]['region'] + '</td>');
+                        $('#board #tbody').append('</tr>');
+                    } 
+                },
+                error:function() {
+                    alert('RestAPI서버에 문제가 발생했습니다. 나중에 이용해 주세요.');
+                }
+                
+            });
+        });
+        // 외부 js파일의 json 데이터를 body > table id에 파싱
+        console.log(jsonData);
+        $(document).ready(function(){
+            // 스프링 jsp에서 파싱하는 방법   
+            // 향상된 for 반복문
+            var i = 0;
+            for(var jsonOne of jsonData) {
+                $('#board #tbody').append('<tr>');
+                $('#board #tbody').append('<td style="text-align:center;">' + (i++ + 1) + '</td>');
+                $('#board #tbody').append('<td style="background-color: lightgreen">' + jsonOne._id + '</td>');
+                $('#board #tbody').append('<td>' + jsonOne.age + '</td>'); 
+                $('#board #tbody').append('<td>' + jsonOne.eyeColor + '</td>');
+                $('#board #tbody').append('<td>' + jsonOne.name + '</td>');
+                $('#board #tbody').append('</tr>');
+            }
+            // jQuery에서 파싱하는 방법
+            // $.each(json object, 콜백함수function(index, jsonOne) {});
+            $.each(jsonData, function(index, jsonOne){
+                if(index == 10) return false; // 반복문 중단
+                // 레코드 : 필드들로 구성된 데이터 (_id, age, eyeColor, name)
+                $('#board #tbody').append('<tr>');
+                $('#board #tbody').append('<td style="text-align:center;">' + (index + 1) + '</td>');
+                $('#board #tbody').append('<td style="background-color: skyblue">' + jsonOne._id + '</td>');
+                $('#board #tbody').append('<td>' + jsonOne.age + '</td>'); 
+                $('#board #tbody').append('<td>' + jsonOne.eyeColor + '</td>');
+                $('#board #tbody').append('<td>' + jsonOne.name + '</td>');
+                $('#board #tbody').append('</tr>');
+            });
+            // 오리지널 JS에서 파싱하는 방법
+            for(var i = 0; i < jsonData.length; i++) {
+                if(i == 10) break; // 반복문 중단
+                $('#board #tbody').append('<tr style="background-color:yellow">'); // append는 after과 같은 역할
+                $('#board #tbody').append('<td style="text-align:center;">' + (i + 1) + '</td>');
+                $('#board #tbody').append('<td style="background-color: pink">' + jsonData[i]['_id'] + '</td>');
+                $('#board #tbody').append('<td>' + jsonData[i]['age'] + '</td>'); 
+                $('#board #tbody').append('<td>' + jsonData[i]['eyeColor'] + '</td>');
+                $('#board #tbody').append('<td>' + jsonData[i]['name'] + '</td>');
+                $('#board #tbody').append('</tr>');
+            } 
+            });
+            
+    </script>
+    <script>
+        // jQuery로 개발자가 프로그램을 간편하게 만들기
+        // jQuery CDN : contents delivery network 인터넷으로 외부 라이브러리를 가져다 사용
+        // jQuery의 기본형식 $시작 문서가 준비되었을 때 자동구현
+        // 인터프리터의 단점인 위 -> 아래로 실행되는 순서를 신경쓰지 않아도 된다.
+        // $('id선택자').click(콜백함수=무명함수-자동실행){구현 내용}
+        $(document).ready(function(){
+            $('#checkValue').click(function(){
+                alert($('#name').val());
+                $('#one').css('background-color', 'pink');
+            })
+        });
+    </script>
+</head>
+<body>
+    <h1 style="text-align: center;">JS 실습</h1>
+    <hr><br>
+    <table id="board">
+        <tr>
+            <th>no.</th>
+            <th>id</th>
+            <th>age</th>
+            <th>eyeColor</th>
+            <th>name</th>
+        </tr>
+        <tbody id="tbody"></tbody>
+    </table>
+    <br>
+    <div id="one">Hello JavaScript</div>
+    <p class="two">헬로 자바스크립트</p>
+    <input type="text" name="name" id="name" value="test">
+    <button onclick="checkValue">입력값 확인</button>
+    <button id="checkValue">jQuery로 입력값 확인</button>
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script>
+        // 연산자 : 사칙연산
+        var x, y;
+        x = 5; y = 2;
+        document.write('<hr>연산자 : 사칙연산 <br>', x + y, '<br>');
+        document.write(x - y, '<br>');
+        document.write(x * y, '<br>');
+        document.write(x ** y, '<br>');
+        document.write(x / y, '<br>');
+        document.write(x % y, '<hr>');
+        // 연산자 : 비교연산
+        var x, y, z;
+        x = 5; y = 2; z = '5';
+        document.write('연산자 : 비교연산 <br>', x > y, '<br>');
+        document.write(x >= y, '<br>');
+        document.write(x < y, '<br>');
+        document.write(x <= y, '<br>');
+        document.write(x == z, '<br>'); // 숫자 5와 문자 5가 같다는 내용(내용만 비교)
+        document.write(x === z, '<hr>'); // 숫자 5와 문자 5가 틀리다는 내용(타입까지 비교)
+        // 연산자 : 논리연산
+        var x, y, z;
+        x = true; y = false; z = '5';
+        document.write('연산자 : 논리연산 <br>', x && y, '<br>');
+        document.write(x || y, '<br>');
+        document.write(!y, '<hr>');
+ 
+        // 함수 변수 사용
+        document.write('함수 변수 사용 <br>');
+        // 기본함수 형태 : function 함수명(파라미터) {구현 내용}
+        var plus = function(x,y) {  // 무명함수 anonymous함수(콜백함수)
+            var z;
+            z = x + y;
+            return z;
+        }
+        document.write(typeof(plus));
+        document.write('<br>');
+        function plus(x,y) { // 함수명이 존재 
+            var z;
+            z = x + y;
+            return z;
+        }
+        document.write(plus(5,2));
+        document.write('<br><hr>');
+        
+        // 내장함수
+        // 사용자가 만든 함수가 아닌, 웹브라우저 내장 함수 
+        // 자바스크립트는 웹브라우저에 내장된 언어
+        var txt = 'dladmsql';
+        var num = 10;
+        document.write('내장함수 <br>', txt.length, '<br>');
+        document.write(txt.indexOf('dms'), '<br>'); // 찾은 문자열의 index 위치를 반환
+        document.write(txt.slice(4,6), '<br>'); // (시작, 끝위치)기준 문자열 슬라이스
+        document.write(txt.replace('dla', '임'), '<br>'); // (찾을문자, 바꿀문자)
+        document.write(txt.toUpperCase() , '<br>'); // 대문자로 변경
+        document.write(txt.toLowerCase() , '<br>'); // 소문자로  변경
+        document.write(num.toFixed(6), '<br>'); // 소수점 이하를 6자리로 파싱
+        document.write(num.toString() + num.toString(), '<br>'); // 숫자를 문자로 변환
+        document.write(Math.PI, '<br>');
+        document.write(Math.max(10,20,30), '<br>'); // 최대값 구하는 함수
+        document.write(Math.random()*10, '<hr>'); // 1 ~ 10사이 랜덤숫자 구하기
+
+        // 날짜 내장함수 사용
+        document.write('날짜 내장함수 <br>');
+        var date = new Date; // new 키워드로 함수형 변수 생성
+        document.write(date, '<br>');
+        document.write(date.getMonth() + 1, '<br>'); // 0부터 시작해서 5월은 4로 표기됨
+        document.write(date.getDay(), '<br>'); // 0:일, 1:월, 2:화, 3:수 . . . .
+        document.write(date.getDate(), '<br>');
+        document.write(date.getHours(), '<hr>');
+
+        // 배열
+        document.write('배열 <br>');
+        var arrays = [10, 20, 30, 40];
+        document.write(typeof(arrays), '<br>');
+        document.write(arrays[2], '<br>');
+        document.write(arrays.slice(1,3), '<br>');
+        document.write(arrays.pop(), '<br>');
+        document.write(arrays, '<br>');
+        document.write(arrays.push(1000), '<br>');
+        document.write(arrays, '<br>');
+        document.write(arrays.join('!!'), '<br>');
+        document.write(arrays, '<br>');
+        document.write(arrays.sort(), '<br>');
+        document.write(arrays.reverse(), '<hr>');
+
+        // 인터넷 자료교환 대량 데이터형식 : xml 태그 방식
+        // 지금은 json(javascript object notation) 자바스크립트 객체 표시
+        // key:value로 이루어져 있다.
+        var human = {
+            name:{
+                firstname: '임',
+                lastname: '은비'
+            },
+            age: 10,
+            married: false
+        }
+        document.write(typeof(human), '<br>');
+        document.write(human['name']);
+        document.write('<br>');
+        document.write(human['name']['lastname']);
+        document.write('<br>');
+        document.write(human['age']);
+        document.write('<br>');
+        document.write(human['married']);
+        document.write('<hr>');
+        
+        // 조건문
+        document.write('조건문 <br>');
+        if (false) {
+            document.write('항상 실행되지 않는다..');
+        } else if(true) {
+            document.write('else if 첫번째');
+        } else if(condition) {
+            document.write('else if 두번째');
+        } else {
+            document.write('else문');
+        }
+        document.write('<hr>');
+
+        // 선택문 : swich case 스위치 케이스문
+        document.write('선택문 <br>');
+        var key = 5;
+        switch (key) {
+            case 1:
+                document.write(key, '를 선택했습니다.');
+                break;
+            case 2:
+                document.write(key, '를 선택했습니다.');
+                break;
+            case 3:
+                document.write(key, '를 선택했습니다.');
+                break;
+            default:
+                document.write('선택된 키가 없습니다.');
+                break;
+        }
+        document.write('<hr>');
+
+        // 반복문 for문
+        document.write('반복문(for문) <br>');
+        var arrays = [10, 20, 30, 40, 50];
+        for(var i = 0; i < arrays.length; i++) {
+            document.write(arrays[i]);
+            document.write('<br>');
+        }
+        document.write('<hr>');
+
+        // 반복문 while문
+        document.write('반복문(while문) <br>');
+        var i = 0;
+        while (i < arrays.length) {
+            document.write(arrays[i++]);
+            document.write('<br>');
+            
+        }
+        document.write('<hr>');
+
+        // 변수의 영역
+        // function scope 예약어 = (var), block scope 예약어 = (let, const)
+        var i = 10;
+        var i2 = 0;
+        if(i > 5) {
+            let i2 = 100; // let변수는 영역 안쪽에서만 효력이 있음.
+        } else {
+            let i2 = 200;
+        }
+        function test(params) {
+            i2 = 200;
+        }
+        test(1);
+        document.write(i2);
+        document.write('<hr>');
+
+
+        // 여러개의 element 선택
+        // var names = document.getElementById('name');
+        var names = $('#name');
+        var inputtName = document.getElementsByName('name');
+        // var twoClassName = document.getElementsByClassName('two');
+        // console.log(twoClassName);
+        // document.write(towClassName[0]['innerHTML']);
+        // console.log(names);
+        // document.write('<hr>');
+        function checkValue(params) {
+                // alert(params + '버튼이 클릭 되었습니다.');
+                alert(names.val() + '가 입력한 값입니다.');
+                // alert(names.value + '가 입력한 값입니다.');
+                // document.getElementById('one').style.backgroundcolor = 'red';
+                $('#one').css('backgroundcolor','red');
+        }
+
+        // 변수=variable 요소(number, string, object) 사용
+        // 데이터를 사용하는 방법 : 변수가 사용
+        // 기본형 : number, string, boolean
+        // 사용자 정의형 : object(array), function
+        // JS에서는 변수의 값에 들어가는 형태에 따라서 데이터형이 달라진다.
+        var 변수 = 100;
+        document.write('변수타입은 : ', typeof(변수), '<br>');
+        변수 = '문자열을 입력';
+        document.write('변수타입은 : ', typeof(변수), '<br>');
+        var name = "임은비";
+        document.write(name);
+        // JS부터는 프로그램이기 때문에 디버그라는 용어 사용(에러 처리)
+        // 자바 언어부터 개발되었고, 자바스크립트와는 관계없음.
+        // 자바스크립트는 인터프리터 언어(위에서 아래로 한 줄씩 해석)=파이썬
+        // 자바는 컴파일 언어로 클래스 단위로 해석
+        // 주석 사용, 개체(태그) 선택 방법, 디버그 하는 방법.
+        document.getElementById('one').innerHTML = "헬로 <h1>javascript</h1>";
+        document.getElementById('one').innerText = "헬로 <h1>javascript</h1>";
+        var debug = document.getElementById('one');  
+        // window.alert(debug.innerText); /* 디버그 방법1*/
+        console.log(debug.innerText); /* 디버그하는 방법2*/
+    </script>
+</body>
+</html>

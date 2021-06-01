@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+<!--     
+        언어를 배운다면 꼭 알아야 할것 :
+            - 주석 처리 방법
+            - 디버그 방법(자바스크립트 ~ 스프링까지)
+            - CRUD 방법(스프링+오라클DB)
+    -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- 
+        meta tag : 사진기 사진의 정보를 표시하는데서부터 출발
+                   메타테그는 컨텐츠 내용은 아님(정보의 정보)
+     -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <!-- 
+        viewport는 반응형(모바일, 태블릿, PC) 홈페이지에서 필수 항목
+    -->
+    <title>브라우저 제목</title>
+    <!-- jQuery코어 임포트 가져오기 -->
+    <script src="/resources/home/js/jquery-3.6.0.js"></script>
+</head>
+    <body>
+        <!-- jQuery 기본구조 만들고 홈페이지로 이동시키기 -->
+        <script>
+            $(document).ready(function(){
+                // 루트홈페이지로 접근할 때 replace 함수를 이용해서
+                // 홈페이지로 이동처리
+                location.replace('/resources/home/index.html');
+            });
+
+        </script>
+    </body>
+</html>
+
+
+

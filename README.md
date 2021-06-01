@@ -1,8 +1,29 @@
-#### 20210531(화) 작업
-- 4장 
+#### 20210601(화) 작업
+- 패키지와 예외처리 실습
+- VS code에서 작업한 html을 이클립스에 배치
+- resources 폴더에 static 컨텐츠(html, css, js, font) 배치
+- 일괄 바꾸기 "/home -> "/resources/home
+-         '/home -> '/resources/home
+
+- 스프링이 관리하는 클래스(빈)의 종류 3가지 (개발자가 만든 클래스 상단에 입력)
+- 1. @Controller 클래스 빈 : 라우터 역할 메서드를 만듬
+- 2. @Service 클래스 빈 	: 비지니스로직 메서드를 만듬
+- 3. @Repository 클래스 빈 : Model처리 메서드를 만듬
+- 스프링 기능 = DI(객체생성-의존성주입), AOP, IoC(제어의 역전- 메모리 관리)
+- 주석 > 디버그 > 변수 > 메서드 > 클래스 > MVC
+- 디버그 방법 : 자바(System.out을 이용해서 콘솔창에 출력)
+- 스프링에서는 logger를 사용해서 디버그 내용 출력
+
+- Controller 클래스에서 생성한 변수 사용(자바) model객체 전송(스프링) -> 출력
+- 출력하는 방식 : EL방식(${변수}), JSTL(*표준 - 출력, 반복, 조건 등 다양한 방식)
+
+- 프로젝트의 버전을 업 -? 외부이브러리 부분의 버전을 올림.
+- 메이븐 외부 라이브러리 https://mvnrepository.com/artifact/junit/junit
+
+-에러 : 404(file not found 경로이상), 500(자바프로그램 에러)
 
 
-#### 20210530(월) 작업
+#### 20210531(월) 작업
 - 오라클 웹용 관리프로그램에서 XE라는 테이블스페이스를 XE사용자로 추가.
 - 비밀번호는 apmsetup으로 통일
 - EntityRelationDiagram(ERD-객체관계그림) : Entity = 테이블

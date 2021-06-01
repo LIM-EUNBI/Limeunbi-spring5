@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <!-- 페이지언어 설정 : Unicode Type Format의 약자-->
+    <!-- 다국어지원 사이트에서 필수 -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS 실습</title>
+    <!-- 나눔고딕 외부 글꼴 사용하기 -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./style.css">
+    <style>
+           /* 
+        * 선택자 종류
+        범용 선택자 : *
+        태그 선택자 : h1, h2, h3, p, div, footer ... 등
+        class 선택자 : .class명 중복사용 가능
+        id 선택자 : #id명 중복선언하면 오동작이 발생됨
+        가상 선택자 : ::after = :after, ::before = :before
+        가상요소(Element-가상태그) : :hover
+            ex) a:hover = a태그에 마우스를 올려놓았을 때 
+        */
+        /* div * { 
+            color: skyblue;
+        } */
+        h1 { background-color: greenyellow;}
+        .box-one, .box-two { background-color: indianred;}
+        #box-four, #box-five { background-color: khaki;}
+        .box-one p::after { content: ' = one add';}
+        .box-one p::before { content: 'add + ';}
+        a:hover { color: lightseagreen;}
+
+        /* font 크기, img 크기, 영상 크기 단위
+                 px, em(1.2배수), rem(root기반 배수) */
+        .box-one { 
+            font-size: 20px;
+            /* font-size: 1.5em;  */
+            /* 웹브라우저 기본 폰트크기는 16px = 1em*/
+            /* font-size: 1.5rem; */
+        }
+        .box-one p { 
+            /* 웹브라우저 기본폰트의 16px의 1.5배가 아니고,
+               부모요소의 1.5배 */
+            font-size: 1.5em;
+            font-size: 1.5rem;
+            /* 위에서부터 해석하는 방식(인터프리터), 자바스크립트는 인터프리터형 언어 */
+        }
+        /* 박스 크기 조절 */
+        .box-one {
+            width: 200px;
+            height: 200px;
+            background-color: goldenrod;
+            /* 안쪽여백 : 4가지 방향 12시 시작 시계방향 */
+            padding: 20px;
+            /* 바깥여백 위, 오른쪽, 아래, 왼쪽 */
+            margin: 20px 10px 60px 60px;
+            margin: 30px 60px; /*30 상하, 60 좌우*/
+            border: 10px solid tomato;
+            /* box-sizing *필수* 패딩이 있어도 커지지 않고 크기를 width, height 크기에 맞춰준다. */
+            box-sizing: border-box;
+        }
+        .box-two {
+            width: 200px;
+            height: 200px;
+            background-color: lightpink;
+            padding: 20px;
+            box-sizing: border-box; 
+        }
+        /* 가로 가운데 정렬 */
+        .box-one {
+            margin: 0px auto;
+        }
+        /* 위치 */
+        .box-one {
+            /* position: absolute; 자리가 다른 태그와 관련없는 위치를 가진다.(절대 위치) */
+            /* position: fixed; 붙박이(고정 위치), 주로 메뉴, 상단으로 이동할 때 많이 쓰인다. */
+        }
+    </style>
+</head>
+<body>
+    <h1>HELLO CSS</h1>
+    <div class="box-one"><p><a href="">상단으로 이동</a></p></div>
+    <div class="box-two"><a href="#">two two two</a></div>
+    <div class="box-three">three </div>
+    <div id="box-four">four</div>
+    <div id="box-five">five</div>
+
+     <!-- 구글 폰트 사용하기: 나눔고딕체 사용 (span 인라인 css) -->
+     <p><span style="color: tomato;">Lorem ipsum</span> dolor sit amet consectetur adipisicing elit. Esse ea accusamus pariatur? Quidem vel quam provident. Cupiditate necessitatibus eius officia facilis labore unde dignissimos dicta totam consectetur, nostrum, pariatur ipsum consequuntur asperiores ea quis exercitationem a quae nihil iste deleniti. Autem eos consequatur quibusdam ipsa doloremque perspiciatis ullam alias dicta.</p>
+     <p><span style="color: tomato;">Lorem ipsum</span> dolor sit amet consectetur adipisicing elit. Esse ea accusamus pariatur? Quidem vel quam provident. Cupiditate necessitatibus eius officia facilis labore unde dignissimos dicta totam consectetur, nostrum, pariatur ipsum consequuntur asperiores ea quis exercitationem a quae nihil iste deleniti. Autem eos consequatur quibusdam ipsa doloremque perspiciatis ullam alias dicta.</p>
+</body>
+</html>
