@@ -11,6 +11,11 @@ class MemberVO {
 	private int age;
 	
 	
+	@Override
+	public String toString() {
+		return "MemberVO [name=" + name + ", phoneNum=" + phoneNum + ", age=" + age + "]";
+	}
+	
 	public String getName() {
 		return name;
 	}
