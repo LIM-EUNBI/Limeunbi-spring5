@@ -1,8 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.3.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
-		
+
+	<!-- Alias인 dataSource 만든다. 여러개의 DB와 호환되게 만든다.(Mysql, Hsql 등 여러 DB서버와 호환되게 만드는데 필요. -->
+	<alias name="dataSource-oracle_loacl" alias="dataSource"/>
+	
+	<!-- 로컬 Hsql 드라이버 설정 - 헤로쿠 클라우드 배포용 -->
+	<!-- <bean id="dataSource-hsql_local"></bean> -->
+	
+	
+	<!-- 로컬 오라클 jdbc 드라이버 설정 -->
+	<bean id="dataSource-oracle_local" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" 
+				  value="oracle.jdbc.driver.OracleDriver"></property>
+		<property name="url" 
+				  value="jdbc:oracle:thin:@localhost:1521/XE"></property>
+		<property name="username" value="XE"></property>
+		<property name="password" value="apmsetup"></property>
+	</bean>
+	<!-- 오라클 jdbc빈을 스프링에서 사용 -->
+	
 </beans>
