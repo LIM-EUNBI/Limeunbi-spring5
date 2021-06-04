@@ -2,7 +2,9 @@ package com.edu.test;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import javax.inject.Inject;
 import javax.sql.DataSource;
@@ -42,8 +44,23 @@ public class DataSourceTest {
 		logger.debug("데이터베이스 직접 접근에 성공했습니다.");
 		logger.debug("DB종류는 " + con.getMetaData().getDatabaseProductName());
 
+		// 직접 쿼리 날리기
+		Statement stmt = con.createStatement();
+		
+		// insert 쿼리
+//		for(int i=0; i<100; i++) {
+//		stmt.executeQuery("insert into dept02 values ("+ i +", '판매부서', '서울')");
+//		}
+		// 테이블에 입력되어 있는 레코드를 select 쿼리를 stmt로 가져오기
+		ResultSet rs = stmt.executeQuery("select * from dept");
+		
+		while(rs.next()) {
+			logger.debug(rs.getString("deptno") + " " + rs.getString("dname") + " " + rs.getString("loc"));
+		}
 				
-		con = null;
+		con.close();
+		stmt.close();
+		rs.close();
 	}
 	
 		@Test

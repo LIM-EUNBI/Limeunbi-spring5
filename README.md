@@ -13,6 +13,16 @@
 - 스프링이 관리하는 클래스를 추가하는 방법 : @Controller, @Repository 등 or xml에 빈을 추가
 
 
+#### 20210604(금) 작업
+- JUnit에서 SQL로그 상황이 나오게 하는 드라이버를 pom.xml에 추가.
+- src/main/resources에 log4jdbc.log4j2.properties 파일 추가
+-
+- 오라클일 때 : localhost:1521/XE 접속 URL끝의 XE 서비스 ID명
+- 오라클은 사용자명이 테이블 스페이스명(DB명)
+- Mysql : localhost:3306/XE URL끝의 XE 스키마명(DB명)
+- 오라클 실습
+
+
 #### 20210603(목) 작업
 - JUnit 테스트 : 오라클 연동한 후 회원관리 CRUB 테스트 진행
 - 오라클 실습 예정 : https://wikidocs.net/3910

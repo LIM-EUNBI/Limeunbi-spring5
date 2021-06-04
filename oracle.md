@@ -1,4 +1,71 @@
 #### SQL문법
+- @Transectional // 스프링에서 에러 발생시 update 부분이 롤백.
+-
+#### 20210605(금)
+* CASE문
+- SELECT
+- CASE WHEN comm IS NULL THEN 0
+- WHEN comm = 0 THEN 100
+- WHEN comm > 0 THEN comm
+- END "CASE 출력문" FROM emp;
+
+* CREATE (테이블 생성), 다른 테이블 복사
+- CREATE TABLE dept02 AS SELECT * FROM dept WHERE 1=0;
+
+* INSERT (row 추가)
+- INSERT INTO dept02 (deptno, dname, loc) values(10, '개발부서', '천안');
+
+* DELETE 
+- DELETE FROM dept02 WHERE deptno = 10;
+- DELECT FROM dept02 WHERE deptno > 0;
+
+* DROP (테이블을 없애는 명령)
+- DROP TABLE dept02;
+
+* UPDATE 테이블명 SET 필드명 = '수정할 값' WHERE
+- UPDATE emp01 SET ENAME = 'EUNBI' WHERE empno = 7839;
+- UPDATE emp01 SET sal = sal*1.1; // 직원들 연봉을 10프로 인상
+- UPDATE emp01 SET hiredate = sysdate; // 입사일을 현재 날짜로 변경
+-
+-
+* JOIN
+- 오라클 조인
+- SELECT * FROM emp, dept WHERE emp.deptno = dept.deptno;
+- SELECT dept.dname, emp.* FROM emp, dept WHERE emp.deptno = dept.deptno AND emp.ename = 'SCOTT';
+- 표준조인 (ANSI)
+- SELECT * FROM emp e JOIN dept d ON e.deptno = d.deptno;
+- SELECT d.dname, e.* FROM emp e JOIN dept d ON e.deptno = d.deptno WHERE e.ename = 'SCOTT';
+- tbl_board 테이블과 tbl_reply 테이블 조인
+- FROM tbl_board BOD 
+- INNER  JOIN tbl_reply REP ON BOD.bno = REP.bno
+- GROUP BY BOD.bno, title, writer, BOD.reg_date, view_count
+- ORDER BY BOD.bno;
+-
+-
+
+* 그룹 함수
+- SELECT ename, ROUND(sal,-3) FROM emp01;
+- SELECT SUM(sal) FROM emp;
+- SELECT round(AVG(sal), 2) FROM emp;
+- SELECT max(sal), min(sal) FROM emp;
+- SELECT COUNT(*) FROM emp WHERE sal >= (SELECT ROUND(AVG(sal)) FROM emp);
+- SELECT deptno, SUM(sal) FROM emp GROUP BY deptno ORDER BY SUM(sal) DESC;
+-
+- CREAT TABLE
+- CREATE TABLE TBL_MEMBER_DEL
+- (
+- USER_ID VARCHAR2(50) PRIMARY KEY,
+- USER_PW VARCHAR2(255)
+- );
+- 
+- ALTER 
+- ALTER TABLE dept MODIFY(deptno NUMBER(4)); // number 길이를 4로 변경
+- ALTER TABLE RENAME COLUMN tbl_member email TO user_email; // 테이블 컬럼명 변경
+
+
+
+
+#### 20210604(목)
 * sqldeveloper 깔끔하게 쿼리문 정리 control + F7
 
 * DESC (테이블 구조 확인) DESC dept;
