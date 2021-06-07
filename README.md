@@ -11,21 +11,60 @@
 
 - root-context.xml 파일에 오라클 커넥션 빈(스프링 클래스) 추가
 - 스프링이 관리하는 클래스를 추가하는 방법 : @Controller, @Repository 등 or xml에 빈을 추가
+-
+- JUnit에서 SQL로그 상황이 나오게 하는 드라이버를 pom.xml에 추가.
+- src/main/resources에 log4jdbc.log4j2.properties 파일 추가
 
+- 마이바티스 추가
+- 1. pom.xml에 마이바티스 모듈 추가
+- 2. 마이바티스 설정파일 추가 root-context.xml에 빈 추가 /main/resources에 mapper폴더 생성 후 mapper폴더 안에 oracle, mysql 폴더 생성
+
+
+
+#### 공부 자료
+- 오라클 문법 : https://wikidocs.net/3910
+- 인터프리터 https://colab.research.google.com/drive/1wyL8Fg3-l8PKpmqbBCxd_ewBGDKdTzuw
+- 클래스 변수, 인스턴스 변수 설명 = https://itmining.tistory.com/20
+- 추상화 설명 = https://limkydev.tistory.com/188 (사용법)
+- https://victorydntmd.tistory.com/117
+- 아스키, 유니코드 https://whatisthenext.tistory.com/103
+- 시노님 설명 https://mine-it-record.tistory.com/68
+
+#### 20210607(월) 작업
+- 오라클 DB관리 Application Express -> administration -> 로그인 (admin/초기 비밀번호)Apmsetup1!-system 비밀번호와는 별개 -> 
+- 오라클 접속 오류 17002 해결
+- https://velog.io/@qwerspace/%EC%98%A4%EB%9D%BC%ED%81%B4-%EC%97%90%EB%9F%AC-%EC%97%85%EC%B2%B4-%EC%BD%94%EB%93%9C-17002
+
+- XE2 workspace 만들고 삭제 -> sqldeveloper에서 system으로 접속해서
+- SELECT * FROM all_users; 쿼리문 실행해보면 xe2가 아직도 존재하는 점 확인
+- DROP USER XE2 CASCADE; 실행문으로 삭제.
+- 오라클은 스프링과 같은 방식 패키지명안에 함수, 프로시저(오라클 프로그램)를 만들 수 있다.
+- 패키지명이 길어서 사용시 개발자에게 부담이 되기 때문에 시노님(동의어)를 사용.
+
+- 시퀀스 : DB에서 기본으로 MAX값을 구해서 + 1을 해준다. 고유번호가 중복되지 않고
+-       자동으로 1증가해준다. (지금 하는 프로젝트에서는 게시물SEQ_BNO, 댓글 시퀀스SEQ_RNO)
+-
+- DB프로그램 방식(프로시저)로 더미 데이터 추가(회원관리 100명), 게시판(공지사항 50, 갤러리 50)
+- 프로시저 실행 : CALL 프로시저명 (값);
+- 마이바티스(mybatis) : 스프링에서 쿼리를 관리 (pom.xml에 마이바티스 모듈 추가)
+
+- DataSourceTest에 selectMember 메서드 추가
+- main/java에 com.edu.vo 패키지 생성 후 MemberVO 클래스 생성.
+- ㄴ> loombok.jar를 사용해서 getter,setter를 생략할 수도 있다.
 
 #### 20210604(금) 작업
 - JUnit에서 SQL로그 상황이 나오게 하는 드라이버를 pom.xml에 추가.
 - src/main/resources에 log4jdbc.log4j2.properties 파일 추가
 -
 - 오라클일 때 : localhost:1521/XE 접속 URL끝의 XE 서비스 ID명
-- 오라클은 사용자명이 테이블 스페이스명(DB명)
+- 오라클은 사용자명이 테이블 스키마명(DB명)
 - Mysql : localhost:3306/XE URL끝의 XE 스키마명(DB명)
 - 오라클 실습
 
 
 #### 20210603(목) 작업
 - JUnit 테스트 : 오라클 연동한 후 회원관리 CRUB 테스트 진행
-- 오라클 실습 예정 : https://wikidocs.net/3910
+- 오라클 실습 
 
 
 #### 20210602(수) 작업
@@ -154,12 +193,11 @@
 
 - 클래스 변수 : 클래스가 메모리에 올라갈 때,
 - 인스턴스 변수 : 인스턴스가 생성될 때
-- 클래스 변수, 인스턴스 변수 설명 = https://itmining.tistory.com/20
+
 - 상수를 만들 때 : final int MAX = 10;
 
 - 추상화(Abstract) : 오프라인 업무 -> 대표업무만 뽑아낸 클래스 = 추상클래스
-- 추상화 설명 = https://limkydev.tistory.com/188 (사용법)
-- https://victorydntmd.tistory.com/117
+
 - 클래스는 멤버변수 + 멤버메서드(실행) + 서브클래스
 - 객체와 클래스 : 클래스형 자료를 실행 가능하게 만든 것을 Object라고 한다.
 - OOP(Object Oriented Programing) : 자바를 객체지향(클래스를 실행 가능하게 하는) 프로그래밍
@@ -193,7 +231,7 @@
 - 자바는 객체지향 프로그래밍. (object oriented program)
 - 오브젝트(객체) = 실행 가능한 class(클래스)
 
-- 아스키, 유니코드 https://whatisthenext.tistory.com/103
+
 - 아스키코드 IoT에서 데이터 전송시 필수로 확인해야 한다. 0을 전송 -> 48값을 받는다.
 - IoT프로그램시 하드웨어 값을 주고 받을때 if(var1 == 48) {구현 내용}
 - 공유기가 하위 가질 수 있는 사설 IP는 공유기 자기IP + 255(여유분) = 256개 인터넷이 가능.
@@ -205,7 +243,7 @@
 - UTF8mb4(이모지까지 포함 : 이모티콘 + 이미지)
 - 자바언어를 한다는 것은 컴파일 후 실행. -> 실습 예정
 - 자바스크립트(파이썬)는 그냥 실행해서 프로그램이 만들어진다.(인터프리터) -> 실습 예정
-- 인터프리터 https://colab.research.google.com/drive/1wyL8Fg3-l8PKpmqbBCxd_ewBGDKdTzuw
+
 
 
  
