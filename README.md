@@ -41,7 +41,7 @@
 - 페이징 구현하기전 쿼리로 테스트
 - 페이징에 사용될 변수들 (queryStartNo, queryPerPageNum, page, perPageNum, startPage, endPage)
 - 검색에 사용되는 변수 (search_keyword, search_type)
-- ```
+- 
 SELECT TB.* FROM
 (
     SELECT ROWNUM AS RNUM, TA.* FROM
@@ -52,7 +52,7 @@ SELECT TB.* FROM
 ) TB WHERE TB.RNUM > 2*5
 -- 현재 페이지수의 변수 a*b: 0*10, 1*10, 2*10, 3*10, 4*10.... : page*b
 -- 1페이지당 보여줄 ROW b: 10, 20, 30 : queryPerPageNum
-```
+
 - com.edu.vo에 PageVO 클래스 생성
  
 
