@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.sql.DataSource;
@@ -17,6 +18,9 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+
+import com.edu.service.IF_MemberService;
+import com.edu.vo.MemberVO;
 
 /**
  * 이 클래스는 오라클과 연동해서 CRUD를 테스트해보는 클래스
@@ -35,16 +39,22 @@ public class DataSourceTest {
 	@Inject // 스프링에서 객체를 만드는 방법, 이전 자바에서는 new 키워드로 객체를 만듬.
 	// 이전 자바7에서는 @Autowired로 객체를 만든다.
 	DataSource dataSource; // 메모리 관리를 스프링에서 알아서 해준다.
-	
+	@Inject
+	private IF_MemberService memberService;
 	// M-V-C 사이에 데이터를 입출력하는 임시저장 공간(VO클래스-멤버변수+Get/Set메서드) 생성
 	// ValueObject 클래스는 DB테이블과 1:1
 	// MemberVO.java VO클래스를 생성.
-	//@Test
-//	public void selectMember() throws Exception{
-//		// 회원관리 테이블에서 더미로 입력한 100개의 레코드를 출력하는 메서드 -> 회원관리 목록 출력
-//		List
-//	}
-//	
+	@Test
+	public void selectMember() throws Exception{
+		// 회원관리 테이블에서 더미로 입력한 100개의 레코드를 출력하는 메서드 -> 회원관리 목록 출력
+		// 검색, 페이징 기능 구현(1페이지 10명씩)
+		// 현재 몇페이지, 검색어 임시저장 공간 필요. -> DB에 페이징 조건문, 검색 조건문
+		// PageVO.java 클래스 만들어서 페이징 처리변수와 검색어 변수 선언.
+		// 
+		List<MemberVO> listMember = memberService.selectMember();
+		listMember.toString();
+	}
+	
 	@Test
 	public void oldQueryTest() throws Exception {
 		// 스프링빈을 사용하지 않았을 때 방식 : 코딩 테스트에서는 스프링 설정을 안쓰고, 직접 DB 아이디/암호 입력 

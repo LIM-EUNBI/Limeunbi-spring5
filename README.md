@@ -30,6 +30,43 @@
 - 아스키, 유니코드 https://whatisthenext.tistory.com/103
 - 시노님 설명 https://mine-it-record.tistory.com/68
 
+#### 20210608(화) 작업
+- mapper/oracle 폴더에 IF_MemberMapper.xml 파일 생성.
+- com.edu.dao에 MemberDAO 인터페이스 추가 후 MemberDAO 클래스 생성.
+- ㄴ> *인터페이스 만드는 목적 : 복잡한 구현클래스를 간단하게 구조화 시켜서 개발자가 관리하기 편하게 정리하는 역할.
+- com.edu.service 패키지 생성 후 IF_MemberService 인터페이스 추가 후 MemberService 클래스 생성
+- root-context에서 Namespace에서 context 추가하고
+- com.edu.dao, com.edu.service 빈으로 위치 지정
+- jUnit에서 위 작업한 내용을 CRUD 테스트
+- 페이징 구현하기전 쿼리로 테스트
+- 페이징에 사용될 변수들 (queryStartNo, queryPerPageNum, page, perPageNum, startPage, endPage)
+- 검색에 사용되는 변수 (search_keyword, search_type)
+- ```
+SELECT TB.* FROM
+(
+    SELECT ROWNUM AS RNUM, TA.* FROM
+    (
+        SELECT * FROM tbl_member
+        ORDER BY reg_date DESC
+    ) TA WHERE ROWNUM <= (2*5)+5
+) TB WHERE TB.RNUM > 2*5
+-- 현재 페이지수의 변수 a*b: 0*10, 1*10, 2*10, 3*10, 4*10.... : page*b
+-- 1페이지당 보여줄 ROW b: 10, 20, 30 : queryPerPageNum
+```
+- com.edu.vo에 PageVO 클래스 생성
+ 
+
+- 스프링코딩 작업순서 1부터6까지(아래)
+- ERD를 기준으로 VO클래스를 생성.
+- M-V-C 사이에 데이터를 입출력하는 임시저장 공간(VO클래스-멤버변수+Get/Set메서드) 생성
+- 보통 ValueObject클래스는 DB테이블과 1:1로 매칭이 됩니다.
+- 매퍼쿼리(마이바티스사용)를 만듭니다.(VO사용해서쿼리생성).
+- DAO(데이터엑세스오브젝트,DTO)클래스를 생성(SqlSession사용쿼리실행).*오늘 Sql세션은 root-context에 빈으로 만들었습니다.(1개)
+- 스프링 부트(간단한 프로젝트)에서는 4번 Service클래스가 없이 바로 컨트롤러로 이동합니다.
+- Service(서비스)클래스생성(서비스에 쿼리결과를 담아 놓습니다.)(1개)
+- Controller(컨트롤러)클래스생성(서비스결과를 JSP로 보냅니다.)
+- JSP(View파일) 생성(컨트롤러의Model객체를 JSTL을 이용해 화면에 뿌려 줍니다.)
+
 #### 20210607(월) 작업
 - 오라클 DB관리 Application Express -> administration -> 로그인 (admin/초기 비밀번호)Apmsetup1!-system 비밀번호와는 별개 -> 
 - 오라클 접속 오류 17002 해결
@@ -50,7 +87,7 @@
 
 - DataSourceTest에 selectMember 메서드 추가
 - main/java에 com.edu.vo 패키지 생성 후 MemberVO 클래스 생성.
-- ㄴ> loombok.jar를 사용해서 getter,setter를 생략할 수도 있다.
+- ㄴ> lombok.jar를 사용해서 getter,setter를 생략할 수도 있다.
 
 #### 20210604(금) 작업
 - JUnit에서 SQL로그 상황이 나오게 하는 드라이버를 pom.xml에 추가.

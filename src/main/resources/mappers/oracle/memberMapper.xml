@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- 2개의 객체를 바인딩 시키는 mapper 
+     회원관리 CRUD 쿼리 파일.
+-->
+<mapper namespace="memberMapper">
+<select id="selectMember" resultType="com.edu.vo.MemberVO">
+select * from tbl_member
+</select>
+</mapper>
