@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.edu.vo.MemberVO;
+import com.edu.vo.PageVO;
 
 /**
  * IF_MemberDAO 인터페이스를 구현하는 클래스
@@ -22,10 +23,33 @@ public class MemberDAO implements IF_MemberDAO {
 	
 	
 	@Override //부모 인터페이스의 메서드를 상속해서 재정의.
-	public List<MemberVO> selectMember() throws Exception {
+	public List<MemberVO> selectMember(PageVO pageVO) throws Exception {
 		// Sqlsession의 메서드를 이용해서 mapper 쿼리 사용.
-		List<MemberVO> listMember = sqlSession.selectList("memberMapper.selectMember");
+		List<MemberVO> listMember = sqlSession.selectList("memberMapper.selectMember", pageVO);
 		return listMember;
+	}
+
+
+	@Override // 전체 회원의 카운터
+	public int countMember() throws Exception {
+		// 하나의 값을 뽑아올때 selectOne을 사용.
+		int totalCount = sqlSession.selectOne("memberMapper.countMember");
+		return totalCount;
+	}
+
+
+	@Override
+	public void insertMember(MemberVO memberVO) throws Exception {
+		// sqlSession빈의 메서드를 이용해서 매퍼 쿼리를 실행.
+		sqlSession.insert("memberMapper.insertMember", memberVO);
+		
+	}
+
+
+	@Override
+	public void deleteMember(String user_id) throws Exception {
+		sqlSession.delete("memberMapper.deleteMember", user_id);
+		
 	}
 	
 

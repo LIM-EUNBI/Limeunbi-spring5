@@ -15,6 +15,19 @@ public class PageVO {
 	private int startPage; // perPageNum으로 구하는 UI 하단 시작번호
 	private int endPage; // perPageNum으로 구하는 UI 하단 끝번호
 	
+	private boolean prev; //UI 하단 이전페이지
+	private boolean next; //UI 하단 다음페이지
+	
+	private String search_keyword;
+	private String search_type;
+	
+	@Override
+	public String toString() {
+		return "PageVO [queryStartNo=" + queryStartNo + ", queryPerPageNum=" + queryPerPageNum + ", page=" + page
+				+ ", perPageNum=" + perPageNum + ", totalCount=" + totalCount + ", startPage=" + startPage
+				+ ", endPage=" + endPage + ", prev=" + prev + ", next=" + next + ", search_keyword=" + search_keyword
+				+ ", search_type=" + search_type + "]";
+	}
 	public int getQueryStartNo() {
 		queryStartNo = (this.page-1)*queryPerPageNum; // jsp에서 파라미터로 받을 때 1부터 계산해서 들어와서 -1을 해준다.
 		return queryStartNo;
@@ -53,6 +66,17 @@ public class PageVO {
 		// 만약 11페이지를 클릭하면, 임시 끝페이지가 20.
 		this.startPage = (tempEnd - this.perPageNum) + 1;
 		// 1-10까지는 시작페이지가 1, 11부터는 11이 시작페이지가 된다.
+		
+		//위 startPage변수 jsp에서 반복문의 시작 값으로 사용.
+		if(tempEnd*this.queryPerPageNum > this.totalCount) {
+			this.endPage = (int)Math.ceil((this.totalCount/(double)this.queryPerPageNum));
+		} else {
+			this.endPage = tempEnd;
+		}
+		
+		// prev, next 구하기
+		this.prev = this.startPage != 1;
+		this.next = this.endPage*this.queryPerPageNum < this.totalCount;
 	}
 	public int getStartPage() {
 		return startPage;
@@ -90,9 +114,5 @@ public class PageVO {
 	public void setSearch_type(String search_type) {
 		this.search_type = search_type;
 	}
-	private boolean prev; //UI 하단 이전페이지
-	private boolean next; //UI 하단 다음페이지
 	
-	private String search_keyword;
-	private String search_type;
 }

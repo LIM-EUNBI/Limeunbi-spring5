@@ -30,6 +30,15 @@
 - 아스키, 유니코드 https://whatisthenext.tistory.com/103
 - 시노님 설명 https://mine-it-record.tistory.com/68
 
+#### 20210609(수) 작업
+- 페이징 코드 작성 완료 후 mapper에 select문 추가
+- memberDAO 인터페이스에 추가 후 MemberDAO 클래스에서 countMember 재정의
+- DataSourceTest 파일에서 구현.
+- search_keyword(원래는 mapper-DAO-service-junit 순으로 코딩했는데 반대로 코딩)
+- <![CDATA[]]> : 태그 안쪽에 부등호를 사용하기 위해서 문자열 변환 태그
+- memberMapper 파일에 서브쿼리문, if문 작성 후
+- 공통쿼리를 sqlWhere문으로 따로 뺀 뒤, include로 sqlWhere 사용.
+
 #### 20210608(화) 작업
 - mapper/oracle 폴더에 IF_MemberMapper.xml 파일 생성.
 - com.edu.dao에 MemberDAO 인터페이스 추가 후 MemberDAO 클래스 생성.

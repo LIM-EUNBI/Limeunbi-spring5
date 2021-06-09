@@ -21,6 +21,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.edu.service.IF_MemberService;
 import com.edu.vo.MemberVO;
+import com.edu.vo.PageVO;
 
 /**
  * 이 클래스는 오라클과 연동해서 CRUD를 테스트해보는 클래스
@@ -44,14 +45,48 @@ public class DataSourceTest {
 	// M-V-C 사이에 데이터를 입출력하는 임시저장 공간(VO클래스-멤버변수+Get/Set메서드) 생성
 	// ValueObject 클래스는 DB테이블과 1:1
 	// MemberVO.java VO클래스를 생성.
+	
+	@Test
+	public void deleteMember() throws Exception{
+		memberService.deleteMember("user_del");
+		selectMember();
+	}
+	
+	
+   @Test
+   public void insertMember() throws Exception {
+      MemberVO memberVO = new MemberVO();
+      //insert쿼리에 저장할 객체
+      memberVO.setUser_id("user_delete");
+      memberVO.setUser_pw("12341");//스프링시큐리티5버전으로 암호화로 처리예정
+      memberVO.setEmail("user@test.com");
+      memberVO.setPoint(10);
+      memberVO.setEnabled(true);
+      memberVO.setLevels("ROLE_USER");
+      memberVO.setUser_name("삭제할사용자2");
+      memberService.insertMember(memberVO);
+      selectMember();
+   }
+
+	
+	
 	@Test
 	public void selectMember() throws Exception{
 		// 회원관리 테이블에서 더미로 입력한 100개의 레코드를 출력하는 메서드 -> 회원관리 목록 출력
 		// 검색, 페이징 기능 구현(1페이지 10명씩)
 		// 현재 몇페이지, 검색어 임시저장 공간 필요. -> DB에 페이징 조건문, 검색 조건문
 		// PageVO.java 클래스 만들어서 페이징 처리변수와 검색어 변수 선언.
-		// 
-		List<MemberVO> listMember = memberService.selectMember();
+		PageVO pageVO = new PageVO();
+		pageVO.setPage(1);//기본값으로 1페이지
+		pageVO.setPerPageNum(10);
+		pageVO.setQueryPerPageNum(10);
+		pageVO.setTotalCount(memberService.countMember());//테스트 100명
+		pageVO.setSearch_type("user_id");
+		pageVO.setSearch_keyword("user_del");
+		
+		// pageVO객체에 어떤값이 들어있는지 확인
+		logger.info("pageVO 저장된 값 확인 " + pageVO);
+		List<MemberVO> listMember = memberService.selectMember(pageVO);
 		listMember.toString();
 	}
 	
