@@ -38,6 +38,8 @@
 - <![CDATA[]]> : 태그 안쪽에 부등호를 사용하기 위해서 문자열 변환 태그
 - memberMapper 파일에 서브쿼리문, if문 작성 후
 - 공통쿼리를 sqlWhere문으로 따로 뺀 뒤, include로 sqlWhere 사용.
+- insert, delete까지 추가.
+
 
 #### 20210608(화) 작업
 - mapper/oracle 폴더에 IF_MemberMapper.xml 파일 생성.
