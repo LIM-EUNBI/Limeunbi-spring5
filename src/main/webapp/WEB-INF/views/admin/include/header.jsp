@@ -99,12 +99,12 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="/admin/member/member_list" class="nav-link">
               <i class="far fa-circle nav-icon"></i>
               <p>관리자 관리</p>
             </a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item">s
             <a href="#" class="nav-link">
               <i class="far fa-circle nav-icon"></i>
               <p>게시판생성 관리</p>

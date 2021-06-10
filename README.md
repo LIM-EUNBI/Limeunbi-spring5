@@ -30,6 +30,16 @@
 - 아스키, 유니코드 https://whatisthenext.tistory.com/103
 - 시노님 설명 https://mine-it-record.tistory.com/68
 
+#### 20210610(목) 작업
+- readMember 추가
+- pom.xml파일에 스프링 시큐리티 추가해준 뒤 , properties에 <spring.security.version>5.2.3.RELEASE</spring.security.version> 추가.
+- updateMember 추가 (시큐리티 코드 추가)
+
+- 컨트롤러를 이용해서 관리자단 회원관리 화면 JSP 만들기 시작.
+- 컨트롤러에 selectMember ReqeustMapping 추가.
+- WEB-INF admin 폴더에 member/member_list.jsp 추가
+- resources/admin/board_list wrapper부분 복사해서 WEB-INF admin 폴더에 member/member_list.jsp 붙여넣기
+
 #### 20210609(수) 작업
 - 페이징 코드 작성 완료 후 mapper에 select문 추가
 - memberDAO 인터페이스에 추가 후 MemberDAO 클래스에서 countMember 재정의

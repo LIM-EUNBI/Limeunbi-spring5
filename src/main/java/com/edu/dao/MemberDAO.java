@@ -31,9 +31,9 @@ public class MemberDAO implements IF_MemberDAO {
 
 
 	@Override // 전체 회원의 카운터
-	public int countMember() throws Exception {
+	public int countMember(PageVO pageVO) throws Exception {
 		// 하나의 값을 뽑아올때 selectOne을 사용.
-		int totalCount = sqlSession.selectOne("memberMapper.countMember");
+		int totalCount = sqlSession.selectOne("memberMapper.countMember", pageVO);
 		return totalCount;
 	}
 
@@ -49,6 +49,19 @@ public class MemberDAO implements IF_MemberDAO {
 	@Override
 	public void deleteMember(String user_id) throws Exception {
 		sqlSession.delete("memberMapper.deleteMember", user_id);
+		
+	}
+
+
+	@Override
+	public MemberVO readMember(String user_id) throws Exception {
+		return sqlSession.selectOne("memberMapper.readMember", user_id);
+	}
+
+
+	@Override
+	public void updateMember(MemberVO memberOne) throws Exception {
+		sqlSession.update("memberMapper.updateMember", memberOne);
 		
 	}
 	

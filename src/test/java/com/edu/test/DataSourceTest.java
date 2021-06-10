@@ -13,6 +13,7 @@ import javax.sql.DataSource;
 import org.apache.log4j.Logger;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 //import org.slf4j.Logger;
 //import org.slf4j.LoggerFactory;
 import org.springframework.test.context.ContextConfiguration;
@@ -47,8 +48,58 @@ public class DataSourceTest {
 	// MemberVO.java VO클래스를 생성.
 	
 	@Test
+	public void updateMember() throws Exception{
+		// 회원정보 수정.
+		MemberVO memberVO = new MemberVO();
+		memberVO.setEmail("admin@test.com");
+		memberVO.setEnabled(true);
+		memberVO.setLevels("ROLE_ADMIN");
+		memberVO.setPoint(100);
+		memberVO.setUser_name("최고관리자");
+		memberVO.setUser_pw("");
+		// 메서드 내 적용된 객체변수 생성.
+		BCryptPasswordEncoder pwe = new BCryptPasswordEncoder();
+		if((memberVO.getUser_pw()).length() < 0) {
+			String userPwe = pwe.encode(memberVO.getUser_pw()); // encode(rawdata)
+			memberVO.setUser_pw(userPwe); // 암호화된 해시데이터가 membervo객체에 입력.
+			}
+		//스프링5 시큐리티 암호화 적용 로직.
+		memberVO.setUser_id("admin"); //수정 조회조건에 사용.where
+		memberService.updateMember(memberVO);
+		// 1명의 회원만 수정할 때 사용하는 로직.(위)
+		// 굳이 회원정보 수정일 때 시큐리티를 적용하는 이유, insert할때도 적용하게될 수 있는지.
+		// update와 시큐리티 암호를 따로 구현하면 되는게 아닌지 물어보기.
+		
+		//반복(시큐리티 암호화가 되지않는 사용자만 암호 업데이트)
+		PageVO pageVO = new PageVO();
+		pageVO.setPage(1);//기본값으로 1페이지
+		pageVO.setPerPageNum(10);
+		pageVO.setQueryPerPageNum(1000);
+		List<MemberVO> listMember = memberService.selectMember(pageVO);
+		for(MemberVO memberOne : listMember) {
+			// 중복암호화 방지
+			String rawPw = memberOne.getUser_pw();
+			if(rawPw.length() < 50) {
+			String onePwe = pwe.encode(rawPw);
+			memberOne.setUser_pw(onePwe);
+			memberService.updateMember(memberOne);
+			}
+		}
+		selectMember();
+	}
+	
+	@Test
+	public void readMember() throws Exception{
+		// 회원 상세보기(1개 레코드) 
+		MemberVO memberVO = new MemberVO();	
+		String user_id = "admin";
+		memberVO = memberService.readMember(user_id);
+	}
+	
+	
+	@Test
 	public void deleteMember() throws Exception{
-		memberService.deleteMember("user_del");
+		memberService.deleteMember("user_delete");
 		selectMember();
 	}
 	
@@ -69,7 +120,6 @@ public class DataSourceTest {
    }
 
 	
-	
 	@Test
 	public void selectMember() throws Exception{
 		// 회원관리 테이블에서 더미로 입력한 100개의 레코드를 출력하는 메서드 -> 회원관리 목록 출력
@@ -79,10 +129,10 @@ public class DataSourceTest {
 		PageVO pageVO = new PageVO();
 		pageVO.setPage(1);//기본값으로 1페이지
 		pageVO.setPerPageNum(10);
-		pageVO.setQueryPerPageNum(10);
-		pageVO.setTotalCount(memberService.countMember());//테스트 100명
-		pageVO.setSearch_type("user_id");
-		pageVO.setSearch_keyword("user_del");
+		pageVO.setQueryPerPageNum(1000);
+		pageVO.setTotalCount(memberService.countMember(pageVO));//테스트 100명
+//		pageVO.setSearch_type("user_id");
+//		pageVO.setSearch_keyword("user_del");
 		
 		// pageVO객체에 어떤값이 들어있는지 확인
 		logger.info("pageVO 저장된 값 확인 " + pageVO);
@@ -94,7 +144,7 @@ public class DataSourceTest {
 	public void oldQueryTest() throws Exception {
 		// 스프링빈을 사용하지 않았을 때 방식 : 코딩 테스트에서는 스프링 설정을 안쓰고, 직접 DB 아이디/암호 입력 
 		Connection con = null;
-		con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521/XE", "XE2", "apmsetup");
+		con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521/XE", "XE", "apmsetup");
 		logger.debug("데이터베이스 직접 접근에 성공했습니다.");
 		logger.debug("DB종류는 " + con.getMetaData().getDatabaseProductName());
 
