@@ -29,7 +29,7 @@ public class PageVO {
 				+ ", search_type=" + search_type + "]";
 	}
 	public int getQueryStartNo() {
-		queryStartNo = (this.page-1)*queryPerPageNum; // jsp에서 파라미터로 받을 때 1부터 계산해서 들어와서 -1을 해준다.
+		queryStartNo = this.page-1; // jsp에서 파라미터로 받을 때 1부터 계산해서 들어와서 -1을 해준다.
 		return queryStartNo;
 	}
 	public void setQueryStartNo(int queryStartNo) {

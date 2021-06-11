@@ -30,6 +30,23 @@
 - 아스키, 유니코드 https://whatisthenext.tistory.com/103
 - 시노님 설명 https://mine-it-record.tistory.com/68
 
+
+#### 20210611(금) 작업
+- model을 이용해서 결과를 JSP로 구현(JSTL로 구현)
+- jstl 태그 임포트(taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c") 후
+- 회원 리스트(member_list.jsp에서) 바인딩.
+- (taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c") timestamp변환 태그 임포트
+- listmember 빈값일 때 if문 사용해서 조회된 값이 없습니다. 출력.
+- 해킹 방지를 막기 위해서 c:out 코드를 추가
+- member_list에서 페이징처리 부분 코드 추가, 'active' 구현
+- keyword, type으로 검색해도 페이징 처리 될 수 있도록 코드 추가
+- @ModelAttribute("pageVO") 추가
+- prev, next 코드 추가 (관리자단 회원목록 처리 마무리O)
+
+- 관리자 회원관리 CRUD화면 JSP처리 시작
+- member_view 파일 생성 후 Controller에 viewMemberForm 메서드 추가.
+
+
 #### 20210610(목) 작업
 - readMember 추가
 - pom.xml파일에 스프링 시큐리티 추가해준 뒤 , properties에 <spring.security.version>5.2.3.RELEASE</spring.security.version> 추가.
