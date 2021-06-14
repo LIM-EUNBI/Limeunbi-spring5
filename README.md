@@ -29,6 +29,8 @@
 - https://victorydntmd.tistory.com/117
 - 아스키, 유니코드 https://whatisthenext.tistory.com/103
 - 시노님 설명 https://mine-it-record.tistory.com/68
+- @어노테이션 속성들에 대한 설명 https://sarc.io/index.php/development/1139-requestmapping
+
 
 #### 20210614(월) 작업
 - member_view에서 삭제버튼 구현(adminController에 추가)
