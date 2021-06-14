@@ -35,7 +35,7 @@
             <!-- /.card-header -->
             <!-- form start -->
             <!-- 첨부파일을 전송할때는 enctype 필수! 없으면 첨부파일 전송 X -->
-            <form id="form_view" name="form_view" action="" enctype="multipart/form-data">
+            <form id="form_view" name="form_view" action="/admin/member/member_update_form" enctype="multipart/form-data">
               <div class="card-body">
                 <div class="form-group">
                   <label for="exampleInputEmail1">회원ID</label>
@@ -96,6 +96,13 @@
 <!-- jQuery사용 관리자단 (jQuery코어가 하단에 있기 때문에 footer보다 아래에 코드작성)-->
 <script>
 $(document).ready(function(){
+	$("#btn_delete").click(function() {
+		if(confirm("정말로 삭제하시겠습니까?")) {
+			$("#form_view").attr("action","/admin/member/member_delete");
+			$("#form_view").attr("method","POST");
+			$("#form_view").submit();
+		}		
+	});
 	$("#btn_list").click(function() {
 		var queryString = 'page=${pageVO.page}&search_type=${pageVO.search_type}&search_keyword=${pageVO.search_keyword}';
 		location.replace('/admin/member/member_list?'+queryString);

@@ -17,6 +17,14 @@ public class MemberVO {
 	public String getUser_id() {
 		return user_id;
 	}
+	
+	@Override
+	public String toString() {
+		return "MemberVO [user_id=" + user_id + ", user_pw=" + user_pw + ", user_name=" + user_name + ", email=" + email
+				+ ", levels=" + levels + ", reg_date=" + reg_date + ", update_date=" + update_date + ", point=" + point
+				+ ", enabled=" + enabled + "]";
+	}
+
 	public void setUser_id(String user_id) {
 		this.user_id = user_id;
 	}

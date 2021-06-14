@@ -30,6 +30,15 @@
 - 아스키, 유니코드 https://whatisthenext.tistory.com/103
 - 시노님 설명 https://mine-it-record.tistory.com/68
 
+#### 20210614(월) 작업
+- member_view에서 삭제버튼 구현(adminController에 추가)
+- multipart(첨부파일기능) -> commons.fileupload pom.xml에 추가, servlet에 beans추가
+
+- update 구현 (adminController에 추가-updateMember, updateMemberForm 2개 추가)
+- member_update ok
+- 한글깨짐 UTF-8유니코드 인코딩파일 web.xml에 추가
+- update 시큐리티 코드 추가
+
 
 #### 20210611(금) 작업
 - model을 이용해서 결과를 JSP로 구현(JSTL로 구현)
@@ -45,6 +54,8 @@
 
 - 관리자 회원관리 CRUD화면 JSP처리 시작
 - member_view 파일 생성 후 Controller에 viewMemberForm 메서드 추가.
+- list목록에서 view 페이지로 이동 후 목록을 눌렀을 때 page, search_keyword등 파라미터 그대로 전달, 
+- 즉 목록을 눌러도 페이징 초기화가 아닌 내가 머물렀던 페이징 그대로 구현.
 
 
 #### 20210610(목) 작업
