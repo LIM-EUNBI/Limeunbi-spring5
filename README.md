@@ -31,13 +31,21 @@
 - 시노님 설명 https://mine-it-record.tistory.com/68
 - @어노테이션 속성들에 대한 설명 https://sarc.io/index.php/development/1139-requestmapping
 
+#### 20210615(화) 작업
+- insert 구현
+- 아이디 중복체크(필수) 버튼으로 이벤트 처리 - RestAPI 
+- ㄴ> src/main/jave에 com.edu.util 패키지 생성
+- servlet.context.xml 파일에 com.edu.util 빈 추가
+- CommonUtil 구현, singleton설명
+- ID중복체크 (O), 시큐리티 (O)
+
 
 #### 20210614(월) 작업
 - member_view에서 삭제버튼 구현(adminController에 추가)
 - multipart(첨부파일기능) -> commons.fileupload pom.xml에 추가, servlet에 beans추가
 
 - update 구현 (adminController에 추가-updateMember, updateMemberForm 2개 추가)
-- member_update ok
+- member_update (O)
 - 한글깨짐 UTF-8유니코드 인코딩파일 web.xml에 추가
 - update 시큐리티 코드 추가
 
