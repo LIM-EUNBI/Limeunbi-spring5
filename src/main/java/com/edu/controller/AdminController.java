@@ -14,13 +14,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.edu.service.IF_BoardTypeService;
 import com.edu.service.IF_MemberService;
+import com.edu.vo.BoardTypeVO;
 import com.edu.vo.MemberVO;
 import com.edu.vo.PageVO;
 
 /**
  * 이 클래스는 Admin 관리자단을 접근하는 Controller class
+ * 디스패처 서블렛(게이트웨이) 클래스는 톰캣이 실행될 때 제일 먼저 실행되는 클래스
+ * 디스패처 서블렛으로 컨트롤러에 있는 모든 맵핑을 읽는다.
  * 변수 Object를 만들어서 jsp로 전송 + jsp에서 값을 받아서 class에서 처리
+ * views가 최상위 루트
  * @author 은비
  *
  */
@@ -32,6 +37,44 @@ public class AdminController {
 	// 회원목록을 출력하는 jsp와 매핑
 	@Inject
 	private IF_MemberService memberService;
+	@Inject
+	private IF_BoardTypeService boardTypeService;
+	
+	// jsp에서 게시판 생성관리에 Get/Post 접근할때 URL을 bbs_type으로 지정한다.
+	@RequestMapping(value="/admin/bbs_type/bbs_type_list", method=RequestMethod.GET)
+	public String selectBoardTypeList(Model model) throws Exception{ // 목록
+		model.addAttribute("listBoardTypeVO", boardTypeService.selectBoardType());
+		return "admin/bbs_type/bbs_type_list";
+	}
+	
+	@RequestMapping(value="/admin/bbs_type/bbs_type_insert", method=RequestMethod.GET)
+	public String inserBoardTypeForm() throws Exception{ // 입력폼
+		return "admin/bbs_type/bbs_type_insert";
+	}
+	@RequestMapping(value="/admin/bbs_type/bbs_type_insert", method=RequestMethod.POST)
+	public String inserBoardType(BoardTypeVO boardTypeVO) throws Exception{ // 입력처리
+		// 위 insert에서 넘어온 값을 boardTypeVO에 자동으로 담긴다. 단, 폼name과 VO 멤버변수명이 동일해야한다.
+		boardTypeService.insertBoardType(boardTypeVO);
+		return "redirect:/admin/bbs_type/bbs_type_list";
+	}
+	// 게시판 생성관리는 사용자단에서 사용하지 않기 때문에  Read, Update를 같이 구현
+	@RequestMapping(value="/admin/bbs_type/bbs_type_update", method=RequestMethod.GET)
+	public String updateBoardTypeForm(@RequestParam("board_type")String board_type, Model model) throws Exception{ // 수정폼
+		model.addAttribute("boardTypeVO",boardTypeService.readBoardType(board_type));
+		return "admin/bbs_type/bbs_type_update";
+	}
+	@RequestMapping(value="/admin/bbs_type/bbs_type_update", method=RequestMethod.POST)
+	public String updateBoardType(BoardTypeVO boardTypeVO) throws Exception{ // 수정처리
+		boardTypeService.updateBoardType(boardTypeVO);
+		return "redirect:/admin/bbs_type/bbs_type_update?board_type="+boardTypeVO.getBoard_type();
+	}
+	@RequestMapping(value="/admin/bbs_type/bbs_delete", method=RequestMethod.POST)
+	public String deleteBoardType(@RequestParam("board_type")String board_type) throws Exception{ // 삭제처리
+		boardTypeService.deleteBoardType(board_type);
+		return "redirect:/admin/bbs_type/bbs_type_list";
+	}
+	
+	
 	
 	// 회원 신규등록 처리하는 서비스를 호출하는 URL
 	@RequestMapping(value="/admin/member/member_insert", method=RequestMethod.POST)

@@ -31,6 +31,13 @@
 - 시노님 설명 https://mine-it-record.tistory.com/68
 - @어노테이션 속성들에 대한 설명 https://sarc.io/index.php/development/1139-requestmapping
 
+#### 20210616(수) 작업
+- 스프링의 AOP기능 구현
+- BoardTypeVO 클래스 생성 → boardTypeMapper 파일 → DAO인터페이스, DAO클래스 → 
+- service인터페이스, service클래스 → adminController → jsp화면
+- 
+
+
 #### 20210615(화) 작업
 - insert 구현
 - 아이디 중복체크(필수) 버튼으로 이벤트 처리 - RestAPI 
