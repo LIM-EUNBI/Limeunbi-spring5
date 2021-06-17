@@ -43,7 +43,7 @@ public class AdminController {
 	// jsp에서 게시판 생성관리에 Get/Post 접근할때 URL을 bbs_type으로 지정한다.
 	@RequestMapping(value="/admin/bbs_type/bbs_type_list", method=RequestMethod.GET)
 	public String selectBoardTypeList(Model model) throws Exception{ // 목록
-		model.addAttribute("listBoardTypeVO", boardTypeService.selectBoardType());
+		//model.addAttribute("listBoardTypeVO", boardTypeService.selectBoardType());
 		return "admin/bbs_type/bbs_type_list";
 	}
 	
@@ -68,7 +68,7 @@ public class AdminController {
 		boardTypeService.updateBoardType(boardTypeVO);
 		return "redirect:/admin/bbs_type/bbs_type_update?board_type="+boardTypeVO.getBoard_type();
 	}
-	@RequestMapping(value="/admin/bbs_type/bbs_delete", method=RequestMethod.POST)
+	@RequestMapping(value="/admin/bbs_type/bbs_type_delete", method=RequestMethod.POST)
 	public String deleteBoardType(@RequestParam("board_type")String board_type) throws Exception{ // 삭제처리
 		boardTypeService.deleteBoardType(board_type);
 		return "redirect:/admin/bbs_type/bbs_type_list";

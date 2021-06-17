@@ -22,6 +22,8 @@
 
 
 #### 공부 자료
+- 스프링의 기능 : IoC(제어의 역전 : 객체의 메모리 관리를 개발자가 하지 않고 스프링이 대신해준다.)
+- 			  DI(의존성 주입, @Inject)
 - 오라클 문법 : https://wikidocs.net/3910
 - 인터프리터 https://colab.research.google.com/drive/1wyL8Fg3-l8PKpmqbBCxd_ewBGDKdTzuw
 - 클래스 변수, 인스턴스 변수 설명 = https://itmining.tistory.com/20
@@ -30,12 +32,28 @@
 - 아스키, 유니코드 https://whatisthenext.tistory.com/103
 - 시노님 설명 https://mine-it-record.tistory.com/68
 - @어노테이션 속성들에 대한 설명 https://sarc.io/index.php/development/1139-requestmapping
+- AOP 설명 : https://engkimbs.tistory.com/746
+
+#### 20210617(목) 작업
+- 관리자 게시판생성관리 리스트, 수정 구현
+- header.jsp에서 반복문으로 동적으로 게시판 변경
+-
+- 스프링의 AOP기능 구현 3가지 : @Aspect, @ControllerAdvice, intercept(가로채기)태그
+- 게시판 종류 출력 : @ControllerAdvice(컨트롤러 클래스의 메서드에만 advice적용)
+- 검색시 게시판 타입의 값을 계속 유지하는 기능 : @Aspect
+- 로그인, 권한체크시(시큐리티) : intercept태그
+-
+- AOP라이브러리 pom.xml에 추가
+- root.context.xml에 namespace에 aop체크, 프록시 저장소 추가
+- com.edu.aop 패키지 생성 AspectAdvice 클래스 생성
+- 게시판 생성, 삭제 구현
+-
+- 1개 페이지로 여러 게시판을 board_type 변수를 이용해서 구별해서 사용.
+- boardVO 클래스파일 생성 → boardMapper 생성 → bno 자동증가 처리.
 
 #### 20210616(수) 작업
-- 스프링의 AOP기능 구현
 - BoardTypeVO 클래스 생성 → boardTypeMapper 파일 → DAO인터페이스, DAO클래스 → 
 - service인터페이스, service클래스 → adminController → jsp화면
-- 
 
 
 #### 20210615(화) 작업

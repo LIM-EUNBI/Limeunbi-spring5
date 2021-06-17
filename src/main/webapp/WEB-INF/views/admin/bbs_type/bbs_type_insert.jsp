@@ -29,30 +29,30 @@
           <!-- 글쓰기 폼 -->
           <div class="card card-primary">
             <div class="card-header">
-              <h3 class="card-title">수정</h3>
+              <h3 class="card-title">게시판 생성</h3>
             </div>
             <!-- /.card-header -->
             <!-- form start -->
             <!-- 첨부파일을 전송할때는 enctype 필수! 없으면 첨부파일 전송 X -->
-            <form name="form_write" method="POST" action="/admin/bbs_type/bbs_type_update" enctype="multipart/form-data">
+            <form name="form_write" method="POST" action="/admin/bbs_type/bbs_type_insert" enctype="multipart/form-data">
               <div class="card-body">
                 <div class="form-group">
+                <!-- PK고유키, 중복체크 생략 -->
                   <label for="board_type">게시판타입</label>
-                  <input readonly value="${boardTypeVO.board_type }" name="board_type" type="text" class="form-control" id="board_type" placeholder="게시판 타입을 입력해주세요." required>
+                  <input value="" name="board_type" type="text" style="ime-mode:disabled" class="form-control" id="board_type" placeholder="게시판 타입을 입력해주세요." required>
                 </div>
                 <div class="form-group">
                   <label for="board_name">게시판 이름</label>
-                  <input value="${boardTypeVO.board_name }" name="board_name" type="text" id="board_name" class="form-control" placeholder="게시판명을 입력해주세요." required>
+                  <input value="" name="board_name" type="text" id="board_name" class="form-control" placeholder="게시판명을 입력해주세요." required>
                 </div>
                 <div class="form-group">
                   <label for="board_sun">출력 순서</label>
-                  <input value="${boardTypeVO.board_sun }" name="board_sun" type="text" class="form-control" id="board_sun" placeholder="출력 순서를 입력해주세요." required>
+                  <input value="0" name="board_sun" type="number" class="form-control" id="board_sun" placeholder="출력 순서를 입력해주세요." required>
                 </div>
               </div>
               <!-- /.card-body -->
               <div class="card-footer text-right">
-                <button type="submit" class="btn btn-primary">수정</button>
-                <button type="button" class="btn btn-danger" id="btn_delete">삭제</button>
+                <button type="submit" class="btn btn-primary">생성</button>
                 <a href="/admin/bbs_type/bbs_type_list" class="btn btn-secondary">목록</a>
               </div>
             </form>
@@ -66,14 +66,3 @@
   <!-- /.content-wrapper -->
 
 <%@ include file="../include/footer.jsp" %>
-<script>
-$(document).ready(function() {
-	$("#btn_delete").click(function() {
-		if(confirm("정말로 해당 테이블을 삭제하시겠습니까?")){
-		var form_write = $("form[name='form_write']");
-		form_write.attr("action","/admin/bbs_type/bbs_type_delete");
-		form_write.submit();
-		}
-	});
-});
-</script>

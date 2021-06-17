@@ -29,7 +29,7 @@ public class BoardTypeDAO implements IF_BoardTypeDAO {
 	@Override
 	public void insertBoardType(BoardTypeVO boardTypeVO) throws Exception {
 		// TODO Auto-generated method stub
-		sqlSession.insert("boardTypeMapper.inserBoardType", boardTypeVO);
+		sqlSession.insert("boardTypeMapper.insertBoardType", boardTypeVO);
 		
 	}
 
