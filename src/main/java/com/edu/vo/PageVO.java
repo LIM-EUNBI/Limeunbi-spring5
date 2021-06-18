@@ -7,6 +7,7 @@ package com.edu.vo;
  */
 
 public class PageVO {
+	private String board_type; // 게시판 종류를 표시하는 변수
 	private int queryStartNo; // 한페이지당 보여줄 row수 계산
 	private int queryPerPageNum; // 한페이지당 보여줄 row수 계산
 	private Integer page; // 현재페이지
@@ -28,6 +29,17 @@ public class PageVO {
 				+ ", endPage=" + endPage + ", prev=" + prev + ", next=" + next + ", search_keyword=" + search_keyword
 				+ ", search_type=" + search_type + "]";
 	}
+	
+	public String getBoard_type() {
+		return board_type;
+	}
+
+
+
+	public void setBoard_type(String board_type) {
+		this.board_type = board_type;
+	}
+
 	public int getQueryStartNo() {
 		queryStartNo = this.page-1; // jsp에서 파라미터로 받을 때 1부터 계산해서 들어와서 -1을 해준다.
 		return queryStartNo;

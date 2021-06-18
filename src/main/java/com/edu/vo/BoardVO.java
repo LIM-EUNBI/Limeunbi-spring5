@@ -19,7 +19,27 @@ public class BoardVO {
 	private Date update_date;
 	private String board_type;
 	
+	// 게시물 등록시 첨부파일 1개 이상일 때, DB에는 없는 필드를 2개가 더 필요하다.
+	private String[] save_file_names;
+	private String[] real_file_names;
 	
+	
+	public String[] getSave_file_names() {
+		return save_file_names;
+	}
+
+	public void setSave_file_names(String[] save_file_names) {
+		this.save_file_names = save_file_names;
+	}
+
+	public String[] getReal_file_names() {
+		return real_file_names;
+	}
+
+	public void setReal_file_names(String[] real_file_names) {
+		this.real_file_names = real_file_names;
+	}
+
 	@Override
 	public String toString() {
 		return "BoardVO [bno=" + bno + ", title=" + title + ", content=" + content + ", writer=" + writer

@@ -20,7 +20,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import com.edu.service.IF_BoardService;
 import com.edu.service.IF_MemberService;
+import com.edu.vo.BoardVO;
 import com.edu.vo.MemberVO;
 import com.edu.vo.PageVO;
 
@@ -36,7 +38,9 @@ import com.edu.vo.PageVO;
 public class DataSourceTest {
 	// 디버그용 로그 객체(변수) 생성
 	private Logger logger = Logger.getLogger(DataSourceTest.class);
-	
+	@Inject
+	private IF_BoardService boardService;
+
 	//dataSource 객체는 데이터베이스 객체를 pool로 저장해서 사용할 때 DataSource객체를 사용.
 	@Inject // 스프링에서 객체를 만드는 방법, 이전 자바에서는 new 키워드로 객체를 만듬.
 	// 이전 자바7에서는 @Autowired로 객체를 만든다.
@@ -47,6 +51,15 @@ public class DataSourceTest {
 	// ValueObject 클래스는 DB테이블과 1:1
 	// MemberVO.java VO클래스를 생성.
 	
+	@Test
+	public void insertBoard() throws Exception{
+		BoardVO boardVO = new BoardVO();
+		boardVO.setTitle("반환값 테스트");
+		boardVO.setContent("J유닛 입력 테스트");
+		boardVO.setWriter("admin");
+		boardVO.setBoard_type("gallery");
+		boardService.insertBoard(boardVO);
+	}
 	@Test
 	public void updateMember() throws Exception{
 		// 회원정보 수정.

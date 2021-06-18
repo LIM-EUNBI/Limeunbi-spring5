@@ -33,6 +33,27 @@
 - 시노님 설명 https://mine-it-record.tistory.com/68
 - @어노테이션 속성들에 대한 설명 https://sarc.io/index.php/development/1139-requestmapping
 - AOP 설명 : https://engkimbs.tistory.com/746
+-
+- 데이터 정의어(DDL)
+- 데이터 정의어는 데이터를 정의하는 언어
+- 테이블이나 관계의 구조를 생성하는 데 사용
+- CREATE, ALTER, DROP, TRUNCATE 문이 있음
+
+데이터 조작어(DML)
+- 데이터베이스에 저장된 자료들을 입력, 수정, 삭제, 조회하는 언어
+- SELECT, INSERT, UPDATE, DELETE 문이 있음
+- SELECT 문은 특별히 질의어(Query)라고 부름
+
+데이터 제어어(DCL)
+- 데이터베이스 관리자가 데이터 보안, 무결성 유지, 병행 제어, 회복을 위해 DBA가 사용하는 제어용 언어
+- GRANT, REVOKE 문이 있음
+
+#### 20210618(금) 작업
+- boardMapper 쿼리
+- AttachVO 클래스 생성 - 첨부파일 멤버변수 
+- DAO인터페이스, 클래스 → Service 인터페이스, 클래스 → junit 테스트(insert할때 자동으로 bno가 들어가는지)
+- @Service에서 DB테이블 CRUD / @Controller에서는 첨부파일 업로드,다운로드 로직 처리 
+
 
 #### 20210617(목) 작업
 - 관리자 게시판생성관리 리스트, 수정 구현
