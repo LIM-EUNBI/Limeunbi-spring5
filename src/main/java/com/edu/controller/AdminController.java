@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.edu.service.IF_BoardService;
 import com.edu.service.IF_BoardTypeService;
 import com.edu.service.IF_MemberService;
 import com.edu.vo.BoardTypeVO;
@@ -39,7 +40,26 @@ public class AdminController {
 	private IF_MemberService memberService;
 	@Inject
 	private IF_BoardTypeService boardTypeService;
+	@Inject
+	private IF_BoardService boardService;
 	
+	// ************************ 게시물 관리 ***************************
+	// 게시물 목록은 폼으로 접근하지 않고 URL로 접근하기 때문에 GET방식으로 메소드 설정.
+	@RequestMapping(value="/admin/board/board_list", method=RequestMethod.GET)
+	public String board_list(@ModelAttribute("pageVO")PageVO pageVO, Model model) throws Exception{
+		// 페이징 처리를 위한 기본값 생성
+		if(pageVO.getPage() == null) {
+			pageVO.setPage(1);
+		}
+		pageVO.setPerPageNum(5);
+		pageVO.setQueryPerPageNum(5);
+		pageVO.setTotalCount(boardService.countBoard(pageVO));
+		model.addAttribute("listBoardVO", boardService.selectBoard(pageVO));
+		return "admin/board/board_list";
+	}
+	
+	
+	// ******************** 게시판 생성관리 **********************
 	// jsp에서 게시판 생성관리에 Get/Post 접근할때 URL을 bbs_type으로 지정한다.
 	@RequestMapping(value="/admin/bbs_type/bbs_type_list", method=RequestMethod.GET)
 	public String selectBoardTypeList(Model model) throws Exception{ // 목록
@@ -75,7 +95,7 @@ public class AdminController {
 	}
 	
 	
-	
+	// *********************** 회원관리 ****************************
 	// 회원 신규등록 처리하는 서비스를 호출하는 URL
 	@RequestMapping(value="/admin/member/member_insert", method=RequestMethod.POST)
 	public String insertMember(MemberVO memberVO, PageVO pageVO) throws Exception{

@@ -5,6 +5,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.edu.dao.IF_BoardDAO;
 import com.edu.vo.AttachVO;
@@ -23,13 +24,13 @@ public class BoardService implements IF_BoardService{
 	private IF_BoardDAO boardDAO;
 	
 	
-	
 	@Override
 	public List<BoardVO> selectBoard(PageVO pageVO) throws Exception {
 		// 1개호출
 		return boardDAO.selectBoard(pageVO);
 	}
 
+	@Transactional
 	@Override
 	public void insertBoard(BoardVO boardVO) throws Exception {
 		// 첨부파일 있으면 첨부파일 insertAttach -> 게시물 insertBoard 실행
@@ -51,7 +52,8 @@ public class BoardService implements IF_BoardService{
 			index++;
 		}
 	}
-
+	
+	@Transactional
 	@Override
 	public BoardVO readBoard(int bno) throws Exception {
 		// 게시물 상세보기 readBoard + updateViewCount 2개의 메서드가 필요
@@ -60,6 +62,7 @@ public class BoardService implements IF_BoardService{
 		return boardVO;
 	}
 
+	@Transactional
 	@Override
 	public void updateBoard(BoardVO boardVO) throws Exception {
 		// 첨부파일 처리 포함 게시물 업데이트 2개의 메서드 실행이 필요
@@ -81,7 +84,8 @@ public class BoardService implements IF_BoardService{
 			index++;
 		}
 	}
-
+	
+	@Transactional
 	@Override
 	public void deleteBoard(int bno) throws Exception {
 		// 3개의 메서드가 실행(댓글, 첨부파일 삭제 후 게시물 삭제)

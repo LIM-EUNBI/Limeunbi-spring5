@@ -48,6 +48,15 @@
 - 데이터베이스 관리자가 데이터 보안, 무결성 유지, 병행 제어, 회복을 위해 DBA가 사용하는 제어용 언어
 - GRANT, REVOKE 문이 있음
 
+#### 20210621(월) 작업
+- 트랜잭션이란 여러개의 메서드를 1개처럼 처리하게 구현하는 애노테이션 - 데이터무결성 유지
+- 트랜잭션, 파일업로드 설정 root-context.xml에 추가
+- BoardService에 @Transactional 추가
+- servlet-context.xml에 multipart에 maxUploadSize 빈 추가
+- AdminController에서 board_list 추가
+- board_list 파일 처리.
+
+
 #### 20210618(금) 작업
 - boardMapper 쿼리
 - AttachVO 클래스 생성 - 첨부파일 멤버변수 

@@ -10,6 +10,12 @@ delete from tbl_attach where bno = #{bno}
 delete from tbl_attach where save_file_name = #{save_file_name}
 </delete>
 
+<!-- 페이징을 제외한 검색쿼리(board_type포함)를 이용해서 개수물 개수totalCount변수값 구하기 -->
+<select id="countBoard" resultType="int">
+select count(*) from tbl_board
+<include refid="sqlWhere" />
+</select>
+
 <!-- 첨부파일은 수정시 기존파일을 삭제하고 신규파일을 덮어쓰기 때문에 첨부파일은 수정이 없다. -->
 <insert id="updateAttach">
 insert into tbl_attach values(
@@ -71,21 +77,19 @@ select * from tbl_board where bno = #{bno}
 </insert>
 
 <!-- 페이징을 제외한 검색쿼리 이용해서 게시물 개수 구하기 -->
-<select id="countBoard" resultType="int">
-select count(*) from tbl_board
-<include refid="sqlWhere" />
-</select>
-
 <select id="selectBoard" resultType="com.edu.vo.BoardVO">
 select table_b.* from
-	select rownum as rnum, table_a.* from (
+(
+	select rownum as rnum, table_a.* from 
+	(
 		select * from tbl_board
 		<include refid="sqlWhere" />
+		order by bno desc
 	) table_a
-	<![CDATA[	
-	where rownum <= (#{queryStartNo}*#{queryperPageNum})+#{queryPerPageNum}
-) table_b where table_b.rnum > #{queryStartNo}*#{queryPerPageNum}
-]]>
+	<![CDATA[
+	where rownum <= #{queryStartNo}+#{queryPerPageNum}
+) table_b where table_b.rnum > #{queryStartNo}
+	]]>
 </select>
 
 <!-- 검색처리 : 멤버쿼리에서 작성한 내용 붙여넣기 -->
