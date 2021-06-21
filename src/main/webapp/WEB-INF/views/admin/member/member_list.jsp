@@ -54,6 +54,7 @@
           </div>
           <!-- /.card-header -->
           <div class="card-body table-responsive p-0">
+            세션값출력:<c:out value="${session_board_type}" />
             <table class="table table-hover">
               <!-- 줄바꿈않할때 다음 클래스추가 text-nowrap  -->
               <thead class="text-center">
@@ -85,6 +86,7 @@
               </c:forEach>
               </tbody>
             </table>
+            
           </div>
           <!-- /.card-body -->
         </div>

@@ -11,6 +11,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -38,9 +39,10 @@ public class AspectAdvice {
 	private IF_BoardTypeService boardTypeService;
 	
 	// @Before + @After = @Around (포인트컷 전,후 모든 메서드 ↓)
-	@Around("execution(* com.edu.*Controller.*(..))") 
+	@Around("execution(* com.edu.controller.*Controller.*(..))") 
 	// @Around는 콜백함수 매개변수로 조인포인트 객체를 필수로 받는다.
 	public Object sessionManager(ProceedingJoinPoint pjp) throws Throwable {
+		logger.info("디버그19:");
 		// board_type 변수값을 세션에 저장
 		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
 		// 일반적인 컨트롤러에서는 매개변수 HttpServletRequest를 사용가능
@@ -65,7 +67,7 @@ public class AspectAdvice {
 					pageVO.setBoard_type(board_type); // 여기서 항상 값을 가져가도록 구현.
 				}
 			}
-		
+		logger.info("debug19: "+ board_type);
 		// Aspect - 포인트컷(Around) - 조인포인트(메서드) - 매개변수로 구현한 결과를 return
 		Object result = pjp.proceed();
 		return result;
