@@ -34,17 +34,17 @@
 - @어노테이션 속성들에 대한 설명 https://sarc.io/index.php/development/1139-requestmapping
 - AOP 설명 : https://engkimbs.tistory.com/746
 -
-- 데이터 정의어(DDL)
+- 데이터 정의어(DDL - Data Definition Language)
 - 데이터 정의어는 데이터를 정의하는 언어
 - 테이블이나 관계의 구조를 생성하는 데 사용
 - CREATE, ALTER, DROP, TRUNCATE 문이 있음
 
-데이터 조작어(DML)
+데이터 조작어(DML - Data Manipulation Language)
 - 데이터베이스에 저장된 자료들을 입력, 수정, 삭제, 조회하는 언어
 - SELECT, INSERT, UPDATE, DELETE 문이 있음
 - SELECT 문은 특별히 질의어(Query)라고 부름
 
-데이터 제어어(DCL)
+데이터 제어어(DCL - Data Control Language)
 - 데이터베이스 관리자가 데이터 보안, 무결성 유지, 병행 제어, 회복을 위해 DBA가 사용하는 제어용 언어
 - GRANT, REVOKE 문이 있음
 
