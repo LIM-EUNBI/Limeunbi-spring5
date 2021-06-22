@@ -51,9 +51,10 @@
 #### 20210622(화) 작업
 - AdminController에 board_view 메서드 추가
 - commonUtil에서 첨부파일 이미지인지 체크하는 데이터 추가 
-- board_view.jsp 파일 처리
+- board_view.jsp 파일 처리 (삭제)
 - 서버 중지 후 목록으로 가면 board_type값이 없어서 오류. 
 - AdminController board_list에 if문으로 해결(서버 중지 후 재시작의 경우 notice목록으로 가도록 구현)
+- AdminController에 삭제 추가
 
 #### 20210621(월) 작업
 - 트랜잭션이란 여러개의 메서드를 1개처럼 처리하게 구현하는 애노테이션 - 데이터무결성 유지
