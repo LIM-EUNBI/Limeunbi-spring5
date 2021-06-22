@@ -1,5 +1,8 @@
 package com.edu.util;
 
+import java.util.ArrayList;
+
+import javax.annotation.Resource;
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
@@ -26,6 +29,43 @@ public class CommonUtil {
 	@Inject
 	private MemberService memberService;//스프링빈을 주입받아서(DI) 객체준비
 	
+	// 첨부파일 업로드/다운로드/삭제/인서트/수정에 모두 사용될 저장경로를 지정해서 전역으로 사용
+	@Resource(name="uploadPath") // root-context에 있는 uploadPath 가져오기
+	private String uploadPath;
+	
+	
+	public String getUploadPath() {
+		return uploadPath;
+	}
+
+
+	public void setLogger(Logger logger) {
+		this.logger = logger;
+	}
+
+	public void setMemberService(MemberService memberService) {
+		this.memberService = memberService;
+	}
+
+	public void setCheckImgArray(ArrayList<String> checkImgArray) {
+		this.checkImgArray = checkImgArray;
+	}
+
+	//첨부파일이 이미지인지 체크하는 데이터
+	private ArrayList<String> checkImgArray = new ArrayList<String>() {
+		{
+			add("gif");
+			add("jpg");
+			add("jpeg");
+			add("png");
+			add("bmp");
+		}
+	};
+	
+	public ArrayList<String> getCheckImgArray() {
+		return checkImgArray;
+	}
+
 	//RestAPI서버 맛보기ID중복체크(제대로 만들면 @RestController 사용)
 	@RequestMapping(value="/id_check", method=RequestMethod.GET)
 	@ResponseBody //반환받은 값의 헤더값을 제외하고, 내용(body)만 반환하겠다는 명시

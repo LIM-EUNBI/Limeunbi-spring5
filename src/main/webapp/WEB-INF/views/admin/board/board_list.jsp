@@ -14,7 +14,7 @@
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">{게시판변수명}</li>
+              <li class="breadcrumb-item active">${pageVO.board_type }</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -66,7 +66,7 @@
               </thead>
               <tbody >
               <c:forEach var="boardVO" items="${listBoardVO}">
-                <tr style="cursor: pointer;" onclick="location.replace('/admin/board/board_view?bno=${boardVO.bno}');">
+                <tr style="cursor: pointer;" onclick="location.replace('/admin/board/board_view?bno=${boardVO.bno}&page=${pageVO.page}&search_type=${pageVO.search_type}&search_keyword=${pageVO.search_keyword}');">
                   <td class="text-center">${boardVO.bno }</td>
                   <td class="text-center">${boardVO.board_type }</td>
                   <td class="text-center">${boardVO.title }</td>

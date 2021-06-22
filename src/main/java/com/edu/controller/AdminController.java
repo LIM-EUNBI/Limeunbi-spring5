@@ -1,5 +1,6 @@
 package com.edu.controller;
 
+import java.io.File;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -17,7 +18,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.edu.service.IF_BoardService;
 import com.edu.service.IF_BoardTypeService;
 import com.edu.service.IF_MemberService;
+import com.edu.util.CommonUtil;
+import com.edu.vo.AttachVO;
 import com.edu.vo.BoardTypeVO;
+import com.edu.vo.BoardVO;
 import com.edu.vo.MemberVO;
 import com.edu.vo.PageVO;
 
@@ -42,11 +46,58 @@ public class AdminController {
 	private IF_BoardTypeService boardTypeService;
 	@Inject
 	private IF_BoardService boardService;
+	@Inject
+	private CommonUtil commonUtil;
 	
 	// ************************ 게시물 관리 ***************************
+	// 게시물 삭제는 POST방식
+	@RequestMapping(value="/admin/board/board_delete", method=RequestMethod.POST)
+	public String board_delete(@RequestParam("bno")Integer bno, PageVO pageVO) throws Exception {
+		logger.info("디버그 전역업로드 경로 : " + commonUtil.getUploadPath());
+		// 첨부파일이 있는 경우, 먼저 삭제해주는 코드
+		// 기존 등록된 첨부파일 폴더에서 삭제할 UUID(고유식별값)이름을 추출.
+		List<AttachVO> delFiles = boardService.readAttach(bno);
+		boardService.deleteBoard(bno);
+		// 물리적 파일삭제 처리
+		for(AttachVO file_name:delFiles) {
+			// File클래스는 파일위치, 삭제할 파일명
+			File target = new File(commonUtil.getUploadPath(), file_name.getSave_file_name());
+				if(target.exists()) {
+					target.delete();
+				}
+		}
+		String qString = "page="+pageVO.getPage()+"&search_type="+pageVO.getSearch_type()+"&search_keyword="+pageVO.getSearch_keyword();
+		return "redirect:/admin/board/board_list?"+qString;
+	}
+	@RequestMapping(value="/admin/board/board_view", method=RequestMethod.GET)
+	public String board_view(@RequestParam("bno")Integer bno,@ModelAttribute("pageVO")PageVO pageVO, Model model) throws Exception {
+		BoardVO boardVO = boardService.readBoard(bno);
+		
+		// 첨부파일 데이터
+		List<AttachVO> files = boardService.readAttach(bno);
+		String[] save_file_names = new String[files.size()];
+		String[] real_file_names = new String[files.size()];
+		int cnt = 0;
+		// Attach 테이블 안의 해당 bno 게시물의 첨부파일 이름을 파싱
+		for(AttachVO file_name:files) {
+			save_file_names[cnt] = file_name.getSave_file_name();
+			real_file_names[cnt] = file_name.getReal_file_name();
+			cnt += 1;
+		}
+		boardVO.setSave_file_names(save_file_names);
+		boardVO.setReal_file_names(real_file_names);
+		model.addAttribute("boardVO", boardVO);
+		// 업로드한 데이터가 이미지인지 아닌지 체크
+		model.addAttribute("checkImgArray", commonUtil.getCheckImgArray());
+		return "admin/board/board_view";
+	}
 	// 게시물 목록은 폼으로 접근하지 않고 URL로 접근하기 때문에 GET방식으로 메소드 설정.
 	@RequestMapping(value="/admin/board/board_list", method=RequestMethod.GET)
 	public String board_list(@ModelAttribute("pageVO")PageVO pageVO, Model model) throws Exception{
+		// 게시판 타입이 null일때 기본값으로 notice를 추가
+		if(pageVO.getBoard_type() == null) {
+			pageVO.setBoard_type("notice");
+		}
 		// 페이징 처리를 위한 기본값 생성
 		if(pageVO.getPage() == null) {
 			pageVO.setPage(1);

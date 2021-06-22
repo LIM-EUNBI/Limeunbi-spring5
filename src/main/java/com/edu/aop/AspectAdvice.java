@@ -64,7 +64,8 @@ public class AspectAdvice {
 				}
 				if(session.getAttribute("session_board_type") != null) {
 					board_type = (String) session.getAttribute("session_board_type");
-					pageVO.setBoard_type(board_type); // 여기서 항상 값을 가져가도록 구현.
+					if(pageVO != null) { // pageVO가 값이 있을때만 아래코드 실행
+					pageVO.setBoard_type(board_type); }// 여기서 항상 값을 가져가도록 구현.
 				}
 			}
 		logger.info("debug19: "+ board_type);
