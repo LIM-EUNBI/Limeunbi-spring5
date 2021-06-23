@@ -83,7 +83,7 @@
               </div>
               <input name="page" type="hidden" value="${pageVO.page }">
               <input name="search_type" type="hidden" value="${pageVO.search_type }"> 
-              <input name="search_keyword" type="hidden" value="${pageVO.search_keyword }">
+              <%-- <input name="search_keyword" type="hidden" value="${pageVO.search_keyword }"> --%>
             </form>
           </div>
           <!-- //글쓰기 폼 -->
@@ -97,17 +97,19 @@
 <!-- jQuery사용 관리자단 (jQuery코어가 하단에 있기 때문에 footer보다 아래에 코드작성)-->
 <script>
 $(document).ready(function(){
+	var form_update = $("form[name='form_write']");
 	$("#btn_prev").click(function() {
-		var form_update = $("form[name='form_write']");
 		form_update.attr("action","/admin/member/member_view");
 		form_update.attr("method", "get");
 		form_update.submit();
 	});
 	$("#btn_list").click(function() {
-		var form_update = $("form[name='form_write']");
+		/* 폼을 get방식으로 전송시 암호와 같은 정보가 URL쿼리 스트링에 노출되어 주석처리
 		form_update.attr("action","/admin/member/member_list");
 		form_update.attr("method", "get");
-		form_update.submit();
+		form_update.submit(); */
+		var queryString = 'page=${pageVO.page}&search_type=${pageVO.search_type}';
+		location.replace('/admin/member/member_list?'+queryString);
 	});
 });
 

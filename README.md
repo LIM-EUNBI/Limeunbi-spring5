@@ -47,6 +47,13 @@
 데이터 제어어(DCL - Data Control Language)
 - 데이터베이스 관리자가 데이터 보안, 무결성 유지, 병행 제어, 회복을 위해 DBA가 사용하는 제어용 언어
 - GRANT, REVOKE 문이 있음
+- session 생성 : setAttribute, 값 불러오기 : getAttribute,   
+- 삭제 :removeAttribute, 전체 삭제 : invalidate
+
+#### 20210623(수) 작업
+- search_keyword AOP 추가
+- update구현
+- 첨부파일 구현
 
 #### 20210622(화) 작업
 - AdminController에 board_view 메서드 추가

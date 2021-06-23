@@ -38,8 +38,7 @@
                         <option value="all">전체</option>
                         <option value="title">제목</option>
                         <option value="content">내용</option>
-                        <input type="text" name="search_keyword" class="form-control float-left" placeholder="Search" style="width: inherit;">
-                        <div class="input-group-append float-left" style="width: inherit;">
+						<input type="text" value="${session_search_keyword}"name="search_keyword" class="form-control float-left" placeholder="Search" style="width: inherit;">                        <div class="input-group-append float-left" style="width: inherit;">
                         <button type="submit" class="btn btn-default">
                             <i class="fas fa-search"></i>
                         </button>
@@ -66,7 +65,7 @@
               </thead>
               <tbody >
               <c:forEach var="boardVO" items="${listBoardVO}">
-                <tr style="cursor: pointer;" onclick="location.replace('/admin/board/board_view?bno=${boardVO.bno}&page=${pageVO.page}&search_type=${pageVO.search_type}&search_keyword=${pageVO.search_keyword}');">
+                <tr style="cursor: pointer;" onclick="location.replace('/admin/board/board_view?bno=${boardVO.bno}&page=${pageVO.page}&search_type=${pageVO.search_type}');">
                   <td class="text-center">${boardVO.bno }</td>
                   <td class="text-center">${boardVO.board_type }</td>
                   <td class="text-center">${boardVO.title }</td>
@@ -82,18 +81,18 @@
         <!-- //콘텐츠 내용 -->
         <!-- 페이징 처리 -->
         <div class="col-12 text-right">
-          <a href="/admin/board/board_insert" class="btn btn-primary mb-3">글쓰기</a>
+          <a href="/admin/board/board_insert_form" class="btn btn-primary mb-3">글쓰기</a>
           <ul class="pagination justify-content-center">
               <li class="paginate_button page-item previous ${pageVO.prev==false?'disabled':''}" id="example2_previous">
-                <a href="/admin/board/board_list?page=${pageVO.startPage-1}&search_type=${pageVO.search_type}&search_keyword=${pageVO.search_keyword}" aria-controls="example2" data-dt-idx="0" tabindex="0" class="page-link">Previous</a>
+                <a href="/admin/board/board_list?page=${pageVO.startPage-1}&search_type=${pageVO.search_type}" aria-controls="example2" data-dt-idx="0" tabindex="0" class="page-link">Previous</a>
               </li>
               <c:forEach begin="${pageVO.startPage}" end="${pageVO.endPage }" step="1" var="idx">
               <li class="paginate_button page-item ${pageVO.page==idx?'active':''}">
-                <a href="/admin/board/board_list?page=${idx}&search_type=${pageVO.search_type}&search_keyword=${pageVO.search_keyword}" aria-controls="example2" data-dt-idx="1" tabindex="0" class="page-link">${idx }</a>
+                <a href="/admin/board/board_list?page=${idx}&search_type=${pageVO.search_type}" aria-controls="example2" data-dt-idx="1" tabindex="0" class="page-link">${idx }</a>
               </li>
             	</c:forEach>
               <li class="paginate_button page-item next ${pageVO.next==false?'disabled':''}" id="example2_next">
-                <a href="/admin/board/board_list?page=${pageVO.endPage+1}&search_type=${pageVO.search_type}&search_keyword=${pageVO.search_keyword}" aria-controls="example2" data-dt-idx="7" tabindex="0" class="page-link">Next</a>
+                <a href="/admin/board/board_list?page=${pageVO.endPage+1}&search_type=${pageVO.search_type}" aria-controls="example2" data-dt-idx="7" tabindex="0" class="page-link">Next</a>
               </li>
           </ul>
         </div>

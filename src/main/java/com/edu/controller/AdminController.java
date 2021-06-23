@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.edu.service.IF_BoardService;
 import com.edu.service.IF_BoardTypeService;
@@ -50,6 +51,65 @@ public class AdminController {
 	private CommonUtil commonUtil;
 	
 	// ************************ 게시물 관리 ***************************
+	@RequestMapping(value="/admin/board/board_update", method=RequestMethod.POST)
+	public String board_update(@RequestParam("file") MultipartFile[] files,PageVO pageVO, BoardVO boardVO) throws Exception{
+		
+		// 기존 등록된 첨부파일 목록 구하기
+		List<AttachVO> delFiles = boardService.readAttach(boardVO.getBno());
+		String[] save_file_names = new String[files.length];
+		String[] real_file_names = new String[files.length];
+		int idx = 0;
+		for(MultipartFile file:files) {
+			if(file.getOriginalFilename() != "") { // 전송된 첨부파일이 있다면 실행
+				int sun = 0;
+				// jsp에서 기존에 1번 위치에 기존파일이 있으면 기존 파일을 지우고 신규파일 업로드
+				for(AttachVO file_name:delFiles) { // 기존 파일을 가져와서 반복
+					if(idx == sun) {
+						File target = new File(commonUtil.getUploadPath(),file_name.getSave_file_name());
+						if(target.exists()) {
+							target.delete();
+						}
+					}
+					sun += 1;
+				} // for 종료
+				save_file_names[idx] = commonUtil.fileUpload(file); // jsp에서 전송파일
+				real_file_names[idx] = file.getOriginalFilename(); //UI용 이름 임시저장
+			}
+		}
+		String rawContent = boardVO.getContent();
+		String secContent = commonUtil.unscript(rawContent);
+		boardVO.setContent(secContent);
+		
+		String rawTitle = boardVO.getTitle();
+		String secTitle = commonUtil.unscript(rawTitle);
+		boardVO.setTitle(secTitle);
+		
+		boardService.updateBoard(boardVO);
+		
+		String qString = "bno="+boardVO.getBno()+"&page="+pageVO.getPage()+"&search_type="+pageVO.getSearch_type();
+		return "redirect:/admin/board/board_view?"+qString;
+	}
+	// 게시물 수정폼은 URL로 접근
+	@RequestMapping(value="/admin/board/board_update_form", method=RequestMethod.GET)
+	public String board_update_form(Model model,@ModelAttribute("pageVO")PageVO pageVO, @RequestParam("bno")Integer bno) throws Exception{
+		// 첨부파일용 save_file_names, real_file_names 배열값을 구해서 boardVO입력
+		BoardVO boardVO = new BoardVO();
+		boardVO = boardService.readBoard(bno);
+		// 첨부파일 배열 추가
+		List<AttachVO> listAttach = boardService.readAttach(bno);
+		String[] save_file_names = new String[listAttach.size()];
+		String[] real_file_names = new String[listAttach.size()];
+		int idx = 0;
+		for(AttachVO file_name:listAttach) {
+			save_file_names[idx] = file_name.getSave_file_name();
+			real_file_names[idx] = file_name.getReal_file_name();
+			idx += 1;
+		}
+		boardVO.setSave_file_names(save_file_names);
+		boardVO.setReal_file_names(real_file_names);
+		model.addAttribute("boardVO", boardVO);
+		return "admin/board/board_update";
+	}
 	// 게시물 삭제는 POST방식
 	@RequestMapping(value="/admin/board/board_delete", method=RequestMethod.POST)
 	public String board_delete(@RequestParam("bno")Integer bno, PageVO pageVO) throws Exception {
@@ -66,7 +126,7 @@ public class AdminController {
 					target.delete();
 				}
 		}
-		String qString = "page="+pageVO.getPage()+"&search_type="+pageVO.getSearch_type()+"&search_keyword="+pageVO.getSearch_keyword();
+		String qString = "page="+pageVO.getPage()+"&search_type="+pageVO.getSearch_type();
 		return "redirect:/admin/board/board_list?"+qString;
 	}
 	@RequestMapping(value="/admin/board/board_view", method=RequestMethod.GET)
@@ -177,8 +237,7 @@ public class AdminController {
 			memberVO.setUser_pw(encPw);
 		}
 		memberService.updateMember(memberVO);
-		String qString = "user_id="+memberVO.getUser_id()+"&page="+pageVO.getPage()+"&search_type="+pageVO.getSearch_type()+
-				"&search_keyword="+pageVO.getSearch_keyword();
+		String qString = "user_id="+memberVO.getUser_id()+"&page="+pageVO.getPage()+"&search_type="+pageVO.getSearch_type();
 		return "redirect:/admin/member/member_update_form?"+qString;
 	}
 	// 수정폼을 호출 = 화면에 출력만(렌더링)
