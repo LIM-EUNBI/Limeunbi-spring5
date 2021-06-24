@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.edu.dao.BoardDAO;
 import com.edu.service.IF_BoardService;
 import com.edu.service.IF_BoardTypeService;
 import com.edu.service.IF_MemberService;
@@ -49,8 +50,17 @@ public class AdminController {
 	private IF_BoardService boardService;
 	@Inject
 	private CommonUtil commonUtil;
+	@Inject
+	private BoardDAO boardDAO;
 	
 	// ************************ 게시물 관리 ***************************
+	@RequestMapping(value="/admin/board/board_insert_form", method=RequestMethod.GET)
+	public String board_insert_form(@ModelAttribute("pageVO")PageVO pageVO) throws Exception{
+		if(pageVO.getPage() == null) {
+			pageVO.setPage(1);
+		}
+		return "admin/board/board_insert";
+	}
 	@RequestMapping(value="/admin/board/board_update", method=RequestMethod.POST)
 	public String board_update(@RequestParam("file") MultipartFile[] files,PageVO pageVO, BoardVO boardVO) throws Exception{
 		
@@ -58,24 +68,32 @@ public class AdminController {
 		List<AttachVO> delFiles = boardService.readAttach(boardVO.getBno());
 		String[] save_file_names = new String[files.length];
 		String[] real_file_names = new String[files.length];
-		int idx = 0;
+		int idx = 0; // jsp폼에서 보내온 파일에 대한 인덱스 초기값 변수.
 		for(MultipartFile file:files) {
 			if(file.getOriginalFilename() != "") { // 전송된 첨부파일이 있다면 실행
-				int sun = 0;
+				int sun = 0; // DB테이블에 저장된 순서에 대한 인덱스 초기값 변수
 				// jsp에서 기존에 1번 위치에 기존파일이 있으면 기존 파일을 지우고 신규파일 업로드
 				for(AttachVO file_name:delFiles) { // 기존 파일을 가져와서 반복
 					if(idx == sun) {
 						File target = new File(commonUtil.getUploadPath(),file_name.getSave_file_name());
 						if(target.exists()) {
 							target.delete();
+							boardDAO.deleteAttach(file_name.getSave_file_name());
 						}
 					}
-					sun += 1;
-				} // for 종료
+					sun++;
+				} 
 				save_file_names[idx] = commonUtil.fileUpload(file); // jsp에서 전송파일
 				real_file_names[idx] = file.getOriginalFilename(); //UI용 이름 임시저장
+			} else {
+				save_file_names[idx] = null;
+				real_file_names[idx] = null;
 			}
-		}
+			idx++;
+		}// for 종료
+		boardVO.setSave_file_names(save_file_names);
+		boardVO.setReal_file_names(real_file_names);
+		// 시큐어 코딩 추가
 		String rawContent = boardVO.getContent();
 		String secContent = commonUtil.unscript(rawContent);
 		boardVO.setContent(secContent);

@@ -50,10 +50,14 @@
 - session 생성 : setAttribute, 값 불러오기 : getAttribute,   
 - 삭제 :removeAttribute, 전체 삭제 : invalidate
 
+#### 20210624(목) 작업
+- 첨부파일 수정, 삭제 구현
+
 #### 20210623(수) 작업
 - search_keyword AOP 추가
 - update구현
-- 첨부파일 구현
+- 첨부파일 구현 (수정, 삭제)
+- board_insert 구현 시작(내일 마무리)
 
 #### 20210622(화) 작업
 - AdminController에 board_view 메서드 추가

@@ -44,11 +44,13 @@ public class BoardService implements IF_BoardService{
 		String real_file_name = ""; // UI용 1개 파일명
 		AttachVO attachVO = new AttachVO();
 		for(String save_file_name : save_file_names) { // 첨부파일 갯수만큼 반복
+			if(save_file_name != null) {
 			real_file_name = real_file_names[index];
 			attachVO.setBno(bno);
 			attachVO.setReal_file_name(real_file_name);
 			attachVO.setSave_file_name(save_file_name);
 			boardDAO.insertAttach(attachVO);
+			}
 			index++;
 		}
 	}
@@ -76,11 +78,13 @@ public class BoardService implements IF_BoardService{
 		int index = 0;
 		String real_file_name = "";
 		for(String save_file_name : save_file_names) {
+			if(save_file_name != null) { // null이 들어가지 않게 하기 위해서 추가
 			real_file_name = real_file_names[index];
 			attachVO.setBno(bno);
 			attachVO.setSave_file_name(save_file_name);
 			attachVO.setReal_file_name(real_file_name);
 			boardDAO.updateAttach(attachVO);
+			}
 			index++;
 		}
 	}
