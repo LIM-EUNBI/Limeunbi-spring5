@@ -50,8 +50,15 @@
 - session 생성 : setAttribute, 값 불러오기 : getAttribute,   
 - 삭제 :removeAttribute, 전체 삭제 : invalidate
 
+#### 20210625(금) 작업
+- board_insert 구현 - c:url 사용
+- view에서 첨부파일때문에 공백이 생겨서 IE에서만 스타일지정하는 코드 추가 
+- 관리자단 게시물 관리 CRUD (O)
+- 댓글 VO, Mapper, DAO, Service, @RestController, 크롬부메랑테스트(junit대신), jsp(1페이지 CRUD처리 ajax이용)
+- 고전CRUD와 RestFull(API)방식 차이점 : 고전(화면 이동), Rest대세코딩(1개 화면에서 처리)
+
 #### 20210624(목) 작업
-- 첨부파일 수정, 삭제 구현
+- 첨부파일 수정, 삭제 구현 (AspectAdvice, controller, util)
 
 #### 20210623(수) 작업
 - search_keyword AOP 추가

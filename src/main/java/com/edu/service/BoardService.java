@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.edu.dao.IF_BoardDAO;
+import com.edu.dao.IF_ReplyDAO;
 import com.edu.vo.AttachVO;
 import com.edu.vo.BoardVO;
 import com.edu.vo.PageVO;
@@ -22,7 +23,8 @@ import com.edu.vo.PageVO;
 public class BoardService implements IF_BoardService{
 	@Inject
 	private IF_BoardDAO boardDAO;
-	
+	@Inject
+	private IF_ReplyDAO replyDAO;
 	
 	@Override
 	public List<BoardVO> selectBoard(PageVO pageVO) throws Exception {
@@ -96,6 +98,7 @@ public class BoardService implements IF_BoardService{
 		// 트랜잭션 : 첨부파일 삭제 후 게시물 삭제하려는데 에러가 떠서 삭제가 안될 때 
 		// 이와같은 상황을 방지하는 목적의 기능으로 @Transactional 어노테이션을 사용
 		boardDAO.deleteAttachAll(bno);
+		replyDAO.deleteReplyAll(bno);
 		boardDAO.deleteBoard(bno);
 	}
 

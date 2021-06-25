@@ -3,6 +3,12 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ include file="../include/header.jsp" %>
+<style>
+/* 아래 미디어쿼리는 IE10,11에서 지원하는 전용CSS 적용 */
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+	.ie_only {max-height:500px; overflow:auto;}
+}
+</style>
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -52,47 +58,45 @@
                 ${boardVO.writer}
               </div>
               <div class="form-group">
-                <label for="exampleInputPassword1">조회수</label>
-                <br>
-                ${boardVO.view_count}
-              </div>
-              <div class="form-group">
-                <label for="exampleInputPassword1">작성일</label>
-                <br>
-                <fmt:formatDate pattern="yyyy-MM-dd hh:mm:ss" value="${boardVO.reg_date}"/> 
-              </div>
-              <div class="form-group">
                 <label for="exampleInputFile">첨부파일</label>
+                 <div class="input-group">
                 <c:forEach begin="0" end="1" var="idx">
-	                <c:if test="${boardVO.save_file_names[idx] != null}">
-	                <div class="input-group">
-	                   	<!-- 첨부파일을 URL로 직접접근하지 못하기 때문에 컨트롤러로만 접근이 가능(다운로드전용 메서드생성) -->
-	                    <a href="/download?save_file_name=${boardVO.save_file_names[idx]}&real_file_name=${boardVO.real_file_names[idx]}">
-	                    ${boardVO.real_file_names[idx]}
-	                    </a>
-	                    <!-- jstl에서 변수사용하기 fn.split('데이터','분할기준값') 목적: 확장자를 이용해서 이미지 미리보기를 할 건지 결정 img태그사용
-	                    	String[] fileNameArray = String.split('변수값','분할기준값');
-	                    -->
-	                    <c:set var="fileNameArray" value="${fn:split(boardVO.save_file_names[idx],'.')}" />
-	                    <!-- 그림판.얼굴.코.JPG = 3개배열, 그림판.jpg = 2개배열 -->
-	                    <c:set var="extName" value="${fileNameArray[fn:length(fileNameArray)-1]}" />
-	                    <!-- 그림판.얼굴.jpg 파일을 위 변수로 처리시 extName = fineNameArray[2] = jpg -->
-	                    <!-- 자바언어로는 switch ~ case문 ~ default -->
-	                    <!-- containsIgnoreCase('찾을값의문장','비교기준값') -->
-	                    <c:choose>
-	                    	<c:when test="${fn:containsIgnoreCase(checkImgArray,extName)}">
-	                    		<img src="/image_preview?save_file_name=${boardVO.save_file_names[idx]}" style="width:100%;">
-	                    	</c:when>
-	                    	<c:otherwise>
-	                    		<!-- 아무의미 없이 개발연습용으로  -->
-	                    		<c:out value="${checkImgArray}" /> 이미지가 아님.
-	                    	</c:otherwise>
-	                    </c:choose>
-	                </div>
-	                </c:if>
+                   <c:if test="${boardVO.save_file_names[idx] != null}">
+                     <div class="ie_only">
+                        <!-- JSTL의 c:url 태그로 URL감싸주면 인코딩처리됩니다.(한글이 인코딩이됩니다) -->
+                        <c:url value="/download" var="url"> 
+                     <c:param name="save_file_name" value="${boardVO.save_file_names[idx]}" />
+                     <c:param name="real_file_name" value="${boardVO.real_file_names[idx]}" /> 
+                  </c:url>
+                  <a href="${url}">
+                        <!-- 첨부파일을 URL로 직접접근하지 못하기 때문에 컨트롤러로만 접근이 가능(다운로드전용 메서드생성)IE에서 한글쿼리스트링문제때문에 사용X -->
+                       <%-- <a href="/download?save_file_name=${boardVO.save_file_names[idx]}&real_file_name=${boardVO.real_file_names[idx]}"> --%>
+                       ${boardVO.real_file_names[idx]}
+                       </a>
+                       <!-- jstl에서 변수사용하기 fn.split('데이터','분할기준값') 목적: 확장자를 이용해서 이미지 미리보기를 할 건지 결정 img태그사용
+                          String[] fileNameArray = String.split('변수값','분할기준값');
+                       -->
+                       <c:set var="fileNameArray" value="${fn:split(boardVO.save_file_names[idx],'.')}" />
+                       <!-- 그림판.얼굴.코.JPG = 3개배열, 그림판.jpg = 2개배열 -->
+                       <c:set var="extName" value="${fileNameArray[fn:length(fileNameArray)-1]}" />
+                       <!-- 그림판.얼굴.jpg 파일을 위 변수로 처리시 extName = fineNameArray[2] = jpg -->
+                       <!-- 자바언어로는 switch ~ case문 ~ default -->
+                       <!-- containsIgnoreCase('찾을값의문장','비교기준값') -->
+                       <c:choose>
+                          <c:when test="${fn:containsIgnoreCase(checkImgArray,extName)}">
+                             <img src="/image_preview?save_file_name=${boardVO.save_file_names[idx]}" style="width:100%;">
+                          </c:when>
+                          <%-- <c:otherwise>
+                             <!-- 아무의미 없이 개발연습용으로  -->
+                             <c:out value="${checkImgArray}" /> 이미지가 아님.
+                          </c:otherwise> --%>
+                       </c:choose>
+                     </div>
+                   </c:if>
                 </c:forEach>                
-              </div>
-            </div>
+               </div>
+              </div>          
+              </div> 
             <!-- /.card-body -->
 
             <div class="card-footer text-right">
