@@ -13,7 +13,7 @@ import com.edu.vo.ReplyVO;
 
 public interface IF_ReplyService {
 	
-	public List<ReplyVO> selectReply(PageVO pageVO) throws Exception;
+	public List<ReplyVO> selectReply(PageVO pageVO, Integer bno) throws Exception;
 	public int countReply(Integer bno) throws Exception;
 	public void insertReply(ReplyVO replyVO) throws Exception;
 	public void updateReply(ReplyVO replyVO) throws Exception;

@@ -17,10 +17,10 @@ where bno = #{bno}
 </update>
 
 <update id="updateReply">
-update tbl_reply set = (
-	reply_text = #{reply_text},
-	update_date = systimestamp
-) where rno = #{rno}
+update tbl_reply set
+reply_text = #{reply_text},
+update_date = systimestamp
+where rno = #{rno}
 </update>
 
 <insert id="insertReply">

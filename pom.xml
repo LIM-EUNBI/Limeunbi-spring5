@@ -182,6 +182,13 @@
          <artifactId>aspectjweaver</artifactId>
          <version>${org.aspectj-version}</version>
       </dependency>
+      <!--  ResponseEntity<HashMap>형태의 데이터를 클라이언트쪽에  json데이터로 반환시 필요-->
+      <dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.9.7</version>
+		</dependency>
+      
 	</dependencies>
     <build>
         <plugins>

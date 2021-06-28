@@ -23,7 +23,7 @@
 
 #### 공부 자료
 - 스프링의 기능 : IoC(제어의 역전 : 객체의 메모리 관리를 개발자가 하지 않고 스프링이 대신해준다.)
-- 			  DI(의존성 주입, @Inject)
+- 			  ㄴ> DI(의존성 주입, @Inject)
 - 오라클 문법 : https://wikidocs.net/3910
 - 인터프리터 https://colab.research.google.com/drive/1wyL8Fg3-l8PKpmqbBCxd_ewBGDKdTzuw
 - 클래스 변수, 인스턴스 변수 설명 = https://itmining.tistory.com/20
@@ -33,22 +33,35 @@
 - 시노님 설명 https://mine-it-record.tistory.com/68
 - @어노테이션 속성들에 대한 설명 https://sarc.io/index.php/development/1139-requestmapping
 - AOP 설명 : https://engkimbs.tistory.com/746
--
+- API 설명 : https://www.redhat.com/ko/topics/api/what-are-application-programming-interfaces
+- RestAPI 설명 : https://gmlwjd9405.github.io/2018/09/21/rest-and-restful.html
+- ResponseEntity 설명 : https://juwonkim.tistory.com/m/161?category=848128
+- 
+
 - 데이터 정의어(DDL - Data Definition Language)
 - 데이터 정의어는 데이터를 정의하는 언어
 - 테이블이나 관계의 구조를 생성하는 데 사용
 - CREATE, ALTER, DROP, TRUNCATE 문이 있음
-
-데이터 조작어(DML - Data Manipulation Language)
+- 
+- 데이터 조작어(DML - Data Manipulation Language)
 - 데이터베이스에 저장된 자료들을 입력, 수정, 삭제, 조회하는 언어
 - SELECT, INSERT, UPDATE, DELETE 문이 있음
 - SELECT 문은 특별히 질의어(Query)라고 부름
-
-데이터 제어어(DCL - Data Control Language)
+- 
+- 데이터 제어어(DCL - Data Control Language)
 - 데이터베이스 관리자가 데이터 보안, 무결성 유지, 병행 제어, 회복을 위해 DBA가 사용하는 제어용 언어
 - GRANT, REVOKE 문이 있음
 - session 생성 : setAttribute, 값 불러오기 : getAttribute,   
 - 삭제 :removeAttribute, 전체 삭제 : invalidate
+- 
+- @RestController클래스 : 일반 컨트롤러와 다르게 반환값이 body로 출력
+
+#### 20210628(월) 작업
+- 크롬 확장 프로그램 중 부메랑 테스트 실습- Boomerang - SOAP & REST Client
+- Endpoint : 마이크로서비스는 RestAPI로 구현, 요청하는 URL을 Endpoint라고 한다. (트렌드 : 마이크로 서비스, 기존 컨트롤러를 모두 REstController로 변경이 필요) - 데이터를 전송할 때, 쿼리스트링으로 보내지 않고 /reply/reply_list/{변수값}/{변수값} 검색에 쉽게 노출시키기 위해서 위와 같이 쓰인다.
+- ReplyController 생성, pom.xml에 ResponseEntity 모듈 추가
+- reply list, update, insert 구현
+
 
 #### 20210625(금) 작업
 - board_insert 구현 - c:url 사용

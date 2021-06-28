@@ -21,9 +21,9 @@ public class ReplyService implements IF_ReplyService {
 	private IF_ReplyDAO replyDAO;
 	
 	@Override
-	public List<ReplyVO> selectReply(PageVO pageVO) throws Exception {
+	public List<ReplyVO> selectReply(PageVO pageVO, Integer bno) throws Exception {
 		// TODO Auto-generated method stub
-		return replyDAO.selectReply(pageVO);
+		return replyDAO.selectReply(pageVO, bno);
 	}
 
 	@Override
