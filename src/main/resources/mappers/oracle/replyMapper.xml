@@ -12,7 +12,7 @@ delete from tbl_reply where rno = #{rno}
 
 <!-- 댓글을 입력하면 boardVO.reply_count가 증가해야한다. -->
 <update id="replyCountUpdate">
-update tbl_board set reply_count = reply_count + #{count} 
+update tbl_board set reply_count = (select count(*) from tbl_reply where bno = #{bno})
 where bno = #{bno}
 </update>
 
