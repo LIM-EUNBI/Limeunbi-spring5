@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-5.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+<!-- 스프링 시큐리티는 AOP(@Aspect, @ControllerAdvice)기능의 일종, 핵심 -->
+<!-- 시큐리티 영향을 받지않는 URL접근이 가능한 주소부터 나열 -->
+<!-- 주로 정적인(static, resources폴더) 파일들은 보안해제 시킴 -->
+<security:http pattern="/**/*.js" security="none" />
+<security:http pattern="/**/*.css" security="none" />
+<security:http pattern="/**/img/*" security="none" />
+<!-- 스프링 시큐리티 기본설정 -->
+<!-- use-expressions=자바의 EL을 사용하겠다고 설정 -->
+<security:http auto-config="true" use-expressions="true">
+	<!-- root로 접근했을 때 세션을 사용하지 않는다. -->
+	<security:session-management invalid-session-url="/"  >
+	<!-- 동일ID의 세션 최대 개수가 3개 -->
+	<security:concurrency-control max-sessions="3" error-if-maximum-exceeded="false" />
+	</security:session-management>
+	<!-- intercept(가로채기AOP) 사용, 로그인과 권한체크(access)
+		 밑에서부터 위로 해석이 된다. -->
+	<security:intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/>
+	<security:intercept-url pattern="/**/*_insert" access="hasRole('ROLE_ADMIN','ROLE_USER')"/>
+	<security:intercept-url pattern="/**/*_insert_form" access="hasRole('ROLE_ADMIN','ROLE_USER')"/>
+	<security:intercept-url pattern="/**/*_update" access="hasRole('ROLE_ADMIN','ROLE_USER')"/>
+	<security:intercept-url pattern="/**/*_update_form" access="hasRole('ROLE_ADMIN','ROLE_USER')"/>
+	<security:intercept-url pattern="/**/*_delete" access="hasRole('ROLE_ADMIN','ROLE_USER')"/>
+	<security:intercept-url pattern="/**/member/**" access="hasRole('ROLE_ADMIN','ROLE_USER')"/>
+	<security:intercept-url pattern="/**" access="permitAll"/>
+	<security:csrf disabled="false"/>
+	<!-- 접근허용이 안된 사용자들을 체크해서 로그인 폼으로 다시 이동
+		 login-processing처리는 jsp로그인폼의 POST방식 / login을 처리해줌 (컨트롤러에서 맵핑이 필요없다.)
+	 	 login 성공하면 /login_success 컨트롤러로 이동해서 로그인 세션을 개발자가 만들어야 한다.
+		 /login처리하려면 jsp로그인폼의 user_id, user_pw POST받아서 처리
+	 -->
+	<security:form-login
+		login-page="/login_form"
+		login-processing-url="/login"
+		always-use-default-target="true"
+		default-target-url="/login_success"
+		authentication-failure-url="/login_form?mag=fail"
+		username-parameter="user_id"
+		password-parameter="user_pw"
+	/>
+	<!-- login 폼에서 받은 user_id와 user_pw 처리 -->
+	<!-- 토큰 : 네트워크에서 자료를 입출력할 때 사용하는 자료형태를 토큰이라고 한다. -->
+	<security:remember-me key="remember-key" token-validity-seconds="604800" remember-me-parameter="remember-me-parameter" />
+	<!-- 로그아웃 처리(로그아웃하면 세션 날리기) invalidate -->
+	<security:logout logout-url="/logout" logout-success-url="/" invalidate-session="true"
+	delete-cookies="JSESSIONID,SPRING_SECURITY_REMEMBER_ME_COOKIE" />
+</security:http>
+<!-- 스프링 시큐리티나 OAuth2.0(오픈 외부인증,카카오, 네이버 로그인 등)에는 인증(authentication)과 권한체크(Authority)이 있다.-->
+<security:authentication-manager>
+	<security:authentication-provider>
+		<security:jdbc-user-service data-source-ref="dataSource" 
+		users-by-username-query="select user_id as no,user_pw as password, enabled from tbl_member where user_id = ?"
+		authorities-by-username-query="select user_id as no,levels as authority from tbl_member where user_id = ?"
+		/>
+	</security:authentication-provider>
+</security:authentication-manager>
+
+</beans>

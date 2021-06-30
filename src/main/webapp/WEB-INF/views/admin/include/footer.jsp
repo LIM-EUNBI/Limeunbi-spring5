@@ -45,4 +45,27 @@
 <!-- <script src="/resources/admin/dist/js/pages/dashboard.js"></script> -->
 </body>
 </html>
+<style>
+.sidebar-dark-primary .nav-sidebar>.nav-item>.nav-link.active, .sidebar-light-primary .nav-sidebar>.nav-item>.nav-link.active
+{background-color: #fff; color:#000}
+</style>
+<script>
+/* 왼쪽 메뉴 선택시 active 부트 스트랩 클래스를 동적으로 추가하는 코드 */
+$(document).ready(function(){
+	//현재 선택한 url값을 기준으로 지정
+	var current = location.pathname; //현재 url경로
+	var current2 = current.split("/")[2];
+	/* alert(current2); */
+	$(".nav-treeview li a").each(function(){
+		if($(this).attr('href').indexOf(current2) != -1){
+			if(current2 != "board"){
+			$(this).addClass("active");}
+			
+		} else{
+			$(this).removeClass("active");
+		}
+	});
+	
+});
+</script>
     

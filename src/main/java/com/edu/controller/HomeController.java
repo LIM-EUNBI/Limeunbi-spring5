@@ -29,6 +29,10 @@ public class HomeController {
 	 * return 값으로 view(jsp)를 선택해서 작업한 결과를 변수로 담아서 화면에 전송 후 결과를 표시(렌더링) 합니다.
 	 * 폼(자료)전송시 post(자료숨김), get(자료노출-URL쿼리스트링?있는자료전송)
 	 */
+	@RequestMapping(value="/login_form", method=RequestMethod.GET)
+	public String login_form() throws Exception{
+		return "home/login";
+	}
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String homepage(Model model) { //콜백메스드,자동실행됨.
 		String jspVar = "@서비스(DB)에서 처리한 결과";

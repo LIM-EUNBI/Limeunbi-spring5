@@ -57,6 +57,14 @@
 - @RestController클래스 : 일반 컨트롤러와 다르게 반환값이 body로 출력
 - RestAPI, 스프링, 노드js 연동하면 구글맵, RestAPI실시간으로 결과 공유할 수 있게 만들 수 있다
 
+#### 20210630(수) 작업
+- 댓글 모달창 delete까지 작업 완료.
+- 메뉴 active 완료
+- 사용자단 로그인 구현 (시큐리티)- spring폴더에 security-context.xml 추가
+- security-context 설정
+- LoginController 생성
+- web.xml에  param-value에 security-context 추가
+
 #### 20210629(화) 작업
 - reply_delete 구현
 - jsp에서 ajax로 RestAPI서버 사용.
@@ -64,7 +72,7 @@
 - board_view.jsp에서 ajax로 댓글 입력, 리스트 처리
 - 게시물 관련 내용 : 컨트롤러에서 보낸 model객체에 담긴 변수값을 jsp사용
 - 댓글 관련 내용 : Rest컨트롤러에서 보낸 ResponseEntity객체에 담긴 변수값을 jsp사용
-- 댓글 RUD는 모달(팝업)창에서 작업시작.
+- 댓글 RUD는 모달(팝업)창에서 작업시작.(R,U (O))
 
 #### 20210628(월) 작업
 - 크롬 확장 프로그램 중 부메랑 테스트 실습- Boomerang - SOAP & REST Client
