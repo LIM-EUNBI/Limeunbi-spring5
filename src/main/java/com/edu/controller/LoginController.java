@@ -34,12 +34,12 @@ public class LoginController {
 	public String login_success(HttpServletRequest request, RedirectAttributes rdat) throws Exception{
 		//request는 세션객체를 만들기 위해서(로그인 정보 유지)
 		//rdat는 모델로 값을 전송할 수 없을때 사용. 
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication(); //ID, 암호 비교쿼리가 실행된 결과가 저장
 		String userid = "";
 		String levels = "";
 		Boolean enabled = false;
 		//principal객체는 UserDatails객체에 포함되어 있고, enabled라는 인증결과가 생성.
-		Object principal = auth.getPrincipal();//ID,암호 쿼리가 실행.
+		Object principal = auth.getPrincipal();
 		if(principal instanceof UserDetails) {
 			enabled = ((UserDetails) principal).isEnabled();//true, false
 			//위 인증 결과로 로그인 체크를 한다.
@@ -68,7 +68,7 @@ public class LoginController {
 			MemberVO memberVO = memberService.readMember(userid);
 			session.setAttribute("session_username", memberVO.getUser_name());
 		}
-		rdat.addFlashAttribute("mag", "로그인"); //로그인 성공여부를 jsp페이지로 보내주는 변수 생성
+		rdat.addFlashAttribute("msg", "로그인"); //로그인 성공여부를 jsp페이지로 보내주는 변수 생성
 		return "redirect:/";
 	}
 }

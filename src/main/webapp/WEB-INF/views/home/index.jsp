@@ -1,6 +1,37 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="./include/header.jsp" %>
+<script>
+// 메인페이지 전용 슬라이드 
+$(document).ready(function() {
+	// 메인 슬라이드 실행 부분을 분리
+	// 함수 호출(실행)
+	slideAuto = setTimeout("play_w('right')", 3000); // 3초 후에 play_w 실행
+	var slidePlayHide = setTimeout(function() {
+		$('.rollplay').css('display','none');
+	}, 3000); // 3초 후에 rollplay클래스 플레이버튼 영역을 숨김
+
+	$('.rollstop').click(function() {
+		// this : 클릭한 본인 태그
+		$(this).hide(); // 현재 stop버튼을 숨김
+		$('.rollplay').css('display','inline-block');
+		if(slideAuto) {clearTimeout(slideAuto)};
+	});
+	$('.rollplay a').click(function() {
+		$(this).parent().hide();
+		$('.rollstop').css('display','inline-block');
+		play_w('right');
+	});
+	$('.rollingbtn li.seq a').each(function(index) {
+		$(this).click(function() {
+			$('.rollplay').hide();
+			$('.rollstop').css('display','inline-block');
+			if(slideAuto) {clearTimeout(slideAuto);}
+			play_w(index);
+		});
+	});
+});
+</script>
 	<!-- 메인콘텐츠영역 -->
 	<div id="container">
 		<!-- 모바일+PC 공통슬라이드영역 -->

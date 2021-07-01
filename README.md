@@ -57,6 +57,15 @@
 - @RestController클래스 : 일반 컨트롤러와 다르게 반환값이 body로 출력
 - RestAPI, 스프링, 노드js 연동하면 구글맵, RestAPI실시간으로 결과 공유할 수 있게 만들 수 있다
 
+#### 20210701(목) 작업
+- web.xml에 스프링 시큐리티가 적용된 URL을 필터링하는 클래스 추가 
+- security-context.xml에 passwordEncoder bean 추가
+- header.jsp에 msg 메세지 추가, login.jsp에 param.msg 스크립트 메세지 추가
+- 위 설정을 다했는데 로그인이 안되길래 확인해보니 <security:csrf disabled="false"/>가 되어있어서 true로 변경
+- admin - include - footer에서 로그아웃 /admin 처리
+- 세션 유지시간 web.xml에 추가
+- mypage 수정, 탈퇴 구현 (HomeController에 추가, member/mypage.jsp 생성)
+
 #### 20210630(수) 작업
 - 댓글 모달창 delete까지 작업 완료.
 - 메뉴 active 완료
@@ -64,7 +73,7 @@
 - security-context 설정
 - LoginController 생성
 - web.xml에  param-value에 security-context 추가
-zz
+
 #### 20210629(화) 작업
 - reply_delete 구현
 - jsp에서 ajax로 RestAPI서버 사용.
