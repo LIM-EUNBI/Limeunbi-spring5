@@ -3,8 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="f" %>
 <%@ include file="../include/header.jsp" %>
-  
-<%@ include file="../include/footer.jsp" %>
+
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -93,7 +92,8 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
-
+  
+<%@ include file="../include/footer.jsp" %>
 <!-- jQuery사용 관리자단 (jQuery코어가 하단에 있기 때문에 footer보다 아래에 코드작성)-->
 <script>
 $(document).ready(function(){

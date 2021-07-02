@@ -40,6 +40,47 @@ public class HomeController {
 	 * 폼(자료)전송시 post(자료숨김), get(자료노출-URL쿼리스트링?있는자료전송)
 	 */
 	
+	//404파일 에러 처리 GET호출 추가
+	@RequestMapping(value="/home/error/error_404", method=RequestMethod.GET)
+	public String error_404(HttpServletRequest request, Model model) {
+		model.addAttribute("prevPage", request.getHeader("Referer"));
+		return "home/error/error_404";
+	}
+	 
+	// 회원가입 -----------------------------------------------------------------------
+	@RequestMapping(value="/join", method=RequestMethod.POST)
+	public String join(MemberVO memberVO, RedirectAttributes rdat) throws Exception{
+		// jsp폼에서 levels를 ROLE_ADMIN으로 누군가 강제로 넣을 가능성이 있기 때문에 컨트롤러에서 set해준다.
+		memberVO.setLevels("ROLE_USER");
+		memberVO.setEnabled(true);
+		memberVO.setPoint(0);
+
+		String raw_pw = memberVO.getUser_pw();
+		BCryptPasswordEncoder pwEncoder = new BCryptPasswordEncoder();
+		String encPw = pwEncoder.encode(raw_pw);
+		memberVO.setUser_pw(encPw);
+
+		memberService.insertMember(memberVO);
+		rdat.addFlashAttribute("msg", "회원가입이 ");
+		return "redirect:/login_form";
+	}
+	
+	// 회원가입폼 호출 GET
+	@RequestMapping(value="/join_form", method=RequestMethod.GET)
+	public String join_form() throws Exception{
+		return "home/join";
+	}
+	
+	// 회원 탈퇴 -----------------------------------------------------------------------
+	@RequestMapping(value="/member/mypage_leave", method=RequestMethod.POST)
+	public String mypage_leave(MemberVO memberVO, RedirectAttributes rdat) throws Exception{
+		memberService.updateMember(memberVO);
+		rdat.addFlashAttribute("msg", "회원 탈퇴");
+		return "redirect:/logout";
+	}
+	
+	
+	// 마이페이지 정보 수정 -----------------------------------------------------------------------
 	// 마이페이지 회원정보 수정 POST 처리 후 msg를 히든값으로 jsp로 전송.
 	@RequestMapping(value="/member/mypage", method=RequestMethod.POST)
 	public String mypage(MemberVO memberVO, RedirectAttributes rdat) throws Exception{
@@ -54,7 +95,7 @@ public class HomeController {
 		rdat.addFlashAttribute("msg", "회원 정보가 수정");
 		return "redirect:/member/mypage_form";
 	}
-	// 마이페이지폼 호출, 회원 수정폼
+	// 마이페이지폼 호출, 회원 수정폼-----------------------------------------------------------------------
 	@RequestMapping(value="/member/mypage_form", method=RequestMethod.GET)
 	public String mypage_form(HttpServletRequest request, Model model) throws Exception{ //request.발생된 세션 가져오기
 		//로그인 한 사용자 세션을 session_userid로 memberService의 readMember를 호출하면 됨.
@@ -63,7 +104,7 @@ public class HomeController {
 		model.addAttribute("memberVO", memberService.readMember(user_id));
 		return "home/member/mypage";
 	}
-	// 사용자단 로그인폼 호출
+	// 사용자단 로그인폼 호출-----------------------------------------------------------------------
 	@RequestMapping(value="/login_form", method=RequestMethod.GET)
 	public String login_form() throws Exception{
 		return "home/login";
@@ -76,5 +117,4 @@ public class HomeController {
 		logger.info("디버그 스프링 로고 사용 :" + jspVar); // System.out 대신 logger 객체를 사용.
 		return "home/index";//확장자가 생략 .jsp가 생략되어 있음.
 	}
-	
 }

@@ -57,6 +57,20 @@
 - @RestController클래스 : 일반 컨트롤러와 다르게 반환값이 body로 출력
 - RestAPI, 스프링, 노드js 연동하면 구글맵, RestAPI실시간으로 결과 공유할 수 있게 만들 수 있다
 
+#### 20210702(금) 작업
+- mypage 탈퇴 구현 (O)
+- join 구현
+- 
+- error_sping.jsp 
+- jsp 에러 발생시 Exception 무조건 나오게 처리 : AOP중 ControllerAdvice로 구현.
+- 위 ControllerAdvice에서 에러 메세지를 캐치해서 jsp 에러 페이지로 보내서 어떤 에러가 나왔는지 확인
+- 404(톰캣서버에서 발생)는 컨트롤러에서 발생되지 않기 때문에 별도파일 생성.
+- 404코드 발생시 error_404.jsp 바인딩되는 설정을 web.xml에 추가
+- HomeController에서 Get /home/error/error_404경로 추가
+
+- 헤로쿠 클라우드 준비
+- https://heroku.com 회원가입
+
 #### 20210701(목) 작업
 - web.xml에 스프링 시큐리티가 적용된 URL을 필터링하는 클래스 추가 
 - security-context.xml에 passwordEncoder bean 추가

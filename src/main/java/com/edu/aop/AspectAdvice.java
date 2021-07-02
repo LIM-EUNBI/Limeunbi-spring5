@@ -13,9 +13,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.edu.service.IF_BoardTypeService;
 import com.edu.vo.BoardTypeVO;
@@ -38,7 +40,22 @@ public class AspectAdvice {
 	@Inject
 	private IF_BoardTypeService boardTypeService;
 	
-	// @Before + @After = @Around (포인트컷 전,후 모든 메서드 ↓)
+	
+	// 컨트롤러에서 Exception이 발생했을 때, 에러 메세지를 개발자가 작성한 jsp화면에 뿌려주는 기능을 하는 메서드
+	@ExceptionHandler(Exception.class)
+	public ModelAndView errorModelAndView(Exception e, HttpServletRequest request) {
+		ModelAndView modelAndView = new ModelAndView();
+		
+		//이전페이지로 돌아가기용 버튼 생성
+		String referer = request.getHeader("Referer"); //크롬>네트워크>파일>Referer>이전페이지 url 존재
+		request.getSession().setAttribute("session_prevPage", referer); //prevPage 세션변수 사용
+		
+		modelAndView.addObject("exception", e);//jsp이름, 데이터 객체
+		modelAndView.setViewName("home/error/error_spring");
+		return modelAndView;
+	}
+	
+	// @Before + @After = @Around (포인트컷 전,후 모든 메서드 ↓)------------------------------------------
 	@Around("execution(* com.edu.controller.*Controller.*(..))") 
 	// @Around는 콜백함수 매개변수로 조인포인트 객체를 필수로 받는다.
 	public Object sessionManager(ProceedingJoinPoint pjp) throws Throwable {
@@ -87,7 +104,8 @@ public class AspectAdvice {
 		return result;
 	}
 	
-	//ControllerAdvice를 이용해서 컨트롤러의 모든 메서드 호출 가능
+
+	//ControllerAdvice를 이용해서 컨트롤러의 모든 메서드 호출 가능--------------------------------------------------
 	@ModelAttribute("listBoardTypeVO")
 	// 컨트롤러로 입출력되는 메서드가 실행 전에 값을 생성해서 모델객체에 담아서 jsp로 보내준다.
 	public List<BoardTypeVO> listBoardTypeVO() throws Exception{

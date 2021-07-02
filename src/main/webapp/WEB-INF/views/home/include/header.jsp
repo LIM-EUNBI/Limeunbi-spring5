@@ -20,6 +20,7 @@
 <!-- 사용자 정의형 css, script 추가 -->
 <link rel="stylesheet" href="/resources/home/css/mobile.css">
 <link rel="stylesheet" href="/resources/home/css/tablet.css">
+<link rel="stylesheet" href="/resources/home/css/board.css">
 <link rel="stylesheet" href="/resources/home/css/pc.css">
 <script src="/resources/home/js/main.js"></script>
 <script src="/resources/home/js/slidemain.js"></script> <!-- 메인 슬라이드 코어 임포트 -->
@@ -59,9 +60,9 @@ if("${msg}" != ""){
 				<c:choose>
 					<c:when test="${session_enabled eq 'true' }">
 					<!-- 로그인 후 보이는 메뉴(아래) -->
-					<li><a href="#">${session_username}님 환영합니다.</a></li>
-					<li><a href="/logout">로그아웃</a></li>
+					<li style="color:#fff;font-size: 14px;">${session_username}님 환영합니다.</li>
 					<li><a href="/member/mypage_form">마이페이지</a></li>
+					<li><a href="/logout">로그아웃</a></li>
 					<c:if test="${session_levels eq 'ROLE_ADMIN' }">
 					<li><a href="/admin">AdminLTE</a></li>
 					</c:if>

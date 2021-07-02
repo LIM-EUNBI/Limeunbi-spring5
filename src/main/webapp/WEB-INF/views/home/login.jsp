@@ -41,7 +41,7 @@ if("${param.msg}" == "fail"){
 
 					</ul>
 					<p class="btn_line">
-					<button class="btn_baseColor">로그인</button>
+					<button class="btn_baseColor" style="cursor:pointer;">로그인</button>
 					</p>	
 				</fieldset>
 			</form>

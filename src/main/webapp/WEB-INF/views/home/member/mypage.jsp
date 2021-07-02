@@ -37,8 +37,8 @@
 </style>
 <script>
 // 회원가입 유효성 검사 체크
-/* $(document).ready(function() {
-	$(".appForm").validate({
+$(document).ready(function() {
+	/*$(".appForm").validate({
 		rules: {
 			password: "required",
 			password_chk: {
@@ -80,7 +80,7 @@
 				<ul class="app_list">
 					<li class="clear">
 						<label for="user_id" class="tit_lbl pilsoo_item">ID</label>
-						<div class="app_content"><input value="${memberVO.user_id}" type="text" name="user_id" class="w100p" id="user_id" readonly/></div>
+						<div class="app_content"><input value="${memberVO.user_id}" type="text" name="user_id" class="w100p" id="user_id" readonly ></div>
 					</li>
 					<li class="clear">
 						<label for="password_lbl" class="tit_lbl pilsoo_item">비밀번호</label>
@@ -99,21 +99,20 @@
 						<div class="app_content"><input value="${memberVO.point }" type="digits" name="point" class="w100p" id="point_lbl" readonly/></div>
 					</li>
 					<li class="clear">
-						<label for="gender_lbl" class="tit_lbl pilsoo_item">로그인 여부</label>
+						<label for="gender_lbl" class="tit_lbl pilsoo_item">로그인여부</label>
 						<div class="app_content radio_area">
 							<select name="enabled" class="gender" required>
-								<option value="${memberVO.enabled }">${memberVO.enabled?'허용':'비허용' }</option>
+								<option value="${memberVO.enabled}">${memberVO.enabled=='true'?'허용':'금지'}</option>
 							</select>
 						</div>
 					</li>
 					<li class="clear">
-						<label for="gender_lbl" class="tit_lbl pilsoo_item">권한</label>
+						<label for="gender_lbl" class="tit_lbl pilsoo_item">권한여부</label>
 						<div class="app_content radio_area">
 							<select name="levels" class="gender" required>
-								<option value="${memberVO.levels }">${memberVO.levels}</option>
+								<option value="${memberVO.levels}">${memberVO.levels}</option>
 							</select>
 						</div>
-					</li>
 					<li class="clear">
 						<label for="agree_lbl" class="tit_lbl pilsoo_item">개인정보활용동의</label>
 						<div class="app_content checkbox_area"><input type="checkbox"" name="agree" class="css-checkbox" id="agree_lbl" required checked/>
@@ -138,8 +137,15 @@
 <script>
 $(document).ready(function() {
 	$("#btn_leave").click(function() {
-		var form_leave = $("#form[name='join_form']");
-		$("select[name='enabled']").val();
+		if(confirm('정말로 탈퇴하시겠습니까?')){
+		var form_leave = $("form[name='join_form']");
+		$("option:eq(0)", "select[name='enabled']").val("false");
+		//$("select[name='enabled']").html("<option value='false'>탈퇴</option>");
+		// alert($("select[name='enabled']").val());
+		form_leave.attr("action","/member/mypage_leave"); // 크롬 오동작으로 추가한 코드
+		form_leave.submit();
+		//location.replace('/logout');
+		}
 	});
 });
 </script>
