@@ -72,7 +72,8 @@
 - hsqlad 외부모듈 pom.xml에 스프링빈 생성 후 DB생성 스크립트 실행, DB매니저 실행 root-context.xml에 추가
 - main/resources에 db폴더 추가, 더미데이터 파일 추가
 - 헤로쿠에서 오라클을 지원 안하기 때문에 hsql로 변경(배포할때는 오라클로 변경)
-
+- mysql 폴더에 Mapper(board, boardType, member, reply) 추가
+- oracle, hsqlproperties 추가 후 변수 생성. root-context에 변수처리
 
 #### 20210702(금) 작업
 - mypage 탈퇴 구현 (O)
