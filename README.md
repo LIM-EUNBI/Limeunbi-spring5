@@ -57,6 +57,19 @@
 - @RestController클래스 : 일반 컨트롤러와 다르게 반환값이 body로 출력
 - RestAPI, 스프링, 노드js 연동하면 구글맵, RestAPI실시간으로 결과 공유할 수 있게 만들 수 있다
 
+#### 20210705(월) 작업
+- heroku- Deploy 에러 : No web processes running 
+- 위 에러를 처리하기 위해 현재 프로젝트에 클라우드용 설정 파일이 필요함.(Procfile 확장자가 없는 설정파일이 필요, 다른 클라우드에서도 필요)
+- Procfile에서 web processes running 시키는 라인이 추가 되어야 한다.(Procfile 만든 후 코드 추가)
+- Run As에서 Maven clean 
+- preferences-Maven-office 체크 해제
+- pom.xml에 version을 edu_webapp으로 변경 후 하단 build에 defaultGoal,directory,finalName 추가
+- PHP에서는 작업한 파일 1개씩 수정해서 올리는 방식(워드프레스, 그누보드 사용)
+- 스프링은 모든 파일을 컴파일해서 패키징한(war파일) 후 업로드
+- Maven build(compile, package):skip test 체크 후 실행할 것
+- lib에 runner.jar 파일 추가 후 Maven build(install) 실행
+- target - edu_webapp - lib에 runner파일이 들어왔는지 확인
+
 #### 20210702(금) 작업
 - mypage 탈퇴 구현 (O)
 - join 구현
