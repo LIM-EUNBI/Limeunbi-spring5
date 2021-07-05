@@ -69,6 +69,10 @@
 - Maven build(compile, package):skip test 체크 후 실행할 것
 - lib에 runner.jar 파일 추가 후 Maven build(install) 실행
 - target - edu_webapp - lib에 runner파일이 들어왔는지 확인
+- hsqlad 외부모듈 pom.xml에 스프링빈 생성 후 DB생성 스크립트 실행, DB매니저 실행 root-context.xml에 추가
+- main/resources에 db폴더 추가, 더미데이터 파일 추가
+- 헤로쿠에서 오라클을 지원 안하기 때문에 hsql로 변경(배포할때는 오라클로 변경)
+
 
 #### 20210702(금) 작업
 - mypage 탈퇴 구현 (O)
