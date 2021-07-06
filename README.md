@@ -56,6 +56,8 @@
 - 
 - @RestController클래스 : 일반 컨트롤러와 다르게 반환값이 body로 출력
 - RestAPI, 스프링, 노드js 연동하면 구글맵, RestAPI실시간으로 결과 공유할 수 있게 만들 수 있다
+- Junit(스프링 테스트 방법) 부메랑(RestAPI 컨트롤러 테스트 방법)
+- 스윙 = 자바 PC용 프로그램
 
 #### 20210705(월) 작업
 - heroku- Deploy 에러 : No web processes running 
@@ -74,6 +76,7 @@
 - 헤로쿠에서 오라클을 지원 안하기 때문에 hsql로 변경(배포할때는 오라클로 변경)
 - mysql 폴더에 Mapper(board, boardType, member, reply) 추가
 - oracle, hsqlproperties 추가 후 변수 생성. root-context에 변수처리
+- cloude.properties 만든 후 헤로쿠에서 확인 ok
 
 #### 20210702(금) 작업
 - mypage 탈퇴 구현 (O)
