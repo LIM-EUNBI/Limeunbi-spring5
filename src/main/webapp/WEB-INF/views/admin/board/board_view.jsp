@@ -312,7 +312,9 @@ var replyList = function() {
 				printReplyList(result.replyList, $("#template"), $("#collapseReply"));
 				printPagingList(result.pageVO, ".pagination");
 			}
-		},error:function() {
+		},error:function(result) {
+			//console.log(result);//크롬에서 확인 가능
+			//alert(JSON.stringify(result));//IE에서 오류 확인
 			alert('RestAPI서버가 작동하지 않습니다.');
 		}
 	});

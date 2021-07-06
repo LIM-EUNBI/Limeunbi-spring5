@@ -1,21 +1,28 @@
 package com.edu.controller;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 //외부 라이브러리(모듈) 사용 = import
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.edu.service.IF_BoardService;
 import com.edu.service.IF_MemberService;
+import com.edu.vo.BoardVO;
 import com.edu.vo.MemberVO;
+import com.edu.vo.PageVO;
 
 /**
  * 이 클래스는 MVC웹프로젝트를 최초로 생성시 자동으로 생성되는 클래스
@@ -33,12 +40,30 @@ public class HomeController {
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	@Inject
 	private IF_MemberService memberService;
+	@Autowired
+	private IF_BoardService boardService;
 	/**
 	 * 사용자요청(웹브라우저)을 받아서=@RequestMapping인테페이스를 사용해서 메서드명을 스프링이 구현합니다.
 	 *  ,router(루트rootX)
 	 * return 값으로 view(jsp)를 선택해서 작업한 결과를 변수로 담아서 화면에 전송 후 결과를 표시(렌더링) 합니다.
 	 * 폼(자료)전송시 post(자료숨김), get(자료노출-URL쿼리스트링?있는자료전송)
 	 */
+	
+	//게시물 리스트 페이지 호출
+	@RequestMapping(value="/home/board/board_list", method=RequestMethod.GET)
+	public String board_list(Model model, @ModelAttribute("pageVO") PageVO pageVO) throws Exception{
+		
+		if(pageVO.getPage() == null) {
+			pageVO.setPage(1);
+		}
+		pageVO.setQueryPerPageNum(5);
+		pageVO.setPerPageNum(5);
+		int totalCount = boardService.countBoard(pageVO);
+		pageVO.setTotalCount(totalCount);//prev, next 변수값이 생성
+		List<BoardVO> boardList = boardService.selectBoard(pageVO);
+		model.addAttribute("boardList", boardList);
+		return "home/board/board_list";
+	}
 	
 	//404파일 에러 처리 GET호출 추가
 	@RequestMapping(value="/home/error/error_404", method=RequestMethod.GET)

@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 
 <%@include file="./include/header.jsp" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!-- --------- 이후는 메인 컨텐츠 부분 ----------- -->
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -43,114 +44,30 @@
           <!-- /.card-header -->
           <div class="card-body p-0" style="display: block;">
             <ul class="users-list clearfix">
-              <li style="cursor: pointer;" onclick="alert('해당회원정보로 이동합니다.')">
+            <!--최신 등록한 회원정보 4명씩 출력-->
+            <c:forEach var="memberVO" items="${latestMembers}" >
+              <li style="cursor: pointer;" onclick="location.replace('/admin/member/member_view?user_id=${memberVO.user_id}')">
                 <img src="/resources/admin/dist/img/default-150x150.png" alt="User Image">
-                <a class="users-list-name" href="#">{이름}</a>
-                <span class="users-list-date">{날짜}</span>
+                <a class="users-list-name" href="#">${memberVO.user_name}</a>
+                <span class="users-list-date">
+                	<fmt:formatDate pattern="yyyy-MM-dd hh:mm:ss" value="${memberVO.reg_date }"/>
+                </span>
               </li>
+            </c:forEach>
             </ul>
             <!-- /.users-list -->
           </div>
           <!-- /.card-body -->
           <div class="card-footer text-center" style="display: block;">
-            <a href="javascript:alert('회원목록으로 이동')">View All Users</a>
+            <a href="/admin/member/member_list">View All Users</a>
           </div>
           <!-- /.card-footer -->
         </div>
         <!-- // 최근 등록한 회원 목록 -->
         <!-- 최근 등록된 게시물 -->
-        <div class="card">
-          <div class="card-header border-transparent">
-            <h3 class="card-title">최근 공지사항</h3>
-
-            <div class="card-tools">
-              <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                <i class="fas fa-minus"></i>
-              </button>
-              <button type="button" class="btn btn-tool" data-card-widget="remove">
-                <i class="fas fa-times"></i>
-              </button>
-            </div>
-          </div>
-          <!-- /.card-header -->
-          <div class="card-body p-0">
-            <div class="table-responsive">
-              <table class="table m-0">
-                <thead>
-                <tr>
-                  <th>Order ID</th>
-                  <th>Item</th>
-                  <th>Status</th>
-                  <th>Popularity</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                  <td><a href="pages/examples/invoice.html">OR9842</a></td>
-                  <td>Call of Duty IV</td>
-                  <td><span class="badge badge-success">Shipped</span></td>
-                  <td>
-                    <div class="sparkbar" data-color="#00a65a" data-height="20">90,80,90,-70,61,-83,63</div>
-                  </td>
-                </tr>
-                </tbody>
-              </table>
-            </div>
-            <!-- /.table-responsive -->
-          </div>
-          <!-- /.card-body -->
-          <div class="card-footer clearfix">
-            <a href="javascript:void(0)" class="btn btn-sm btn-info float-right">더보기</a>
-            <!-- <a href="javascript:void(0)" class="btn btn-sm btn-secondary float-right">View All Orders</a> -->
-          </div>
-          <!-- /.card-footer -->
-        </div>
-        <div class="card">
-          <div class="card-header border-transparent">
-            <h3 class="card-title">최근 겔러리</h3>
-
-            <div class="card-tools">
-              <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                <i class="fas fa-minus"></i>
-              </button>
-              <button type="button" class="btn btn-tool" data-card-widget="remove">
-                <i class="fas fa-times"></i>
-              </button>
-            </div>
-          </div>
-          <!-- /.card-header -->
-          <div class="card-body p-0">
-            <div class="table-responsive">
-              <table class="table m-0">
-                <thead>
-                <tr>
-                  <th>Order ID</th>
-                  <th>Item</th>
-                  <th>Status</th>
-                  <th>Popularity</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                  <td><a href="pages/examples/invoice.html">OR9842</a></td>
-                  <td>Call of Duty IV</td>
-                  <td><span class="badge badge-success">Shipped</span></td>
-                  <td>
-                    <div class="sparkbar" data-color="#00a65a" data-height="20">90,80,90,-70,61,-83,63</div>
-                  </td>
-                </tr>
-                </tbody>
-              </table>
-            </div>
-            <!-- /.table-responsive -->
-          </div>
-          <!-- /.card-body -->
-          <div class="card-footer clearfix">
-            <a href="javascript:void(0)" class="btn btn-sm btn-info float-right">더보기</a>
-            <!-- <a href="javascript:void(0)" class="btn btn-sm btn-secondary float-right">View All Orders</a> -->
-          </div>
-          <!-- /.card-footer -->
-        </div>
+        <c:forEach var="boardTypeVO" items="${listBoardTypeVO}">
+ 			<c:import url="/admin/latest/latest_board?board_type=${boardTypeVO.board_type}&board_name=${boardTypeVO.board_name }" />
+ 		</c:forEach>
         <!-- // 최근 등록된 게시물 -->
       </div><!-- /.container-fluid -->
     </section>

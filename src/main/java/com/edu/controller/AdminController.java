@@ -333,9 +333,26 @@ public class AdminController {
 	//URL요청 경로는 @RequestMapping 반드시 절대 경로로 표시
 	@RequestMapping(value="/admin", method=RequestMethod.GET)
 	public String admin(Model model) throws Exception { //에러 발생시 Exception을 스프링으로 보내게 됩니다.
-		
-		
+		PageVO pageVO = new PageVO();
+		pageVO.setQueryPerPageNum(4);
+		pageVO.setPage(1);
+		List<MemberVO> latestMembers = memberService.selectMember(pageVO);
+		model.addAttribute("latestMembers", latestMembers);
 		return "admin/home"; //리턴 경로 = 접근경로는 반드시 상대 경로로 표시(views가 최상위 폴더)
 		// prefix(/WEB-INF/views/) suffix(.jsp)
+	}
+	//메인페이지 또는 대시보드에 최신 테이블리스트를 출력하는 방법 2가지(위, model사용
+	//아래, @import방식 : 최신 게시물 용도로 사용/ 페이지 안에서 컴파일된 다른 페이지를 불러올 수 있다.
+	@RequestMapping(value="/admin/latest/latest_board", method=RequestMethod.GET)
+	public String latest_board(Model model, @RequestParam(value="board_type", required=false) String board_type, @RequestParam(value="board_name", required=false) String board_name) throws Exception{
+		PageVO pageVO = new PageVO();
+		pageVO.setQueryPerPageNum(5);
+		pageVO.setPage(1);
+		pageVO.setBoard_type(board_type);
+		List<BoardVO> latestBoard = boardService.selectBoard(pageVO);
+		model.addAttribute("board_name", board_name);
+		model.addAttribute("board_type", board_type);
+		model.addAttribute("latestBoard", latestBoard);
+		return "admin/latest/latest_board";
 	}
 }

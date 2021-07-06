@@ -57,7 +57,26 @@
 - @RestController클래스 : 일반 컨트롤러와 다르게 반환값이 body로 출력
 - RestAPI, 스프링, 노드js 연동하면 구글맵, RestAPI실시간으로 결과 공유할 수 있게 만들 수 있다
 - Junit(스프링 테스트 방법) 부메랑(RestAPI 컨트롤러 테스트 방법)
+- 스프링 RestAPI는 Ajax(로거 디버거로 하지 않고, RestAPI리턴값으로 비교)
 - 스윙 = 자바 PC용 프로그램
+- 
+- Hsql데이터베이스의 특징 : 메모리DB이기 때문에, 보통 서버를 restart하면 DB가 리셋된다.
+- sir = 데모사이트나 프로그램의 프로토타입(데모 프로그램)
+
+#### 20210706(화) 작업
+- 댓글등록 오류 처리(쿼리변경)
+- 대시보드 최근 가입한 회원정보 목록 처리
+- → AdminController에서 admine 메서드에서 보내줄 값 추가
+- → home.jsp에서 forEach 반복문을 사용해서 반복 구현
+- → 대시보드에서 회원 눌렀을 때, member_view 페이지로 이동하기 구현
+- → view All Users 눌렀을 때, member_list 페이지로 이동하기 구현
+- 대시보드 게시물 
+- → AdminController에 latest_board 메서드 추가
+- → admin폴더에 latest 폴더 추가, latest_board.jsp 추가 
+- → card 부분 latest_board로 붙여넣고 JSTL <c:import 방식으로 import해주기
+- → Aspect에서 정의한 listBoardTypeVO 사용해서 반복문 돌리기
+-
+- 사용자단 board_list (bno(정렬), 페이징 처리)
 
 #### 20210705(월) 작업
 - heroku- Deploy 에러 : No web processes running 
