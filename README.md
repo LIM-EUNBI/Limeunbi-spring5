@@ -36,8 +36,8 @@
 - API 설명 : https://www.redhat.com/ko/topics/api/what-are-application-programming-interfaces
 - RestAPI 설명 : https://gmlwjd9405.github.io/2018/09/21/rest-and-restful.html
 - ResponseEntity 설명 : https://juwonkim.tistory.com/m/161?category=848128
+- 제어의 역전 설명 : https://codevang.tistory.com/241
 - 
-
 - 데이터 정의어(DDL - Data Definition Language)
 - 데이터 정의어는 데이터를 정의하는 언어
 - 테이블이나 관계의 구조를 생성하는 데 사용
