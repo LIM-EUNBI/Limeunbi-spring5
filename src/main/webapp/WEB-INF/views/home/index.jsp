@@ -77,9 +77,9 @@ $(document).ready(function() {
         </div>
         <!-- //모바일+PC 공통슬라이드영역 -->
 	
-		<!-- 갤러리최근게시물영역 -->
+		<!-- 겔러리최근게시물영역 -->
 		<div class="about_area">
-			<h2>갤러리 최근 게시물 <b>TOP 3</b></h2>
+			<h2>겔 최근 게시물 <b>TOP 3</b></h2>
 			<div class="about_box">
 				<ul class="place_list box_inner clear">
 					<li><a href="#" onclick="$('.popup_base').css('height',$(document).height());$('.contact_pop').show();">
@@ -103,7 +103,7 @@ $(document).ready(function() {
 				</ul>
 			</div>
 		</div>
-		<!-- //갤러리최근게시물영역 -->
+		<!-- //겔러리최근게시물영역 -->
 
 		<!-- 카카오톡상담및최근공지사항영역 -->
 		<div class="appbbs_area">

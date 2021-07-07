@@ -73,6 +73,7 @@ public class AdminController {
 		boardService.insertBoard(boardVO); // DB에 저장하는 서비스 호출
 		return "redirect:/admin/board/board_list";
 	}
+	
 	@RequestMapping(value="/admin/board/board_insert_form", method=RequestMethod.GET)
 	public String board_insert_form(@ModelAttribute("pageVO")PageVO pageVO) throws Exception{
 		if(pageVO.getPage() == null) {
