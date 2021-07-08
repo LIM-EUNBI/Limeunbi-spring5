@@ -38,7 +38,7 @@
 		            		 <c:set var="extName" value="${fileNameArray[fn:length(fileNameArray)-1]}" />
 		            		 <c:choose>
 		            		 	<c:when test="${fn:containsIgnoreCase(checkImgArray,extName)}">
-		            		 	<img alt="다운로드 이미지" style="width:100%;display:block;" src="/image_preview?save_file_name=${boardVO.save_file_names[idx]}">
+		            		 	<img alt="다운로드 이미지" style="max-width:100%;display:block;" src="/image_preview?save_file_name=${boardVO.save_file_names[idx]}">
 		            		 	</c:when>
 		            		 </c:choose>			
 						</c:if>
@@ -161,7 +161,9 @@
 						location.replace('/home/board/board_list?page=${pageVO.page }&search_type=${pageVO.search_type}');
 					});
 					$("#btn_update").click(function() {
-						alert('준비중');
+						form.attr("action", "/home/board/board_update_form");
+						form.attr("method", "get");
+						form.submit();
 					});
 					$("#btn_delete").click(function() {
 						if(confirm('정말로 삭제하시겠습니까?')){

@@ -15,10 +15,8 @@
 				<value>classpath:/properties/oracle.properties</value>
 				-->
 				 
-				<!--  <value>classpath:/properties/cloud.properties</value> -->
-				 
-				
-				<value>classpath:/properties/hsql.properties</value>
+				 <value>classpath:/properties/cloud.properties</value>
+
 				
 			</list>
 		</property>
