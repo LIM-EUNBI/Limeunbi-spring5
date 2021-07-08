@@ -37,6 +37,9 @@
 if("${msg}" != ""){
 	alert("${msg} 되었습니다.");
 }
+if("${msgError}" != ""){
+	alert("${msgError}");
+}
 </script>
 
 </head>

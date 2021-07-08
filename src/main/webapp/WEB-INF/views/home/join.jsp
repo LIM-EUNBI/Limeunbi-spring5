@@ -118,10 +118,12 @@ $(document).ready(function() {
 		if($(this).val() != ""){
 			$.ajax({
 				type:"get",
-				url:"/id_check?user_id="+$(this).val(),
-				dataType:"text",
+				url:"/id_check_old?user_id="+$(this).val(),
+				dataType:"json",
 				success:function(result){
-					if(result == 0){ //중복ID가 존재하지 않으면
+					//alert(JSON.stringify(result));
+					//alert(result.memberCnt);
+					if(result.memberCnt == 0){ //중복ID가 존재하지 않으면
 						$("#btn_insert").attr("disabled", false);
 						$("#btn_insert").css("opacity", "1");
 						$("#msg").remove();

@@ -22,6 +22,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -185,6 +186,19 @@ public class CommonUtil {
 			} 			
 		}
 		return memberCnt;//0.jsp 이렇게 작동하지 않습니다. 이유는 @ResponseBody때문이고, RestAPI는 값만 반환
+	}
+	//사용자단에서 사용 : JsonView방식으로 RestAPI 구현 
+	@RequestMapping(value="/id_check_old", method=RequestMethod.GET)
+	public String id_check_old(@RequestParam("user_id")String user_id, Model model) throws Exception{
+		String memberCnt = "1"; //중복 아이디가 있는것을 기본값으로 지정
+		if(!user_id.isEmpty()) {
+			MemberVO memberVO = memberService.readMember(user_id);
+			if(memberVO == null) { //중복ID가 없다면
+				memberCnt = "0";
+			}
+		}
+		model.addAttribute("memberCnt",memberCnt);
+		return "jsonView";//jsp파일명 대신 servlet에서 정의한 스프링빈 ID명을 적으면, json객체로 결과를 반환.
 	}
 
 	// 파일 업로드 공통 메서드(Admin Controller에서 사용, homeController에서도 똑같이 사용예정)

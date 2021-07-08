@@ -67,6 +67,15 @@
 - update구현 (ajax로 첨부파일 삭제 처리)
 - → bno를 안보내줘서 오류 났었음
 - 사용자단 CRUD 끝
+- 
+- JsonView 방식 사용방법 
+- → servlet.xml에 스프링빈 등록(클래스는 스프링 프레임워크에 내장되어 있다. 즉, pom.xml 외부 모듈을 가져오지 않아도 된다.)
+- → CommonUtil - Id_Check 메서드 추가
+- → join에서 ajax부분 수정
+- 
+- 본인글만 수정할 수 있도록 구현
+- → HomeController에서 board_update에 if문 추가
+- → LoginController에서 만든 session_userid 사용
 
 #### 20210707(수) 작업
 - board_list 마무리 (권한에 따라서 게시물 등록버튼 나타내기, 상단에 게시판 동적으로 나타내기)

@@ -61,7 +61,13 @@ public class HomeController {
 	
 	//게시물 수정 처리 POST 추가
 	@RequestMapping(value="/home/board/board_update",method=RequestMethod.POST)
-	public String board_update(@RequestParam("file")MultipartFile[] files,PageVO pageVO,BoardVO boardVO,RedirectAttributes rdat) throws Exception {
+	public String board_update(HttpServletRequest request,@RequestParam("file")MultipartFile[] files,PageVO pageVO,BoardVO boardVO,RedirectAttributes rdat) throws Exception {
+		//로그인한 세션ID와 게시물의 boardVO.writer사용자와 비교해서 같으면 계속, 다르면 진행X
+		HttpSession session = request.getSession();
+		if(!boardVO.getWriter().equals(session.getAttribute("session_userid"))) {
+			rdat.addFlashAttribute("msgError","본인글만 수정할 수 있습니다.");
+			return "redirect:/home/board/board_view?bno="+boardVO.getBno()+"&page="+pageVO.getPage();
+		}
 		//첨부파일 처리, delFiles만드는 이유는 첨부파일은 수정시, 기존파일 삭제 후 입력해야 하기 때문에
 		List<AttachVO> delFiles = boardService.readAttach(boardVO.getBno());
 		//폼에서 전송받은 첨부파일 files 가로배치로 만들기 위해서 배열변수 생성
@@ -101,16 +107,23 @@ public class HomeController {
 		boardVO.setContent(commonUtil.unscript(rawContent));
 		//게시판테이블 처리
 		boardService.updateBoard(boardVO);
-		rdat.addFlashAttribute("msg", "게시물 수정");//출력메세지: 게시물 수정 이(가) 성공~
+		rdat.addFlashAttribute("msg", "게시물이 수정");//출력메세지: 게시물 수정 이(가) 성공~
 		return "redirect:/home/board/board_view?bno="+boardVO.getBno()+"&page="+pageVO.getPage();//수정하고 뷰페이지로 이동
 	}
 
 	//게시물 수정 폼 호출 GET 추가
 	@RequestMapping(value="/home/board/board_update_form", method=RequestMethod.GET)
-	public String board_update_form(Model model, @ModelAttribute("pageVO")PageVO pageVO, @RequestParam("bno")Integer bno) throws Exception{
+	public String board_update_form(RedirectAttributes rdat, HttpServletRequest request,Model model, @ModelAttribute("pageVO")PageVO pageVO, @RequestParam("bno")Integer bno) throws Exception{
+	
 		//1개의 레코드만 서비스로 호출, 첨부파일은 세로데이터를 가로데이터로 변경 후 boardVO 담아서 전송
 		BoardVO boardVO = new BoardVO();
 		boardVO = boardService.readBoard(bno);
+		//로그인한 세션ID와 게시물의 boardVO.writer사용자와 비교해서 같으면 계속, 다르면 진행X
+		HttpSession session = request.getSession();
+		if(!boardVO.getWriter().equals(session.getAttribute("session_userid"))) {
+			rdat.addFlashAttribute("msgError","본인글만 수정할 수 있습니다.");
+			return "redirect:/home/board/board_view?bno="+boardVO.getBno()+"&page="+pageVO.getPage();
+		}
 		//save_file_names, real_file_names 가상필드값을 채운다.
 		List<AttachVO> fileList = boardService.readAttach(bno);
 		int index = 0;
@@ -124,12 +137,21 @@ public class HomeController {
 		boardVO.setReal_file_names(real_file_names);
 		boardVO.setSave_file_names(save_file_names);
 		model.addAttribute("boardVO", boardVO);
+		
 		return "home/board/board_update";
 	}
 	
 	//게시물 삭제 처리 호출 POST 추가 --------------------------------------------------------
 	@RequestMapping(value="/home/board/board_delete", method=RequestMethod.POST)
-	public String board_delete(@RequestParam("bno")Integer bno, RedirectAttributes rdat) throws Exception{
+	public String board_delete(PageVO pageVO,RedirectAttributes rdat, HttpServletRequest request,@RequestParam("bno")Integer bno) throws Exception{
+		BoardVO boardVO = boardService.readBoard(bno);
+		//로그인한 세션ID와 게시물의 boardVO.writer사용자와 비교해서 같으면 계속, 다르면 진행X
+		HttpSession session = request.getSession();
+		if(!boardVO.getWriter().equals(session.getAttribute("session_userid"))) {
+			rdat.addFlashAttribute("msgError","본인글만 삭제할 수 있습니다.");
+			return "redirect:/home/board/board_view?bno="+boardVO.getBno()+"&page="+pageVO.getPage();
+		}
+		
 		//부모레코드 삭제 전 삭제할 파일들 변수로 임시저장
 		List<AttachVO> delFiles = boardService.readAttach(bno);
 		//테이블 1개 레코드 삭제처리
