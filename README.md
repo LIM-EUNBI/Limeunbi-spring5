@@ -37,7 +37,8 @@
 - RestAPI 설명 : https://gmlwjd9405.github.io/2018/09/21/rest-and-restful.html
 - ResponseEntity 설명 : https://juwonkim.tistory.com/m/161?category=848128
 - 제어의 역전 설명 : https://codevang.tistory.com/241
-- 
+- ResponseBody 설명 : https://highcode.tistory.com/24
+-
 - 데이터 정의어(DDL - Data Definition Language)
 - 데이터 정의어는 데이터를 정의하는 언어
 - 테이블이나 관계의 구조를 생성하는 데 사용
@@ -62,6 +63,15 @@
 - 
 - Hsql데이터베이스의 특징 : 메모리DB이기 때문에, 보통 서버를 restart하면 DB가 리셋된다.
 - sir = 데모사이트나 프로그램의 프로토타입(데모 프로그램)
+
+#### 20210709(금) 작업
+- HomeController에서 본인글만 수정, 삭제할 수 있는 기능을  AOP로 따로 구현
+- 댓글 구현
+- 
+- 헤로쿠는 30분 지나면 휴면모드로 들어가기 때문에 20분마다 재접속해주는 기능 추가.
+- 휴면모드 해제기능 추가 (pom.xml)
+- MemberService에 기능 추가
+- root-context에 빈 추가, 실행하는 명령 추가
 
 #### 20210708(목) 작업
 - update구현 (ajax로 첨부파일 삭제 처리)

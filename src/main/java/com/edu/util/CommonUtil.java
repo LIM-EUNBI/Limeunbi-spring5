@@ -4,6 +4,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.UUID;
@@ -49,6 +51,7 @@ public class CommonUtil {
 	@Inject
 	private BoardDAO boardDAO;
 	
+
 	// 첨부파일 개별삭제 ajax @ResponseBody 사용
 	@RequestMapping(value="/file_delete", method=RequestMethod.POST)
 	@ResponseBody

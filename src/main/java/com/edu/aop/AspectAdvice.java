@@ -17,8 +17,12 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.servlet.FlashMap;
+import org.springframework.web.servlet.FlashMapManager;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
+import com.edu.service.IF_BoardService;
 import com.edu.service.IF_BoardTypeService;
 import com.edu.vo.BoardTypeVO;
 import com.edu.vo.BoardVO;
@@ -39,8 +43,45 @@ public class AspectAdvice {
 
 	@Inject
 	private IF_BoardTypeService boardTypeService;
+	@Inject
+	private IF_BoardService boardService;
 	
-	
+	//본인글만 수정, 삭제하는 기능 구현(admin은 제외) (조인포인트 사용)
+	@Around("execution(* com.edu.controller.HomeController.board_delete(..)) || execution(* com.edu.controller.HomeController.board_update*(..))")
+	public Object check_role(ProceedingJoinPoint pjp) throws Throwable{
+		//이전 페이지 url, 세션값을 가져오기 위해서 request 필요
+		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+		//사용할 변수 초기화
+		String user_id = null; //게시물 작성자 ID
+		BoardVO boardVO = null; //boardVO.getWriter()
+		logger.info("디버그 호출된 메서드명은 : "+pjp.getSignature().getName());
+		//향상된 for문을 이용해서 매개변수 중 bno, boardVO 2가지를 체크해서 user_id를 구한다.
+		for(Object object: pjp.getArgs() ) {
+			//메서드의 매개변수가 BoardVO, bno일때만 로직을 실행하기 위해서
+			if(object instanceof BoardVO) {
+				user_id = ((BoardVO) object).getWriter();
+			}
+			if(object instanceof Integer) {
+				boardVO = boardService.readBoard((int) object);
+				user_id = boardVO.getWriter();
+			}
+		}
+		if(request != null) {
+			HttpSession session = request.getSession();
+			
+			if(!user_id.equals(session.getAttribute("session_userid")) && "ROLE_USER".equals(session.getAttribute("session_levels"))) {
+				FlashMap flashMap = new FlashMap();
+				flashMap.put("msgError", "게시물은 본인글만 수정/삭제 가능합니다.");
+				FlashMapManager flashMapManager = RequestContextUtils.getFlashMapManager(request);
+				flashMapManager.saveOutputFlashMap(flashMap, request, null);
+				
+				return "redirect:"+request.getHeader("Referer");
+			}
+		}
+		
+		Object result = pjp.proceed(); //실제 조인포인트가 이코드에서 실행된다.
+		return result;
+	}
 	// 컨트롤러에서 Exception이 발생했을 때, 에러 메세지를 개발자가 작성한 jsp화면에 뿌려주는 기능을 하는 메서드
 	@ExceptionHandler(Exception.class)
 	public ModelAndView errorModelAndView(Exception e, HttpServletRequest request) {
