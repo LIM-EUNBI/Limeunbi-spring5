@@ -126,7 +126,7 @@
 	<!-- 위에서 만든 스프링빈을 20분마다 실행하는 명령 추가, 크론(데몬-백그라운드) 프로그램-->
 	<bean id="herokuJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
 		<property name="jobDetail" ref="herokuJob" />
-		<property name="cronExpression" value="0 0/20 23,0-18 ? * MON,TUE,WED,THU,FRI" />
+		<property name="cronExpression" value="0 0/20 23,6-18 ? * MON,TUE,WED,THU,FRI" />
 	</bean>
 	<!-- 위에서 만든 트리거가 1개가 아니라 여러개일 때, 1개씩 실행하는 코드 -->
 	<bean id="jobScheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
