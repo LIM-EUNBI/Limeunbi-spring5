@@ -41,10 +41,19 @@ if("${param.msg}" == "fail"){
 
 					</ul>
 					<p class="btn_line">
-					<button class="btn_baseColor" style="cursor:pointer;">로그인</button>
+					<button type="submit" class="btn_baseColor" >로그인</button>
+					<button type="button" class="btn_baseColor" style="background-color:#19ce60;min-width:150px;" id="btn_naver_login">네이버 로그인</button>
 					</p>	
 				</fieldset>
 			</form>
 			<!-- //폼영역 -->
     </div>
 <%@ include file="./include/footer.jsp"%>
+<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.2.js" charset="utf-8"></script>
+<script>
+$(document).ready(function() {
+	$("#btn_naver_login").click(function() {
+		location.replace("${url}"); //login컨트롤러에서 model로 받은 $url변수값이 필요
+	});
+});
+</script>

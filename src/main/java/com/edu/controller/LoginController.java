@@ -11,6 +11,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -30,6 +31,16 @@ public class LoginController {
 	@Inject
 	private IF_MemberService memberService;
 	
+	
+	//HomeController에 있던 /login_form을 네이버 로그인 URL 생성때문에 여기로 이동
+	@RequestMapping(value="/login_form", method=RequestMethod.GET)
+	public String login_form(Model model, HttpSession session) throws Exception{
+		//세션 : 서버에 클라이언트 접속정보를 저장하는 공간
+		String url = "";
+		
+		model.addAttribute("${url}", null);
+		return "home/login";
+	}
 	@RequestMapping(value="/login_success", method=RequestMethod.GET)
 	public String login_success(HttpServletRequest request, RedirectAttributes rdat) throws Exception{
 		//request는 세션객체를 만들기 위해서(로그인 정보 유지)

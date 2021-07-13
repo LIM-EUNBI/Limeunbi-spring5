@@ -305,16 +305,38 @@ public class HomeController {
 		return "home/member/mypage";
 	}
 	// 사용자단 로그인폼 호출-----------------------------------------------------------------------
-	@RequestMapping(value="/login_form", method=RequestMethod.GET)
-	public String login_form() throws Exception{
-		return "home/login";
-	}
+	/*
+	 * @RequestMapping(value="/login_form", method=RequestMethod.GET) public String
+	 * login_form(Model model) throws Exception{ model.addAttribute("url", null);
+	 * return "home/login"; }
+	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String homepage(Model model) { //콜백메스드,자동실행됨.
-		String jspVar = "@서비스(DB)에서 처리한 결과";
-		model.addAttribute("jspObject", jspVar);
-		//home.jsp파일로 자료를 전송(스프링)하는 기능= model인터페이스 객체(스프링이처리)에 내용만 채우면됨
-		logger.info("디버그 스프링 로고 사용 :" + jspVar); // System.out 대신 logger 객체를 사용.
+	public String homepage(Model model) throws Exception{ //콜백메스드,자동실행됨.
+		/*
+		 * String jspVar = "@서비스(DB)에서 처리한 결과"; model.addAttribute("jspObject", jspVar);
+		 * //home.jsp파일로 자료를 전송(스프링)하는 기능= model인터페이스 객체(스프링이처리)에 내용만 채우면됨
+		 * logger.info("디버그 스프링 로고 사용 :" + jspVar); // System.out 대신 logger 객체를 사용.
+		 */		
+		PageVO pageVO = new PageVO();
+		pageVO.setPage(1);
+		pageVO.setQueryPerPageNum(3); //겔러리3개
+		pageVO.setBoard_type("gallery");
+		//첨부파일
+		List<BoardVO> latestGallery = boardService.selectBoard(pageVO);
+		for(BoardVO boardVO:latestGallery) { //리스트형 객체를 한개씩 뽑아서 1개 레코드에 입력
+			List<AttachVO> attachVO = boardService.readAttach(boardVO.getBno());
+			if(attachVO.size() > 0) {
+				String[] save_file_names = new String[attachVO.size()];
+				save_file_names[0] = attachVO.get(0).getSave_file_name();
+				boardVO.setSave_file_names(save_file_names);
+			}
+		}
+		model.addAttribute("latestGallery", latestGallery); //겔러리 최근 게시물
+		
+		pageVO.setQueryPerPageNum(5);//공지사항 5개
+		pageVO.setBoard_type("notice");
+		model.addAttribute("latestNotice", boardService.selectBoard(pageVO)); //공지사항 최근 게시물
+		
 		return "home/index";//확장자가 생략 .jsp가 생략되어 있음.
 	}
 }
