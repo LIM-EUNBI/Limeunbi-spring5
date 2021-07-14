@@ -65,12 +65,15 @@
 - Hsql데이터베이스의 특징 : 메모리DB이기 때문에, 보통 서버를 restart하면 DB가 리셋된다.
 - sir = 데모사이트나 프로그램의 프로토타입(데모 프로그램)
 
+#### 20210714(수) 작업
+- LoginController에 naver_callback 메서드 구현
+
 #### 20210713(화) 작업
 - 사용자단 대시보드 작업
 - 네이버 오픈API를 사용해서 네이버 아이디 로그인 추가
 - → 네이버 폼으로 진행(스프링 시큐리티 무시) → 네이버 로그인 폼에서 인증을 받으면 서비스되는 사이트로 돌아오기
 - → 스프링 시큐리티 로직으로 → 골백 메서드에서 enabled, ROLE 권한 부여, session 생성 
-- login.jsp에서 네이버 로그인 버튼 추가, script 추가
+- login.jsp에서 네이버 로그인 버튼 추가, script 추가(url은 LoginController에서 보내준다)
 - LoginController에 메서드 추가, NaverLoginController 클래스 생성
 - sns.properties 파일 추가
 - pom.xml에 네이버 외부모듈 추가

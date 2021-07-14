@@ -1,23 +1,33 @@
 package com.edu.controller;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.edu.service.IF_MemberService;
 import com.edu.vo.MemberVO;
+import com.github.scribejava.core.model.OAuth2AccessToken;
 
 /**
  * 스프링 시큐리티의 /login처리한 결과를 받아서 
@@ -30,17 +40,60 @@ import com.edu.vo.MemberVO;
 public class LoginController {
 	@Inject
 	private IF_MemberService memberService;
+	@Inject
+	private NaverLoginController naverLoginController;
 	
-	
+	//네이버 인증체크 후 이동할 URL = 콜백 URL
+	@RequestMapping(value="/naver_callback", method={RequestMethod.GET, RequestMethod.POST})
+	public String login_callback(@RequestParam(required=false) String code, @RequestParam String state, HttpSession session, Model model, RedirectAttributes rdat) throws IOException, ParseException{
+		//로그인 취소 버튼을 눌렀을 때,
+		if(code == null) {
+			rdat.addFlashAttribute("msgError", "네이버 로그인을 취소하였습니다.");
+			return "redirect:/login";
+		}
+		OAuth2AccessToken oauthToken; //인증에 사용되는 토큰 객체 생성.
+		oauthToken = naverLoginController.getAccessToken(session, code, state);
+		//네이버로 로그인 한 사용자 profile을 가져온다.
+		String profile = naverLoginController.getUserProfile(oauthToken);
+		//위 정보를 json데이터로 파싱
+		JSONParser parser = new JSONParser();
+		Object obj = parser.parse(profile);
+		JSONObject jsonObj = (JSONObject) obj;
+		JSONObject response_obj = (JSONObject) jsonObj.get("response");
+		String status = (String) jsonObj.get("message"); //인증 성공여부 확인 
+		//최종적으로 출력된 response_obj를 파싱
+		String username = (String) response_obj.get("name");
+		String useremail = (String) response_obj.get("email");
+		if(status.equals("success")) { //네이버 인증처리 결과가 success면
+			//인증성공 후 스프링 시큐리티의 ROLE_USER권한을 받아야 insert, member, update, delete에 접근 가능
+			List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+			authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+			Authentication authentication = new UsernamePasswordAuthenticationToken(useremail, null, authorities);
+			SecurityContextHolder.getContext().setAuthentication(authentication); //위에서 발생한 인증토큰을 시큐리티 클래스에 저장
+			session.setAttribute("session_enabled", true);
+			session.setAttribute("session_userid", useremail);
+			session.setAttribute("session_levels", "ROLE_USER");
+			session.setAttribute("session_username", username);
+			session.setAttribute("session_login_type", "sns"); //마이페이지 안보이게 처리
+			rdat.addFlashAttribute("msg", "네이버 로그인"); //출력결과 : 네이버 아이디
+		}
+		else {
+			rdat.addFlashAttribute("msgError", "네이버 로그인 실패하였습니다.");
+			return "redirect:/login_form";
+		}
+		return "redirect:/"; //로그인 성공했다면 /로 이동
+	}
+
 	//HomeController에 있던 /login_form을 네이버 로그인 URL 생성때문에 여기로 이동
 	@RequestMapping(value="/login_form", method=RequestMethod.GET)
 	public String login_form(Model model, HttpSession session) throws Exception{
 		//세션 : 서버에 클라이언트 접속정보를 저장하는 공간
 		String url = "";
-		
-		model.addAttribute("${url}", null);
+		url = naverLoginController.getAuthorizationUrl(session);
+		model.addAttribute("url", url);
 		return "home/login";
 	}
+	
 	@RequestMapping(value="/login_success", method=RequestMethod.GET)
 	public String login_success(HttpServletRequest request, RedirectAttributes rdat) throws Exception{
 		//request는 세션객체를 만들기 위해서(로그인 정보 유지)

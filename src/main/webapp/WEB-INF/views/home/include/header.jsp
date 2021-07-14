@@ -65,10 +65,12 @@ if("${msgError}" != ""){
 					<c:when test="${session_enabled eq 'true' }">
 					<!-- 로그인 후 보이는 메뉴(아래) -->
 					<li style="color:#fff;font-size: 14px;">${session_username}님 환영합니다.</li>
-					<li><a href="/member/mypage_form">마이페이지</a></li>
 					<li><a href="/logout">로그아웃</a></li>
+					<c:if test="${session_login_type ne 'sns'}">
+					<li><a href="/member/mypage_form">마이페이지</a></li>
+					</c:if>
 					<c:if test="${session_levels eq 'ROLE_ADMIN' }">
-					<li><a href="/admin">AdminLTE</a></li>
+						<li><a href="/admin">AdminLTE</a></li>
 					</c:if>
 					</c:when>
 				<c:otherwise>
