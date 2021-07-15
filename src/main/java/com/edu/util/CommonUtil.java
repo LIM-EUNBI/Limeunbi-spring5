@@ -12,6 +12,7 @@ import java.util.UUID;
 
 import javax.annotation.Resource;
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FilenameUtils;
@@ -216,4 +217,29 @@ public class CommonUtil {
 		FileCopyUtils.copy(fileData, target); // 물리적으로 폴더에 저장
 		return saveFileName;
 	}
+	
+	// 프로필 이미지 업로드 메서드
+	public void profile_upload(String user_id, HttpServletRequest request, MultipartFile file) throws IOException {
+		//서버의 경로가 필요해서 request 사용
+		String folderPath = request.getServletContext().getRealPath("/resources/profile"); //서버의 컨텐츠를 가르킴
+		File makeFolder = new File(folderPath); //공백인 파일 객체 생성.
+		if(!makeFolder.exists()) {
+			makeFolder.mkdir(); //신규폴더 생성
+		}
+		//폴더에 파일이 1000개 이상이면, 조회속도가 느려지기 때문에
+		//이를 방지하기 위해서 년월 폴더로 관리
+		byte[] fileData = file.getBytes();
+		File target = new File(makeFolder,user_id+".png");//user_id는 PK이기 때문에 기존파일이 있다면, 덮어쓴다.
+		FileCopyUtils.copy(fileData, target); //첨부파일이 저장
+		
+	}
+	public void profile_delete(String user_id, HttpServletRequest request) {
+		//프로필 이미지가 존재하면 삭제 
+		String folderPath = request.getServletContext().getRealPath("/resources/profile");
+		File target = new File(folderPath,user_id+".png");
+		if(target.exists()) {
+			target.delete();
+		}
+	}
 }
+

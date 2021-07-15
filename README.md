@@ -65,6 +65,15 @@
 - Hsql데이터베이스의 특징 : 메모리DB이기 때문에, 보통 서버를 restart하면 DB가 리셋된다.
 - sir = 데모사이트나 프로그램의 프로토타입(데모 프로그램)
 
+#### 20210715(목) 작업
+- reply 부메랑 테스트 (리스트 안에 HashMap 확인)
+- admin member_insert에 프로필 사진 구현.
+- AdminController에서 insertMember수정
+- CommonUtil에 profile_upload 메서드 추가
+- 프로필 이미지는 누구나 다 접근 가능한 resources폴더에 업로드
+- URL로 접근할때는 http://localhost:8080/resoures/profile/user55
+- 프로필 이미지 insert, update, view 구현
+
 #### 20210714(수) 작업
 - LoginController에 naver_callback 메서드 구현
 

@@ -38,7 +38,19 @@
             <!-- 첨부파일을 전송할때는 enctype 필수! 없으면 첨부파일 전송 X -->
             <form name="form_write" method="POST" action="/admin/member/member_update" enctype="multipart/form-data">
               <div class="card-body">
-                
+              <div class="form-group">
+	              <img style="width:120px; height:120px; border-radius:50%;" onerror="this.src='/resources/admin/dist/img/default-150x150.png'" src="/resources/profile/${memberVO.user_id}.png" alt="User Image">                  
+                </div>
+                <!-- 사용자 프로필 이미지 수정-->
+                <div class="form-group">
+                  <label for="exampleInputFile">사용자 프로필</label>
+                  <div class="input-group">
+                    <div class="custom-file">
+                      <input accept=".png" name="file" type="file" class="custom-file-input" id="file0">
+                      <label class="custom-file-label" for="file0">파일 선택(*png이미지만 가능)</label>
+                    </div>
+                  </div>
+                </div>
                 <div class="form-group">
                   <label for="user_id">회원ID</label>
                   <input readonly value="${memberVO.user_id }" name="user_id" type="text" class="form-control" id="user_id" placeholder="회원 ID를 입력해주세요." required>
@@ -95,6 +107,14 @@
   
 <%@ include file="../include/footer.jsp" %>
 <!-- jQuery사용 관리자단 (jQuery코어가 하단에 있기 때문에 footer보다 아래에 코드작성)-->
+<!-- 첨부파일 부트스트랩 js 코어 -->
+<script src="/resources/admin/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>    
+<!-- jQuery사용 관리자단 (jQuery코어가 하단에 있기 때문에 footer보다 아래에 코드작성)-->
+<script>
+  $(document).ready(function() {
+      bsCustomFileInput.init();
+  });
+</script>
 <script>
 $(document).ready(function(){
 	var form_update = $("form[name='form_write']");

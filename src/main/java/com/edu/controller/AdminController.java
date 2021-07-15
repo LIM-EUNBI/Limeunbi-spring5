@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -247,7 +248,10 @@ public class AdminController {
 	// *********************** 회원관리 ****************************
 	// 회원 신규등록 처리하는 서비스를 호출하는 URL
 	@RequestMapping(value="/admin/member/member_insert", method=RequestMethod.POST)
-	public String insertMember(MemberVO memberVO, PageVO pageVO) throws Exception{
+	public String insertMember(HttpServletRequest request,MultipartFile file, MemberVO memberVO, PageVO pageVO) throws Exception{
+		if(!file.getOriginalFilename().isEmpty()) {
+			commonUtil.profile_upload(memberVO.getUser_id(), request, file);
+		}
 		BCryptPasswordEncoder pwEncoder = new BCryptPasswordEncoder();
 		String raw_pw = memberVO.getUser_pw();
 		String encPw = pwEncoder.encode(raw_pw);
@@ -265,7 +269,12 @@ public class AdminController {
 	
 	// 수정처리를 호출 = DB변경처리
 	@RequestMapping(value="/admin/member/member_update", method=RequestMethod.POST)
-	public String updateMember(MemberVO memberVO, PageVO pageVO) throws Exception{
+	public String updateMember(MultipartFile file, HttpServletRequest request, MemberVO memberVO, PageVO pageVO) throws Exception{
+		//프로필 이미지 처리
+		if(!file.getOriginalFilename().isEmpty()) {
+			String user_id = memberVO.getUser_id();
+			commonUtil.profile_upload(user_id, request, file);
+		}
 		// 수정처리 이후 본인페이지에 있습니다.
 		// 업데이트 쿼리서비스 호출하기 전 스프링시큐리티 암호화 적용합니다.
 		String rawPw = memberVO.getUser_pw();
@@ -289,12 +298,14 @@ public class AdminController {
 		return "admin/member/member_update";
 	}
 	@RequestMapping(value="/admin/member/member_delete", method=RequestMethod.POST)
-	public String deleteMember(MemberVO memberVO) throws Exception {
+	public String deleteMember(HttpServletRequest request, MemberVO memberVO) throws Exception {
 		logger.info("디버그: " + memberVO.toString());
 		//MemberVO memberVO는 클래스형 변수: String user_id 스트링형 변수 같은 방식.
 		String user_id = memberVO.getUser_id();
 		//이 메서드는 회원상세보기페이지에서 삭제버튼을 클릭시 전송받은 memberVO값을 이용해서 삭제를 구현(아래)
 		memberService.deleteMember(user_id);
+		//DB레코드 삭제 후 프로필 이미지가 있으면 삭제
+		commonUtil.profile_delete(user_id, request); //경로때문에 request 추가
 		return "redirect:/admin/member/member_list";
 	}
 	@RequestMapping(value="/admin/member/member_view", method=RequestMethod.GET)

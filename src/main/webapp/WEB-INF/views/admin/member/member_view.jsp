@@ -37,6 +37,9 @@
             <!-- 첨부파일을 전송할때는 enctype 필수! 없으면 첨부파일 전송 X -->
             <form id="form_view" name="form_view" action="/admin/member/member_update_form" enctype="multipart/form-data">
               <div class="card-body">
+               <div class="form-group">
+	              <img style="width:120px; height:120px; border-radius:50%;" onerror="this.src='/resources/admin/dist/img/default-150x150.png'" src="/resources/profile/${memberVO.user_id}.png" alt="User Image">                  
+                </div>
                 <div class="form-group">
                   <label for="exampleInputEmail1">회원ID</label>
                   <br><c:out value="${memberVO.user_id}" />
