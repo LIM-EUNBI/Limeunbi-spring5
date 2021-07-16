@@ -268,7 +268,8 @@ public class HomeController {
 	// 회원가입폼 호출 GET
 	@RequestMapping(value="/join_form", method=RequestMethod.GET)
 	public String join_form() throws Exception{
-		return "home/join";
+//		return "home/join";
+		return "join.tiles";
 	}
 	
 	// 회원 탈퇴 -----------------------------------------------------------------------
@@ -337,6 +338,7 @@ public class HomeController {
 		pageVO.setBoard_type("notice");
 		model.addAttribute("latestNotice", boardService.selectBoard(pageVO)); //공지사항 최근 게시물
 		
-		return "home/index";//확장자가 생략 .jsp가 생략되어 있음.
+//		return "home/index";//확장자가 생략 .jsp가 생략되어 있음.
+		return "index.tiles";
 	}
 }

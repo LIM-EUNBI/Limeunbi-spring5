@@ -65,6 +65,21 @@
 - Hsql데이터베이스의 특징 : 메모리DB이기 때문에, 보통 서버를 restart하면 DB가 리셋된다.
 - sir = 데모사이트나 프로그램의 프로토타입(데모 프로그램)
 
+#### 20210716(금) 작업
+- 타일즈란?
+- jsp템플릿이라 하며, jsp 레이아웃을 체계적으로 관리 (주로 include를 대체)
+- jsp템플릿인 tiles(타일즈), siteMesh(사이트메쉬), velocity(벨로시티) 등이 있습니다.
+- 현업에서는 위 3가지 템플릿중 1가지는 항상 사용하기 때문에 대표적으로 타일즈를 실습할 예정입니다.
+- 위 3가지 구조는 비슷하기 때문에 1가지만 아셔도 다른 jsp템플릿 적용시 응용가능합니다.
+- 작업순서:
+- pom.xml 타일즈 모듈 라이브러리 추가
+- tiles-context.xml 타일즈설정파일 추가
+- servlet-context.xml 에서 타일즈용 뷰리졸버 빈 추가
+- 위 설정파일을 기준으로 titles폴더 및 layouts폴더 생성 후 layout.jsp생성
+- 기존 home/include 폴더의 header.jsp 와 footer.jsp 파일 복사해서 그대로 사용
+- 기존 home/index.jsp 파일 그대로 복사해서 tiles/index.jsp로 복사해서 @include 삭제만 처리
+- HomeController 에서 기존 @RequestMapping 복사해서 타일즈용으로 추가, 결과 확인 끝.
+
 #### 20210715(목) 작업
 - reply 부메랑 테스트 (리스트 안에 HashMap 확인)
 - admin member_insert에 프로필 사진 구현.
